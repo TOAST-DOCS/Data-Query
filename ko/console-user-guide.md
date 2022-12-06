@@ -190,7 +190,7 @@ system.sync_partition_metadata(schema_name, table_name, mode, case_sensitive)
 
 #### 외부 테이블 쿼리 이용 튜토리얼
 
-1. 샘플 CSV 파일을 [다운로드](https://github.com/ColdWM/cell_test_file/raw/main/facility-boundary-us-all.csv)하여 Object Storage에 업로드 합니다.
+1. 샘플 CSV 파일을 [다운로드](https://static.toastoven.net/prod_dataquery/files/facility-boundary-us-all.csv)하여 Object Storage에 업로드 합니다.
 
 <img src="https://static.toastoven.net/prod_dataquery/dataquery_console_04.png"/>
 
@@ -264,7 +264,7 @@ SELECT * FROM corona_facility_us
 
 * 설정 파라미터
     * 접속URL(**필수**)
-        * 설정 화면에서 제공받은 접속 URL (ex. [https://x-x-x-x-x.cluster-dataquery.cloud.toast.com](https://x-x-x-x-x.cluster-dataquery.cloud.toast.com)
+        * 설정 화면에서 제공받은 접속 URL (ex. [https://x-x-x-x-x.cluster-dataquery.cloud.toast.com](https://x-x-x-x-x.cluster-dataquery.cloud.toast.com))
     * 아이디(**필수**)
         * 인증 정보화면에서 제공받은 아이디
     * 비밀번호(**필수**)
@@ -293,7 +293,7 @@ jdbc:trino://${host}:${port}/${catalog}/${schema}
 
 * 설정 파라미터
     * host(**필수**)
-        * 설정 화면에서 제공받은 접속 URL에서 https:// 를 제외한 나머지를 입력합니다.(ex . [x-x-x-x-x.cluster-dataquery.cloud.toast.com](http://x-x-x-x-x.cluster-dataquery.cloud.toast.com)
+        * 설정 화면에서 제공받은 접속 URL에서 https:// 를 제외한 나머지를 입력합니다.(ex . [x-x-x-x-x.cluster-dataquery.cloud.toast.com](http://x-x-x-x-x.cluster-dataquery.cloud.toast.com))
     * port(**필수**)
         * 443을 입력합니다.
     * catalog
