@@ -10,13 +10,13 @@ DataQuery 서비스를 사용하려면 데이터 소스 추가가 필수입니�
 ### 데이터 소스 추가
 
 * 데이터 소스 설정 및 반영 제약사항
-    * ObjectStorage 유형의 데이터 소스가 반드시 존재해야 다른 데이터 소스를 추가할 수 있습니다.
-    * ObjectStorage 유형의 데이터 소스가 존재해야 **클러스터 활성화 및 쿼리 실행이 가능합니다.**
+    * Object Storage 유형의 데이터 소스가 반드시 존재해야 다른 데이터 소스를 추가할 수 있습니다.
+    * Object Storage 유형의 데이터 소스가 존재해야 **클러스터 활성화 및 쿼리 실행이 가능합니다.**
 * **데이터 소스 추가** 버튼을 클릭합니다.
 
-#### ObjectStorage 데이터 소스 유형
+#### Object Storage 데이터 소스 유형
 
-* **데이터 소스 추가** 버튼을 눌러서 나오는 팝업에서 ObjectStorage 관련 정보를 입력합니다.
+* **데이터 소스 추가** 버튼을 눌러서 나오는 팝업에서 Object Storage 관련 정보를 입력합니다.
     * 데이터 소스 이름
         * 쿼리 수행 시 사용되는 구분자이며, 데이터 소스 사이에서 고유한 값이어야 합니다.
     * 엑세스키, 비밀키, 엔드포인트
@@ -29,7 +29,7 @@ DataQuery 서비스를 사용하려면 데이터 소스 추가가 필수입니�
         * 연동할 기존 데이터들이 dataquery-warehouse 컨테이너 내부에 존재하지 않아도 됩니다.
 * 그 외 사항
     * 연동할 Object Storage는 같은 NHN Cloud 프로젝트 내에 존재하지 않아도 괜찮습니다.
-    * **DataQuery와 연동할 ObjectStorage가 서로 동일한 리전이 아닐 경우, 네트워크 트래픽으로 인한 추가 요금이 발생할 수 있습니다.**
+    * **DataQuery와 연동할 Object Storage가 서로 동일한 리전이 아닐 경우, 네트워크 트래픽으로 인한 추가 요금이 발생할 수 있습니다.**
 
 #### MySQL 데이터 소스 유형
 
@@ -88,7 +88,6 @@ DataQuery 서비스를 사용하려면 데이터 소스 추가가 필수입니�
     * DDL(Data Definition Language, 데이터 정의어), DML(Data Manipulation Language, 데이터 조작어)을 지원하며 아래와 같은 추가 구문을 지원합니다.
         * 메타정보를 확인할 수 있는 구문 : SHOW CATALOGS, SHOW SCHEMAS, SHOW TABLES, SHOW STATS FOR
         * 시스템의 내장 프로시저(Procedure)를 확인하거나 쿼리의 실행 계획을 확인할 수 있는 구문: CALL, EXPLAIN
-        * UPDATE는 지원하지 않습니다.
 * 자세한 사항은 Trino의 가이드 문서를 참고 부탁드립니다.
     * [키워드, 데이터 타입](https://trino.io/docs/398/language.html)
     * [Trino 쿼리](https://trino.io/docs/398/sql.html)
@@ -155,6 +154,7 @@ DataQuery 서비스를 사용하려면 데이터 소스 추가가 필수입니�
         * 사용자가 지정한 별도의 경로에 위치한 데이터를 기반으로 동작합니다.
         * 테이블을 삭제 할 때 내부 테이블과는 달리 연결된 데이터 원본은 삭제되지 않습니다.
         * 테이블을 생성할 때 WITH절의 external\_location에 데이터의 경로를 지정해야 합니다.
+          * external_location 데이터의 경로 입력 시, 버킷, 컨테이너명은 [NHN Cloud Object Storage의 버킷 명명 규칙](https://docs.toast.com/ko/Storage/Object%20Storage/ko/s3-api-guide/#_7)을 지켜야 합니다.
 
 ``` sql
 # Managed Table 샘플
