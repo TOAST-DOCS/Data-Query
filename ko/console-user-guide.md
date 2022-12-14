@@ -183,7 +183,7 @@ system.sync_partition_metadata(schema_name, table_name, mode, case_sensitive)
     * DataQuery에서는 Object Storage 접근을 위해 S3 호환 레이어를 사용하며, 스키마 또는 테이블을 위한 데이터 경로 지정 시 s3a 프로토콜을 사용해야 합니다(ex. s3a://example/test).
     * External table의 external\_location로 지정되는 데이터 디렉터리 경로 객체가 별도로 존재해야 합니다.
         * Object Storage에서 디렉터리를 별도로 생성한 상태에서 데이터가 해당 디렉토리에 위치해야 정상적으로 연동이 될 수 있습니다.
-        * 만약, 해당 처리에 문제가 있을 경우에는 문의 부탁드립니다.
+        * 만약 해당 처리에 문제가 있을 경우에는 고객 센터로 문의하십시오.
     * External table의 external\_location 경로명에 한글이 들어갈 경우 정상적으로 데이터가 처리되지 않습니다.
     * 테이블과 연결된 Object Storage 버킷이 삭제되면 테이블 DROP 쿼리가 실패합니다.
     * DELETE, UPDATE는 파티션 데이터에 대해서만 제한적으로 수행할 수 있습니다.
@@ -191,7 +191,7 @@ system.sync_partition_metadata(schema_name, table_name, mode, case_sensitive)
 
 #### 외부 테이블 쿼리 이용 튜토리얼
 
-1. 샘플 CSV 파일을 [다운로드](https://static.toastoven.net/prod_dataquery/files/facility-boundary-us-all.csv)하여 Object Storage에 업로드 합니다.
+1. 샘플 CSV 파일을 [다운로드](https://static.toastoven.net/prod_dataquery/files/facility-boundary-us-all.csv)하여 Object Storage에 업로드합니다.
 
 <img src="https://static.toastoven.net/prod_dataquery/dataquery_console_04.png"/>
 
