@@ -21,8 +21,8 @@ The service is available through following procedures.
         * This is a separator used to perform queries, and must be unique value among data sources.
     * Access key, secret key, endpoint
         * Connection information for Object Storage where Data to be linked exists.
-        * Access keys and secret keys can be issued from the Object Storage console. For more details, refer to Object Storage Console Usage Guide at https://docs.toast.com/ko/Storage/Object%20Storage/ko/console-guide/#s3-api).
-        * For Endpoint, refer to [S3 API endpoint] from Object Storage Guide of respective region https://docs.toast.com/ko/Storage/Object%20Storage/ko/s3-api-guide/#aws-cli)).
+        * Access keys and secret keys can be issued from the Object Storage console. For more details, refer to [Object Storage Console Guide](https://docs.toast.com/ko/Storage/Object%20Storage/ko/console-guide/#s3-api).
+        * For Endpoint, refer to [S3 API endpoint](https://docs.toast.com/ko/Storage/Object%20Storage/ko/s3-api-guide/#aws-cli)) from Object Storage Guide of respective region.
     * Bucket Name
         * Object Storage container name (dataquery-warehouse) that the system uses to store Default table information, management table information, and data.
             * Create and use your own dataquery-warehouse container.
@@ -108,7 +108,7 @@ The service is available through following procedures.
 * ① Click Query History.
 * ② Additional query window is created where the corresponding query is entered.
 
-## Click History.
+## Query History.
 
 * You can check query information you run on **Query History** screen.
 * Click the collapse button in rightmost column to check additional execution information for query, or click **Download** to download full execution information for query.
@@ -130,14 +130,14 @@ The service is available through following procedures.
 ### Run Object Storage Data Source Query
 
 * Queries for Object Storage data sources are based on Trino-Hive.
-    * Hive is solution to support SQL job processing in [Apache Hadoop] (https://hive.apache.org/) distributed storage environments.
+    * Hive is solution to support SQL job processing in [Apache Hadoop](https://hive.apache.org/) distributed storage environments.
 * DataQuery uses S3-compatible layer for Object Storage access and requires use of s3a protocol when specifying path for data for Schemas or Tables (ex. s3a://example/test).
 * Supports processing of Parquet, JSON, ORC, CSV, and Text types of Data on Object Storage.
 * Object Storage data source provides default Schema named Default, and you can work in the corresponding schema.
 
 #### Additional Grammar to operate Hive feature  
 
-* Trino-Hive basically follows standard SQL grammar, but there is additional feature/Grammar for Hive activity response. [Details] (https://trino.io/docs/398/connector/hive.html#examples)
+* Trino-Hive basically follows standard SQL grammar, but there is additional feature/Grammar for Hive activity response. [Details](https://trino.io/docs/398/connector/hive.html#examples)
 * Supported data format
     * Default format is designated as ORC, and you can specify Parquet, JSON, ORC, CSV, Text, etc. as Settings.
     * When creating Table, you can specify Format value in With clause.
@@ -191,7 +191,7 @@ system.sync_partition_metadata(schema_name, table_name, mode, case_sensitive)
 
 #### External Table Query Utilization Tutorial
 
-1.[Download]https://static.toastoven.net/prod_dataquery/files/facility-boundary-us-all.csv) the sample CSV file and upload to Object Storage.
+1. [Download]https://static.toastoven.net/prod_dataquery/files/facility-boundary-us-all.csv) the sample CSV file and upload to Object Storage
 
 <img src="https://static.toastoven.net/prod_dataquery/dataquery_console_04.png"/>
 
