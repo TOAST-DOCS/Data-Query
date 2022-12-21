@@ -191,7 +191,7 @@ system.sync_partition_metadata(schema_name, table_name, mode, case_sensitive)
 
 #### External Table Query Utilization Tutorial
 
-1. [Download]https://static.toastoven.net/prod_dataquery/files/facility-boundary-us-all.csv) the sample CSV file and upload to Object Storage
+1. Downlaod the sample CSV file and upload to Object Storage [Download]https://static.toastoven.net/prod_dataquery/files/facility-boundary-us-all.csv).
 
 <img src="https://static.toastoven.net/prod_dataquery/dataquery_console_04.png"/>
 
