@@ -22,7 +22,7 @@ The service is available through following procedures.
     * Access key, secret key, endpoint
         * Connection information for Object Storage where Data to be linked exists.
         * Access keys and secret keys can be issued from the Object Storage console. For more details, refer to [Object Storage Console Guide](https://docs.toast.com/ko/Storage/Object%20Storage/ko/console-guide/#s3-api).
-        * For Endpoint, refer to [S3 API endpoint](https://docs.toast.com/ko/Storage/Object%20Storage/ko/s3-api-guide/#aws-cli)) from Object Storage Guide of respective region.
+        * For Endpoint, refer to [S3 API endpoint](https://docs.toast.com/ko/Storage/Object%20Storage/ko/s3-api-guide/#aws-cli) from Object Storage Guide of respective region.
     * Bucket Name
         * Object Storage container name (dataquery-warehouse) that the system uses to store Default table information, management table information, and data.
             * Create and use your own dataquery-warehouse container.

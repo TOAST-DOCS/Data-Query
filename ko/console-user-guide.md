@@ -21,8 +21,8 @@ DataQuery 서비스를 사용하려면 반드시 데이터 소스를 추가해�
         * 쿼리 수행 시 사용되는 구분자이며, 데이터 소스 사이에서 고유한 값이어야 합니다.
     * 액세스 키, 비밀 키, 엔드포인트
         * 연동할 데이터가 존재하는 Object Storage의 연결 정보입니다.
-        * 액세스 키와 비밀 키는 Object Storage 콘솔에서 발급할 수 있습니다. 자세한 내용은 [Object Storage 콘솔 사용 가이드](https://docs.toast.com/ko/Storage/Object%20Storage/ko/console-guide/#s3-api))를 참고하십시오.
-        * 엔드포인트는 Object Storage 가이드의 리전별 [S3 API 엔드포인트](https://docs.toast.com/ko/Storage/Object%20Storage/ko/s3-api-guide/#aws-cli))를 참고하십시오.
+        * 액세스 키와 비밀 키는 Object Storage 콘솔에서 발급할 수 있습니다. 자세한 내용은 [Object Storage 콘솔 사용 가이드](https://docs.toast.com/ko/Storage/Object%20Storage/ko/console-guide/#s3-api)를 참고하십시오.
+        * 엔드포인트는 Object Storage 가이드의 리전별 [S3 API 엔드포인트](https://docs.toast.com/ko/Storage/Object%20Storage/ko/s3-api-guide/#aws-cli)를 참고하십시오.
     * 버킷 이름
         * 시스템에서 기본 테이블 정보나 관리 테이블 정보, 데이터를 저장하기 위해 사용하는 Object Storage 컨테이너명(dataquery-warehouse)입니다.
             * 자체적으로 dataquery-warehouse 컨테이너를 생성해 사용합니다.
