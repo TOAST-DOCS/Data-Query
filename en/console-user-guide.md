@@ -1,3 +1,5 @@
+## Data & Analytics > DataQuery > Console User Guide
+
 To use DataQuery service, you have to add a data source.
 The service is available through following procedures.
 
