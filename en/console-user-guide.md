@@ -9,7 +9,7 @@ The service is available through following procedures.
 
 ## Data Source
 
-## Add Data Source
+### Add Data Source
 
 * Restrictions for Data Source Setup and Reflection
     * Data sources of Object Storage type must exist before adding other data sources.
@@ -110,7 +110,7 @@ The service is available through following procedures.
 * ① Click Query History.
 * ② Additional query window is created where the corresponding query is entered.
 
-## Query History.
+## Query History
 
 * You can check query information you run on **Query History** screen.
 * Click the collapse button in rightmost column to check additional execution information for query, or click **Download** to download full execution information for query.
