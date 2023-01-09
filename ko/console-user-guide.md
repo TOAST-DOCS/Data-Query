@@ -246,6 +246,7 @@ SELECT * FROM corona_facility_us
 
 * MySQL 데이터 소스에 대한 쿼리는 Trino-MySQL을 기반으로 수행됩니다.
 * Trino-MySQL은 기본적으로 표준 SQL 문법을 따릅니다.
+* MySQL 데이터 소스의 스키마와 테이블은 소문자명을 기반으로 동작하고 표현됩니다.
 * 제약 사항
     * UPDATE 쿼리는 지원하지 않습니다.
         * [상세 정보](https://trino.io/docs/398/connector/mysql.html#sql-support)
