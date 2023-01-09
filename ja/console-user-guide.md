@@ -52,7 +52,7 @@ DataQueryサービスを使用するには、必ずデータソースを追加�
 
 * クエリエディタはクラスタ領域、スキーマ領域、エディタ領域、結果/コンソール実行領域nに区分されます。
 
-<img src="https://static.toastoven.net/prod_dataquery/dataquery_console_01.png"/>
+<img src="https://static.toastoven.net/prod_dataquery/dataquery_console_01_en.png"/>
 
 ### 1. クラスタ領域
 
@@ -105,7 +105,7 @@ DataQueryサービスを使用するには、必ずデータソースを追加�
     * マウス右クリックしてコンソールクエリ結果のコピー、エクスポートを実行できます。
 * クエリエディタで実行したクエリリストを提供します。
 
-<img src="https://static.toastoven.net/prod_dataquery/dataquery_console_02.png"/>
+<img src="https://static.toastoven.net/prod_dataquery/dataquery_console_02_en.png"/>
 
 * ①クエリ履歴をクリックします。
 * ②該当クエリが入力されたクエリウィンドウが追加作成されます。
@@ -116,7 +116,7 @@ DataQueryサービスを使用するには、必ずデータソースを追加�
 * 一番右の列の展開ボタンをクリックしてクエリの追加の実行情報を確認できます。**ダウンロード**をクリックしてクエリの全体実行情報をダウンロードできます。
     * ダウンロードファイルにクエリ結果は含まれません。
 
-<img src="https://static.toastoven.net/prod_dataquery/dataquery_console_03.png"/>
+<img src="https://static.toastoven.net/prod_dataquery/dataquery_console_03_en.png"/>
 
 ## 設定
 
@@ -195,7 +195,7 @@ system.sync_partition_metadata(schema_name, table_name, mode, case_sensitive)
 
 1. サンプルCSVファイルを[ダウンロード](https://static.toastoven.net/prod_dataquery/files/facility-boundary-us-all.csv)してObject Storageにアップロードします。
 
-<img src="https://static.toastoven.net/prod_dataquery/dataquery_console_04.png"/>
+<img src="https://static.toastoven.net/prod_dataquery/dataquery_console_04_en.png"/>
 
 2. Object Storageコンソールでアクセスキー、シークレットキーを発行します。
 3. Object Storageのアクセスキー、シークレットキー、エンドポイントを利用してObject Storageデータソースを入力します。
@@ -229,7 +229,7 @@ with (
 
 6. テーブルが正常に追加されたことを確認するためにテーブルを更新します。
 
-<img src="https://static.toastoven.net/prod_dataquery/dataquery_console_05.png" width=220/>
+<img src="https://static.toastoven.net/prod_dataquery/dataquery_console_05_en.png" width=220/>
 
 7. 該当テーブルで、次のようにクエリを実行します。
 
