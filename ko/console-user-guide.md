@@ -14,6 +14,7 @@ DataQuery 서비스를 사용하려면 반드시 데이터 소스를 추가해�
 * 데이터 소스 설정 및 반영 제약 사항
     * Object Storage 유형의 데이터 소스가 반드시 존재해야 다른 데이터 소스를 추가할 수 있습니다.
     * Object Storage 유형의 데이터 소스가 반드시 존재해야 클러스터를 활성화하고 쿼리를 실행할 수 있습니다.
+    * Object Storage 유형의 데이터 소스는 하나만 등록할 수 있습니다.
 * **데이터 소스 추가**를 클릭합니다.
 
 #### Object Storage 데이터 소스 유형
@@ -52,7 +53,7 @@ DataQuery 서비스를 사용하려면 반드시 데이터 소스를 추가해�
 
 * 쿼리 편집기는 클러스터 영역, 스키마 영역, 편집기 영역, 결과/콘솔 실행 영역으로 구분됩니다.
 
-<img src="https://static.toastoven.net/prod_dataquery/dataquery_console_01.png"/>
+<img src="https://static.toastoven.net/prod_dataquery/dataquery_console_01_ko.png"/>
 
 ### 1. 클러스터 영역
 
@@ -60,7 +61,7 @@ DataQuery 서비스를 사용하려면 반드시 데이터 소스를 추가해�
 * 추가, 변경, 삭제한 데이터 소스 정보가 실제 동작에 반영되려면 DataQuery 클러스터를 다시 시작해야 합니다.
 * 데이터 소스를 추가했거나 변경, 삭제 등의 동작이 있었을 경우 아래와 같이 클러스터 재시작 문구가 나타납니다.
     * Object Storage는 필수 데이터 소스로, Object Storage 데이터 소스가 삭제되면 클러스터 시작이 불가능합니다.
-* 클러스터를 끄는 데 1\~2분, 켜는 데 3\~4분 정도의 시간이 소요될 수 있습니다.
+* 클러스터를 끄는 데 1~2분, 켜는 데 3~4분 정도의 시간이 소요될 수 있습니다.
 * DataQuery 클러스터는 모든 데이터 소스를 반영하며, 개별적인 데이터 소스 적용은 불가능합니다.
 * 지속적으로 클러스터 **켜기** 또는 **끄기**에 실패할 경우, 고객 센터로 문의하십시오.
 
@@ -105,7 +106,7 @@ DataQuery 서비스를 사용하려면 반드시 데이터 소스를 추가해�
     * 마우스 오른쪽 버튼을 클릭하여 콘솔 쿼리 결과 복사, 내보내기를 실행할 수 있습니다.
 * 쿼리 편집기에서 실행한 쿼리 목록을 제공합니다.
 
-<img src="https://static.toastoven.net/prod_dataquery/dataquery_console_02.png"/>
+<img src="https://static.toastoven.net/prod_dataquery/dataquery_console_02_ko.png"/>
 
 * ① 쿼리 이력을 클릭합니다.
 * ② 해당 쿼리가 입력된 쿼리 창이 추가 생성됩니다.
@@ -116,7 +117,7 @@ DataQuery 서비스를 사용하려면 반드시 데이터 소스를 추가해�
 * 가장 오른쪽 열의 펼침 버튼을 클릭해 쿼리의 추가적인 실행 정보를 확인할 수 있으며, **다운로드**를 클릭해 쿼리의 전체 실행 정보를 내려받을 수 있습니다.
     * 다운로드 파일에 쿼리 결과는 포함되지 않습니다.
 
-<img src="https://static.toastoven.net/prod_dataquery/dataquery_console_03.png"/>
+<img src="https://static.toastoven.net/prod_dataquery/dataquery_console_03_ko.png"/>
 
 ## 설정
 
@@ -195,7 +196,7 @@ system.sync_partition_metadata(schema_name, table_name, mode, case_sensitive)
 
 1. 샘플 CSV 파일을 [다운로드](https://static.toastoven.net/prod_dataquery/files/facility-boundary-us-all.csv)하여 Object Storage에 업로드합니다.
 
-<img src="https://static.toastoven.net/prod_dataquery/dataquery_console_04.png"/>
+<img src="https://static.toastoven.net/prod_dataquery/dataquery_console_04_ko.png"/>
 
 2. Object Storage 콘솔에서 액세스 키, 시크릿 키를 발급 받습니다.
 3. Object Storage의 액세스 키, 시크릿 키, 엔드포인트를 이용하여 Object Storage 데이터 소스를 입력합니다.
@@ -229,7 +230,7 @@ with (
 
 6. 테이블이 정상적으로 추가되었는지 확인하기 위해 테이블을 새로 고침합니다.
 
-<img src="https://static.toastoven.net/prod_dataquery/dataquery_console_05.png" width=220/>
+<img src="https://static.toastoven.net/prod_dataquery/dataquery_console_05_ko.png" width=220/>
 
 7. 해당 테이블에서 아래와 같이 쿼리를 실행합니다.
 
@@ -245,6 +246,7 @@ SELECT * FROM corona_facility_us
 
 * MySQL 데이터 소스에 대한 쿼리는 Trino-MySQL을 기반으로 수행됩니다.
 * Trino-MySQL은 기본적으로 표준 SQL 문법을 따릅니다.
+* MySQL 데이터 소스의 스키마와 테이블은 소문자명을 기반으로 동작하고 표현됩니다.
 * 제약 사항
     * UPDATE 쿼리는 지원하지 않습니다.
         * [상세 정보](https://trino.io/docs/398/connector/mysql.html#sql-support)
