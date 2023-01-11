@@ -14,6 +14,7 @@ DataQueryサービスを使用するには、必ずデータソースを追加�
 * データソース設定および反映制約事項
     * Object Storageタイプのデータソースが存在している時のみ他のデータソースを追加できます。
     * Object Storageタイプのデータソースが存在する時のみクラスタを有効にしてクエリを実行できます。
+    * Object Storageタイプのデータソースは1つだけ登録できます。
 * **データソースの追加**をクリックします。
 
 #### Object Storageデータソースタイプ
@@ -245,6 +246,7 @@ SELECT * FROM corona_facility_us
 
 * MySQLデータソースに対するクエリはTrino-MySQLに基づいて行われます。
 * Trino-MySQLは基本的に標準SQL文法に従います。
+* MySQLデータソースのスキーマとテーブルは、小文字名に基づいて動作し、表現されます。
 * 制約事項
     * UPDATEクエリはサポートしません。
         * [詳細情報](https://trino.io/docs/398/connector/mysql.html#sql-support)
