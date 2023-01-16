@@ -269,7 +269,7 @@ SELECT * FROM corona_facility_us
 
 * Setting Parameter
     * Access URL (Required) 
-        * Access URL provided on the Settings screen (ex. [https://x-x-x-x-x.cluster-dataquery.cloud.toast.com](https://x-x-x-x-x.cluster-dataquery.cloud.toast.com))
+        * Access URL provided on the Settings screen (ex. [https://x-x-x-x-x.kr1-cluster-dataquery.nhncloudservice.com](https://x-x-x-x-x.kr1-cluster-dataquery.nhncloudservice.com))
     * ID (Required)
         * ID provided on credentials screen
     * Password (Required)
@@ -297,7 +297,7 @@ jdbc:trino://${host}:${port}/${catalog}/${schema}
 
 * Setting parameters
     * host (Required)
-        * In the connection URL provided in the setting screen, enter the rest except for `https://` (ex . x-x-x-x-x.cluster-dataquery.cloud.toast.com).
+        * In the connection URL provided in the setting screen, enter the rest except for `https://` (ex . x-x-x-x-x.kr1-cluster-dataquery.nhncloudservice.com).
     * port (Required)
         * Enter 443.
     * catalog
@@ -305,5 +305,5 @@ jdbc:trino://${host}:${port}/${catalog}/${schema}
     * schema
         * Schema name to connect
 * Example of connection information
-    * jdbc:trino://test-dataquery-domain-12345abcd.cluster-dataquery.cloud.toast.com:443/catalog/schema
+    * jdbc:trino://test-dataquery-domain-12345abcd.kr1-cluster-dataquery.nhncloudservice.com:443/catalog/schema
 * For more details, see [Trino JDBC Guide](https://trino.io/docs/398/client/jdbc.html).
