@@ -269,7 +269,7 @@ SELECT * FROM corona_facility_us
 
 * 설정 파라미터
     * 접속 URL(필수)
-        * 설정 화면에서 제공 받은 접속 URL (ex. [https://x-x-x-x-x.cluster-dataquery.cloud.toast.com](https://x-x-x-x-x.cluster-dataquery.cloud.toast.com))
+        * 설정 화면에서 제공 받은 접속 URL (ex. [https://x-x-x-x-x.kr1-cluster-dataquery.nhncloudservice.com](https://x-x-x-x-x.kr1-cluster-dataquery.nhncloudservice.com))
     * 아이디(필수)
         * 인증 정보 화면에서 제공 받은 아이디
     * 비밀번호(필수)
@@ -297,7 +297,7 @@ jdbc:trino://${host}:${port}/${catalog}/${schema}
 
 * 설정 파라미터
     * host(필수)
-        * 설정 화면에서 제공 받은 접속 URL에서 `https://`를 제외한 나머지를 입력합니다(ex . x-x-x-x-x.cluster-dataquery.cloud.toast.com).
+        * 설정 화면에서 제공 받은 접속 URL에서 `https://`를 제외한 나머지를 입력합니다(ex . x-x-x-x-x.kr1-cluster-dataquery.nhncloudservice.com).
     * port(필수)
         * 443을 입력합니다.
     * catalog
@@ -305,5 +305,5 @@ jdbc:trino://${host}:${port}/${catalog}/${schema}
     * schema
         * 연결을 원하는 스키마 이름
 * 접속 정보 예시
-    * jdbc:trino://test-dataquery-domain-12345abcd.cluster-dataquery.cloud.toast.com:443/catalog/schema
+    * jdbc:trino://test-dataquery-domain-12345abcd.kr1-cluster-dataquery.nhncloudservice.com:443/catalog/schema
 * 더 자세한 정보는 [Trino JDBC 가이드 페이지](https://trino.io/docs/398/client/jdbc.html)를 참고하십시오.

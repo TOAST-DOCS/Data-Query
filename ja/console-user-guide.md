@@ -269,7 +269,7 @@ SELECT * FROM corona_facility_us
 
 * 設定パラメータ
     * 接続URL(必須)
-        * 設定画面で提供された接続URL (ex. [https://x-x-x-x-x.cluster-dataquery.cloud.toast.com](https://x-x-x-x-x.cluster-dataquery.cloud.toast.com))
+        * 設定画面で提供された接続URL (ex. [https://x-x-x-x-x.kr1-cluster-dataquery.nhncloudservice.com](https://x-x-x-x-x.kr1-cluster-dataquery.nhncloudservice.com))
     * ID(必須)
         * 認証情報画面で提供されたID
     * パスワード(必須)
@@ -297,7 +297,7 @@ jdbc:trino://${host}:${port}/${catalog}/${schema}
 
 * 設定パラメータ
     * host(必須)
-        * 設定画面で提供された接続URLで`https://`以外の部分を入力します(ex . x-x-x-x-x.cluster-dataquery.cloud.toast.com)。
+        * 設定画面で提供された接続URLで`https://`以外の部分を入力します(ex . x-x-x-x-x.kr1-cluster-dataquery.nhncloudservice.com)。
     * port(必須)
         * 443を入力します。
     * catalog
@@ -305,5 +305,5 @@ jdbc:trino://${host}:${port}/${catalog}/${schema}
     * schema
         * 接続したいスキーマ名
 * 接続情報例
-    * jdbc:trino://test-dataquery-domain-12345abcd.cluster-dataquery.cloud.toast.com:443/catalog/schema
+    * jdbc:trino://test-dataquery-domain-12345abcd.kr1-cluster-dataquery.nhncloudservice.com:443/catalog/schema
 * 詳細は[Trino JDBCガイドページ](https://trino.io/docs/398/client/jdbc.html)をご覧ください。
