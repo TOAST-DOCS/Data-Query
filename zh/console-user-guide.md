@@ -14,6 +14,7 @@ The service is available through following procedures.
 * Restrictions for Data Source Setup and Reflection
     * Data sources of Object Storage type must exist before adding other data sources.
     * Data sources of Object Storage type have to exist before the cluster can be activated and query runs.
+    * Only one data source of Object Storage type can be registered.
 * Click **Add Data Source**.
 
 #### Object Storage Data Source Type
@@ -52,7 +53,7 @@ The service is available through following procedures.
 
 * Query Editor is divided into Cluster area, Schema area, Editor area, and Result/Console execution area.
 
-<img src="https://static.toastoven.net/prod_dataquery/dataquery_console_01.png"/>
+<img src="https://static.toastoven.net/prod_dataquery/dataquery_console_01_en.png"/>
 
 ### 1. Cluster Area
 
@@ -105,7 +106,7 @@ The service is available through following procedures.
     * Right-click mouse to execute copy and export query results from the console.
 * Provides list of queries executed by Query Editor.
 
-<img src="https://static.toastoven.net/prod_dataquery/dataquery_console_02.png"/>
+<img src="https://static.toastoven.net/prod_dataquery/dataquery_console_02_en.png"/>
 
 * ① Click Query History.
 * ② Additional query window is created where the corresponding query is entered.
@@ -116,7 +117,7 @@ The service is available through following procedures.
 * Click the collapse button in rightmost column to check additional execution information for query, or click **Download** to download full execution information for query.
     * Downloaded file does not include the query results.
 
-<img src="https://static.toastoven.net/prod_dataquery/dataquery_console_03.png"/>
+<img src="https://static.toastoven.net/prod_dataquery/dataquery_console_0_en.png"/>
 
 ## Settings
 
@@ -195,7 +196,7 @@ system.sync_partition_metadata(schema_name, table_name, mode, case_sensitive)
 
 1. [Download](https://static.toastoven.net/prod_dataquery/files/facility-boundary-us-all.csv) the sample CSV file and upload to Object Storage.
 
-<img src="https://static.toastoven.net/prod_dataquery/dataquery_console_04.png"/>
+<img src="https://static.toastoven.net/prod_dataquery/dataquery_console_04_en.png"/>
 
 2. Obtain access keys, secret keys from Object Storage console.
 3. Enter Object Storage data source using access key, secret key, and endpoint of Object Storage.
@@ -229,7 +230,7 @@ with (
 
 6. Refresh the table to check if the table is added normally.
 
-<img src="https://static.toastoven.net/prod_dataquery/dataquery_console_05.png" width=220/>
+<img src="https://static.toastoven.net/prod_dataquery/dataquery_console_05_en.png" width=220/>
 
 7. Run the query from the table as follows.
 
@@ -245,6 +246,7 @@ SELECT * FROM corona_facility_us
 
 * Queries for MySQL data sources are executed based on Trino-MySQL.
 * Trino-MySQL follows standard SQL Grammar by default.
+* MySQL data source schemas and tables are run and expressed based on lowercase names.
 * Restrictions
     * UPDATE Queries are not supported.
         * [Details](https://trino.io/docs/398/connector/mysql.html#sql-support)
@@ -267,7 +269,7 @@ SELECT * FROM corona_facility_us
 
 * Setting Parameter
     * Access URL (Required) 
-        * Access URL provided on the Settings screen (ex. [https://x-x-x-x-x.cluster-dataquery.cloud.toast.com](https://x-x-x-x-x.cluster-dataquery.cloud.toast.com))
+        * Access URL provided on the Settings screen (ex. [https://x-x-x-x-x.kr1-cluster-dataquery.nhncloudservice.com](https://x-x-x-x-x.kr1-cluster-dataquery.nhncloudservice.com))
     * ID (Required)
         * ID provided on credentials screen
     * Password (Required)
@@ -295,7 +297,7 @@ jdbc:trino://${host}:${port}/${catalog}/${schema}
 
 * Setting parameters
     * host (Required)
-        * In the connection URL provided in the setting screen, enter the rest except for `https://` (ex . x-x-x-x-x.cluster-dataquery.cloud.toast.com).
+        * In the connection URL provided in the setting screen, enter the rest except for `https://` (ex . x-x-x-x-x.kr1-cluster-dataquery.nhncloudservice.com).
     * port (Required)
         * Enter 443.
     * catalog
@@ -303,5 +305,5 @@ jdbc:trino://${host}:${port}/${catalog}/${schema}
     * schema
         * Schema name to connect
 * Example of connection information
-    * jdbc:trino://test-dataquery-domain-12345abcd.cluster-dataquery.cloud.toast.com:443/catalog/schema
+    * jdbc:trino://test-dataquery-domain-12345abcd.kr1-cluster-dataquery.nhncloudservice.com:443/catalog/schema
 * For more details, see [Trino JDBC Guide](https://trino.io/docs/398/client/jdbc.html).
