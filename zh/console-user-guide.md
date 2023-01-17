@@ -14,6 +14,7 @@ The service is available through following procedures.
 * Restrictions for Data Source Setup and Reflection
     * Data sources of Object Storage type must exist before adding other data sources.
     * Data sources of Object Storage type have to exist before the cluster can be activated and query runs.
+    * Only one data source of Object Storage type can be registered.
 * Click **Add Data Source**.
 
 #### Object Storage Data Source Type
@@ -245,6 +246,7 @@ SELECT * FROM corona_facility_us
 
 * Queries for MySQL data sources are executed based on Trino-MySQL.
 * Trino-MySQL follows standard SQL Grammar by default.
+* MySQL data source schemas and tables are run and expressed based on lowercase names.
 * Restrictions
     * UPDATE Queries are not supported.
         * [Details](https://trino.io/docs/398/connector/mysql.html#sql-support)
