@@ -127,6 +127,7 @@ The service is available through following procedures.
 * You can change the instance type and number of workers.
     * The number of workers can be set from a minimum of 1 to a maximum of 5.
     * Settings can only be modified when the cluster is turned off (OFF).
+    
 ### External Integration
 * Trino endpoints are provided for linking with external tools (JDBC, CLI, BI solutions, etc.) and can be linked using the information provided in **Settings** page.
 * Access to endpoints requires personal credentials and can be issued by clicking issue **authentication key** from **Settings** menu.
