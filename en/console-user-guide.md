@@ -22,10 +22,10 @@ The service is available through following procedures.
 * Click **Add Data Source** and enter Object Storage information in the dialog box.
     * Data source name
         * This is a separator used to perform queries, and must be unique value among data sources.
-    * Access key, secret key, endpoint
+    * Access key, secret key, region
         * Connection information for Object Storage where Data to be linked exists.
         * Access keys and secret keys can be issued from the Object Storage console. For more details, refer to [Object Storage Console Guide](https://docs.toast.com/ko/Storage/Object%20Storage/ko/console-guide/#s3-api).
-        * For Endpoint, refer to [S3 API endpoint](https://docs.toast.com/ko/Storage/Object%20Storage/ko/s3-api-guide/#aws-cli) from Object Storage Guide of respective region.
+        * For regions, refer to [S3 Region](https://docs.toast.com/ko/Storage/Object%20Storage/ko/s3-api-guide/#aws-cli) from Object Storage Guide of respective region.
     * Bucket Name
         * Object Storage container name (dataquery-warehouse) that the system uses to store Default table information, management table information, and data.
             * Create and use your own dataquery-warehouse container.
@@ -99,7 +99,7 @@ The service is available through following procedures.
 ### 4. Results/Console Execution Query Area
 
 * Can check the results of Query executed in Query Editor.
-    * Provides limited results maximum 5,000 depending on the size of Data.
+    * Provides limited results, about 1 MB or about 5,000, depending on the size of the data.
     * Query results can be downloaded maximum 30 MB.
         * Directly link Trino (ex. JDBC, CLI) to obtain data for entire Query performance results. Refer to Setup Menu Guide.
         * Query results can be downloaded maximum 7 days from the Query completion time. If Query runs at 13hr:53min:32sec on December 1st, you can download it no later than 13hr:53min:32sec on December 8th.
@@ -121,6 +121,14 @@ The service is available through following procedures.
 
 ## Settings
 
+### Cluster Settings
+* You can see the instance types and number of nodes set up in your cluster.
+    * For information on types provided or types other than the list provided in Settings, see [Pricing by Service](https://www.nhncloud.com/kr/pricing/by-service?c=Data%20%26%20Analytics&s=DataQuery).
+* You can change the instance type and number of workers.
+    * The number of workers can be set from a minimum of 1 to a maximum of 5.
+    * Settings can only be modified when the cluster is turned off (OFF).
+    
+### External Integration
 * Trino endpoints are provided for linking with external tools (JDBC, CLI, BI solutions, etc.) and can be linked using the information provided in **Settings** page.
 * Access to endpoints requires personal credentials and can be issued by clicking issue **authentication key** from **Settings** menu.
     * Personal credentials consist of ID and authentication key and are used Username (ID) and Password (authentication key) when accessing the endpoint.
