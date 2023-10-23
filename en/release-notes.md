@@ -1,3 +1,9 @@
+## Data & Analytics > DataQuery > Release Notes
+
+### October 31, 23
+#### Feature Updates
+* Added a feature to select a cluster type
+
 ### December 27, 2022
 
 #### Release of a New Service
