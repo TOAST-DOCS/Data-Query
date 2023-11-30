@@ -255,6 +255,7 @@ SELECT * FROM corona_facility_us
 * Queries for MySQL data sources are executed based on Trino-MySQL.
 * Trino-MySQL follows standard SQL Grammar by default.
 * MySQL data source schemas and tables are run and expressed based on lowercase names.
+* If you have tables with the same name in different cases, query execution and schema collection might not work properly.
 * Restrictions
     * UPDATE Queries are not supported.
         * [Details](https://trino.io/docs/398/connector/mysql.html#sql-support)
