@@ -256,6 +256,7 @@ SELECT * FROM corona_facility_us
 * MySQLデータソースに対するクエリはTrino-MySQLに基づいて行われます。
 * Trino-MySQLは基本的に標準SQL文法に従います。
 * MySQLデータソースのスキーマとテーブルは、小文字名に基づいて動作し、表現されます。
+* 同じ名前で大文字/小文字が異なるテーブルがある場合、クエリ実行とスキーマ収集が正常に動作しない場合があります。
 * 制約事項
     * UPDATEクエリはサポートしません。
         * [詳細情報](https://trino.io/docs/398/connector/mysql.html#sql-support)
