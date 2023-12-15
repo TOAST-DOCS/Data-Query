@@ -16,7 +16,7 @@ The service is available through following procedures.
     * Data sources of Object Storage type have to exist before the cluster can be activated and query runs.
     * Only one data source of Object Storage type can be registered.
     * You must use the DataQuery IP fixation feature when connecting to data sources with access control enabled.
-      * To enable the DataQuery IP fixation feature, contact the Customer Center.
+        * To enable the DataQuery IP fixation feature, contact the Customer Center.
 * Click **Add Data Source**.
 
 #### Object Storage Data Source Type
