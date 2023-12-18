@@ -15,6 +15,8 @@ DataQuery 서비스를 사용하려면 반드시 데이터 소스를 추가해�
     * Object Storage 유형의 데이터 소스가 반드시 존재해야 다른 데이터 소스를 추가할 수 있습니다.
     * Object Storage 유형의 데이터 소스가 반드시 존재해야 클러스터를 활성화하고 쿼리를 실행할 수 있습니다.
     * Object Storage 유형의 데이터 소스는 하나만 등록할 수 있습니다.
+    * 접근 제어가 설정된 데이터 소스 연결 시에는 DataQuery IP 고정 기능을 사용해야 합니다.
+        * DataQuery IP 고정 기능을 사용하려면 고객 센터로 문의하십시오.
 * **데이터 소스 추가**를 클릭합니다.
 
 #### Object Storage 데이터 소스 유형
@@ -255,6 +257,7 @@ SELECT * FROM corona_facility_us
 * MySQL 데이터 소스에 대한 쿼리는 Trino-MySQL을 기반으로 수행됩니다.
 * Trino-MySQL은 기본적으로 표준 SQL 문법을 따릅니다.
 * MySQL 데이터 소스의 스키마와 테이블은 소문자명을 기반으로 동작하고 표현됩니다.
+* 대소문자가 다른 같은 이름의 테이블이 있으면 쿼리 실행 및 스키마 수집이 정상 동작하지 않을 수 있습니다.
 * 제약 사항
     * UPDATE 쿼리는 지원하지 않습니다.
         * [상세 정보](https://trino.io/docs/398/connector/mysql.html#sql-support)
