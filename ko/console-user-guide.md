@@ -267,7 +267,7 @@ SELECT * FROM corona_facility_us
 
 * 설정 메뉴를 통해 발급 받은 인증 정보, 접속 정보와 Trino에서 지원하는 CLI 툴을 통해 커맨드라인에서 쿼리를 실행할 수 있습니다.
   * Trino에서 지원하는 CLI 툴은 최신 버전을 사용하십시오.
-  * 현재 DataQuery에서 제공하고 있는 Trino 버전은 434 입니다.
+  * 현재 DataQuery에서 제공하고 있는 Trino 버전은 434입니다.
   * [Trino CLI](https://repo1.maven.org/maven2/io/trino/trino-cli/434/trino-cli-434-executable.jar)
 
 ```

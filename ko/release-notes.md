@@ -1,6 +1,6 @@
 ## Data & Analytics > DataQuery > 릴리스 노트
 
-### 2024. 01. 23
+### 2024. 01. 23.   
 #### Trino 버전 업그레이드
 * DataQuery에서 제공하는 Trino 버전이 398에서 434으로 업그레이드 되었습니다.
 
