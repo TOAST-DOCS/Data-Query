@@ -94,9 +94,9 @@ DataQuery 서비스를 사용하려면 반드시 데이터 소스를 추가해�
         * 메타데이터를 확인할 수 있는 구문: SHOW CATALOGS, SHOW SCHEMAS, SHOW TABLES, SHOW STATS FOR
         * 시스템의 내장 프로시저(Procedure)를 확인하거나 쿼리의 실행 계획을 확인할 수 있는 구문: CALL, EXPLAIN
 * 자세한 사항은 Trino의 가이드 문서를 참고하십시오.
-    * [키워드, 데이터 타입](https://trino.io/docs/398/language.html)
-    * [Trino 쿼리](https://trino.io/docs/398/sql.html)
-    * [내장함수](https://trino.io/docs/398/functions.html)
+    * [키워드, 데이터 타입](https://trino.io/docs/434/language.html)
+    * [Trino 쿼리](https://trino.io/docs/434/sql.html)
+    * [내장함수](https://trino.io/docs/434/functions.html)
 
 ### 4. 결과/콘솔 실행 쿼리 영역
 
@@ -150,7 +150,7 @@ DataQuery 서비스를 사용하려면 반드시 데이터 소스를 추가해�
 
 #### Hive 기능 동작을 위한 부가적인 문법
 
-* Trino-Hive는 기본적으로 표준 SQL 문법을 따르지만 Hive 동작 대응을 위한 부가적인 기능/문법이 존재합니다. [상세 정보](https://trino.io/docs/398/connector/hive.html#examples)
+* Trino-Hive는 기본적으로 표준 SQL 문법을 따르지만 Hive 동작 대응을 위한 부가적인 기능/문법이 존재합니다. [상세 정보](https://trino.io/docs/434/connector/hive.html)
 * 지원 데이터 포맷
     * 기본 포맷은 ORC로 지정되어 있으며, 설정으로 Parquet, JSON, ORC, CSV, Text 등을 지정할 수 있습니다.
     * 테이블 생성 시 with절의 format 값으로 지정할 수 있습니다.
@@ -200,7 +200,7 @@ system.sync_partition_metadata(schema_name, table_name, mode, case_sensitive)
     * External table의 external\_location 경로명에 한글이 들어갈 경우 정상적으로 데이터가 처리되지 않습니다.
     * 테이블과 연결된 Object Storage 버킷이 삭제되면 테이블 DROP 쿼리가 실패합니다.
     * DELETE, UPDATE는 파티션 데이터에 대해서만 제한적으로 수행할 수 있습니다.
-        * [상세 정보](https://trino.io/docs/398/connector/hive.html#data-management)
+        * [상세 정보](https://trino.io/docs/434/connector/hive.html#data-management)
 
 #### 외부 테이블 쿼리 이용 튜토리얼
 
@@ -260,19 +260,21 @@ SELECT * FROM corona_facility_us
 * 대소문자가 다른 같은 이름의 테이블이 있으면 쿼리 실행 및 스키마 수집이 정상 동작하지 않을 수 있습니다.
 * 제약 사항
     * UPDATE 쿼리는 지원하지 않습니다.
-        * [상세 정보](https://trino.io/docs/398/connector/mysql.html#sql-support)
+        * [상세 정보](https://trino.io/docs/434/connector/mysql.html#sql-support)
 * 외부 툴(JDBC, CLI, BI 솔루션 등)과 연동할 수 있도록 Trino 엔드포인트를 제공합니다.
 
 ### Trino cli
 
 * 설정 메뉴를 통해 발급 받은 인증 정보, 접속 정보와 Trino에서 지원하는 CLI 툴을 통해 커맨드라인에서 쿼리를 실행할 수 있습니다.
-    * [Trino CLI](https://repo1.maven.org/maven2/io/trino/trino-cli/398/trino-cli-398-executable.jar)
+  * Trino에서 지원하는 CLI 툴은 최신 버전을 사용하십시오.
+  * 현재 DataQuery에서 제공하고 있는 Trino 버전은 434 입니다.
+  * [Trino CLI](https://repo1.maven.org/maven2/io/trino/trino-cli/434/trino-cli-434-executable.jar)
 
 ```
 # 파일에 실행 권한이 필요합니다. chmod +x로 부여할 수 있습니다.
-# ex) chmod +x trino-cli-398-executable.jar
+# ex) chmod +x trino-cli-434-executable.jar
 
-./trino-cli-398-executable.jar --server <접속URL(필수)> \
+./trino-cli-434-executable.jar --server <접속URL(필수)> \
   --user <아이디(필수)> --password \
   --catalog <데이터 소스 이름> \
   --schema <스키마 이름>
@@ -294,7 +296,7 @@ SELECT * FROM corona_facility_us
 * catalog, schema 값은 명령을 수행할 연결에 대한 값으로, 입력하지 않아도 cli를 실행할 수 있으며 아래 쿼리를 이용해 catalog나 schema 목록을 확인할 수 있습니다.
     * show catalogs
     * show schemas
-* 더 자세한 정보는 [Trino 가이드 페이지](https://trino.io/docs/398/client/cli.html)를 참고하십시오.
+* 더 자세한 정보는 [Trino 가이드 페이지](https://trino.io/docs/434/client/cli.html)를 참고하십시오.
 
 ### JDBC 연결
 
@@ -317,4 +319,4 @@ jdbc:trino://${host}:${port}/${catalog}/${schema}
         * 연결을 원하는 스키마 이름
 * 접속 정보 예시
     * jdbc:trino://test-dataquery-domain-12345abcd.kr1-cluster-dataquery.nhncloudservice.com:443/catalog/schema
-* 더 자세한 정보는 [Trino JDBC 가이드 페이지](https://trino.io/docs/398/client/jdbc.html)를 참고하십시오.
+* 더 자세한 정보는 [Trino JDBC 가이드 페이지](https://trino.io/docs/434/client/jdbc.html)를 참고하십시오.
