@@ -19,6 +19,7 @@ The service is available through following procedures.
         * To enable the DataQuery IP fixation feature, contact the Customer Center.
 * Click **Add Data Source**.
 
+
 #### Object Storage Data Source Type
 
 * Click **Add Data Source** and enter Object Storage information in the dialog box.
@@ -37,19 +38,59 @@ The service is available through following procedures.
 > [Note]
 > If Object Storage to link with DataQuery is not in the same region, network traffic may incur additional charges.
 
-#### MySQL Data Source Type
+### MySQL Data Source Type
 
 * Data source name
     * This is a separator used to perform queries, and must be unique value among data sources.
 * Access URL
     * It is MySQL Database access address.
     * Have to be entered in the format of **jdbc:mysql://[Host,ip]:[Port]?[Parameter]** 
-    * Time zone has to be set.
+    * If timezone processing is required, the serverTimezone parameter must be set.
         * ex) jdbc:mysql://localhost:10000?**serverTimezone=Asia/Seoul**
 * User ID
     * MySQL Account name to access.
 * Password
     * MySQL Password to access.
+
+### PostgreSQL Data Source Type
+
+* Data source name
+    * This is a separator used to perform queries, and must be unique value among data sources.
+* Access URL
+    * It is PostgreSQL Database access address.
+    * Must be entered in the format of **jdbc:postgresql://[Host,ip]:[Port]/[Database]?[Parameter]**
+* User ID
+    * PostgreSQL Account name to access.
+* Password
+    * POstgreSQL Password to access.
+
+### Oracle Data Source Type
+
+* Data source name
+    * This is a separator used to perform queries, and must be unique value among data sources.
+* Access URL
+    * It is Oracle Database access address.
+    * Must be entered in the format **jdbc**:oracle:thin:@[host,ip]:[port]:[SID** ] or **jdbc:oracle:thin:@[host,ip**]:[port]/[SERVICE NAME]**.
+* User ID
+    * The name of the Oracle account to access.
+* Password
+    * Oracle Password to access.  
+* Additional Settings Information
+    * Handle unsupported types: Determine how to handle unsupported column data types.
+    * Default number of decimal places: Set the default number of decimal places for numbers that don't have a full significant digits (PRECISION) or decimal places (SCALE) setting.
+    * Number rounding: Set the rounding policy for the Oracle NUMBER data type.
+
+### EDB Data source types
+
+* Data source name
+    * This is a separator used to perform queries, and must be unique value among data sources.
+* Access URL
+    * The EDB database access address.
+    * Must be entered in the format of **jdbc:postgresql://[Host,ip]:[Port]?[Parameter]**
+* User ID
+    * EDB Account name to access.
+* Password
+    * EDB Password to access.  
 
 ## Query Editor
 
@@ -94,9 +135,9 @@ The service is available through following procedures.
         * Syntax to check Metadata: SHOW CATALOGS, SHOW SCHEMAS, SHOW TABLES, SHOW STATS FOR
         * Syntax to check system's embedded procedure or to check execution plan of Query: CALL, EXPLAIN
 * See Trino's Guide for more information.
-    * [Keyword, Data Type](https://trino.io/docs/398/language.html)
-    * [Trino Query](https://trino.io/docs/398/sql.html)
-    * [Embedded function](https://trino.io/docs/398/functions.html)
+    * [Keyword, Data Type](https://trino.io/docs/434/language.html)
+    * [Trino Query](https://trino.io/docs/434/sql.html)
+    * [Embedded function](https://trino.io/docs/434/functions.html)
 
 ### 4. Results/Console Execution Query Area
 
@@ -150,7 +191,7 @@ The service is available through following procedures.
 
 #### Additional Grammar to operate Hive feature  
 
-* Trino-Hive basically follows standard SQL grammar, but there is additional feature/Grammar for Hive activity response. [Details](https://trino.io/docs/398/connector/hive.html#examples)
+* Trino-Hive basically follows standard SQL grammar, but there is additional feature/Grammar for Hive activity response. [Details](https://trino.io/docs/434/connector/hive.html)
 * Supported data format
     * Default format is designated as ORC, and you can specify Parquet, JSON, ORC, CSV, Text, etc. as Settings.
     * When creating Table, you can specify Format value in With clause.
@@ -200,7 +241,7 @@ system.sync_partition_metadata(schema_name, table_name, mode, case_sensitive)
     * If external\_location path name of external table contains Korean characters, the data will not be processed properly.
     * If Object Storage bucket associated with table is deleted, the Table DROP query fails.
     * DELETE, UPDATE can only be performed on partition data on limited basis.
-        * [Details](https://trino.io/docs/398/connector/hive.html#data-management)
+        * [Details](https://trino.io/docs/434/connector/hive.html#data-management)
 
 #### External Table Query Utilization Tutorial
 
@@ -255,14 +296,75 @@ SELECT * FROM corona_facility_us
 ### Execute MySQL Data Source Query
 
 * Queries for MySQL data sources are executed based on Trino-MySQL.
-* Trino-MySQL follows standard SQL Grammar by default.
 * MySQL data source schemas and tables are run and expressed based on lowercase names.
 * If you have tables with the same name in different cases, query execution and schema collection might not work properly.
 * Restrictions
-    * UPDATE Queries are not supported.
-        * [Details](https://trino.io/docs/398/connector/mysql.html#sql-support)
-* Provides Trino endpoints to link with external tools (JDBC, CLI, BI solutions, etc.).
+   * DELETE can only be performed on a limited basis when certain conditions are met.
+        * When a where clause is present, the predicate must be able to be pushed down to the data source entirely.
+        * Pushdowns are not supported for columns with a text type.
+        * [Details](https://trino.io/docs/434/connector/mysql.html#predicate-pushdown-support)
+    * UPDATE can only be performed on a limited basis when certain conditions are met.
+        * Assignment to a constant value and can only be done if a predicate exists.
+        * Arithmetic expressions, function calls, and UPDATE statements to non-constant values are not supported.
+        * You can't configure conditional clauses as ANDs.
+        * You can't update all columns in a table at the same time.
+        * [Details](https://trino.io/docs/434/connector/mysql.html#update)
 
+### Execute PostgreSQL Data Source Query
+
+* Queries to PostgreSQL data sources are performed based on Trino-PostgreSQL.
+* PostgreSQL data source schemas and tables are run and expressed based on lowercase names.
+* If you have tables with the same name in different cases, query execution and schema collection might not work properly.
+* Restrictions
+    * DELETE can only be performed on a limited basis when certain conditions are met.
+        * When a where clause is present, the predicate must be able to be pushed down to the data source entirely.
+        * Pushdown is not supported for range conditions (>, <, or BETWEEN) on string types such as CHAR or VARCHAR.
+        * Equality comparison conditions (IN, =, !=) for text types support pushdown.
+        * [Details](https://trino.io/docs/434/connector/postgresql.html#predicate-pushdown-support)
+    * UPDATE can only be performed on a limited basis when certain conditions are met.
+        * Assignment to a constant value and can only be done if a predicate exists.
+        * Arithmetic expressions, function calls, and UPDATE statements to non-constant values are not supported.
+        * You can't configure conditional clauses as ANDs.
+        * You can't update all columns in a table at the same time.
+        * [Details](https://trino.io/docs/434/connector/postgresql.html#update)
+
+### Execute Oracle Data Source Query
+
+* Queries to PostgreSQL data sources are performed based on Trino-Oracle.
+* Oracle data source schemas and tables are run and expressed based on lowercase names.
+* If you have tables with the same name in different cases, query execution and schema collection might not work properly.
+* Restrictions
+    * DELETE and UPDATE can only be performed on a limited basis when certain conditions are met.
+        * When a where clause is present, the predicate must be able to be pushed down to the data source entirely.
+        * Pushdown is not supported for Oracle-type columns that are CLOB, NCLOB, BLOB, or RAW(n).
+        * [Details](https://trino.io/docs/434/connector/oracle.html#predicate-pushdown-support)
+    * UPDATE can only be performed on a limited basis when certain conditions are met.
+        * Assignment to a constant value and can only be done if a predicate exists.
+        * Arithmetic expressions, function calls, and UPDATE statements to non-constant values are not supported.
+        * You can't configure conditional clauses as ANDs.
+        * You can't update all columns in a table at the same time.
+        * [Details](https://trino.io/docs/434/connector/oracle.html#update)
+
+### Execute EDB Data Source Query
+
+* Queries to the EDB data source are performed based on Trino-PostgreSQL.
+* EDB data source schemas and tables are run and expressed based on lowercase names.
+* If you have tables with the same name in different cases, query execution and schema collection might not work properly.
+* Restrictions
+    * DELETE can only be performed on a limited basis when certain conditions are met.
+        * When a where clause is present, the predicate must be able to be pushed down to the data source entirely.
+        * Pushdown is not supported for range conditions (>, <, or BETWEEN) on string types such as CHAR or VARCHAR.
+        * Equality comparison conditions (IN, =, !=) for text types support pushdown.
+        * [Details](https://trino.io/docs/434/connector/postgresql.html#predicate-pushdown-support)
+    * UPDATE can only be performed on a limited basis when certain conditions are met.
+        * Assignment to a constant value and can only be done if a predicate exists.
+        * Arithmetic expressions, function calls, and UPDATE statements to non-constant values are not supported.
+        * You can't configure conditional clauses as ANDs.
+        * You can't update all columns in a table at the same time.
+        * [Details](https://trino.io/docs/434/connector/postgresql.html#update)
+
+
+## External Integration
 ### Trino cli
 
 * You can run queries from command line with credentials issued through the Settings menu, access information, and CLI tools supported by Trino.
@@ -294,7 +396,7 @@ SELECT * FROM corona_facility_us
 * Catalog, schema value is the value for connection for which you want to run command, and you can run cli without entering it, and you can use Query below to check Catalog or Schema list.
     * show catalogs
     * show schemas
-* For more information, refer to the [Trino Guide](https://trino.io/docs/398/client/cli.html).
+* For more information, refer to the [Trino Guide](https://trino.io/docs/434/client/cli.html).
 
 ### Connect to JDBC
 
@@ -317,4 +419,4 @@ jdbc:trino://${host}:${port}/${catalog}/${schema}
         * Schema name to connect
 * Example of connection information
     * jdbc:trino://test-dataquery-domain-12345abcd.kr1-cluster-dataquery.nhncloudservice.com:443/catalog/schema
-* For more details, see [Trino JDBC Guide](https://trino.io/docs/398/client/jdbc.html).
+* For more details, see [Trino JDBC Guide](https://trino.io/docs/434/client/jdbc.html).
