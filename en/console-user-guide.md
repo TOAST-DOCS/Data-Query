@@ -20,7 +20,7 @@ The service is available through following procedures.
 * Click **Add Data Source**.
 
 
-#### Object Storage Data Source Type
+### Object Storage Data Source Type
 
 * Click **Add Data Source** and enter Object Storage information in the dialog box.
     * Data source name
@@ -62,7 +62,7 @@ The service is available through following procedures.
 * User ID
     * PostgreSQL Account name to access.
 * Password
-    * POstgreSQL Password to access.
+    * PostgreSQL Password to access.
 
 ### Oracle Data Source Type
 
@@ -70,7 +70,7 @@ The service is available through following procedures.
     * This is a separator used to perform queries, and must be unique value among data sources.
 * Access URL
     * It is Oracle Database access address.
-    * Must be entered in the format **jdbc**:oracle:thin:@[host,ip]:[port]:[SID** ] or **jdbc:oracle:thin:@[host,ip**]:[port]/[SERVICE NAME]**.
+    * Must be entered in the format **jdbc:oracle:thin:@[host,ip]:[port]:[SID]** or **jdbc:oracle:thin:@[host,ip]:[port]/[SERVICE NAME]**.
 * User ID
     * The name of the Oracle account to access.
 * Password
@@ -330,7 +330,7 @@ SELECT * FROM corona_facility_us
 
 ### Execute Oracle Data Source Query
 
-* Queries to PostgreSQL data sources are performed based on Trino-Oracle.
+* Queries to Oracle data sources are performed based on Trino-Oracle.
 * Oracle data source schemas and tables are run and expressed based on lowercase names.
 * If you have tables with the same name in different cases, query execution and schema collection might not work properly.
 * Restrictions
