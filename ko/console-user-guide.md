@@ -70,7 +70,7 @@ DataQuery 서비스를 사용하려면 반드시 데이터 소스를 추가해�
     * 쿼리 수행 시 사용되는 구분자이며, 데이터 소스 사이에서 고유한 값이어야 합니다.
 * 접속 URL
     * Oracle 데이터베이스 접속 주소입니다.
-    * **jdbc:oracle:thin:@[호스트,ip]:[포트]:[SID]** 또는 **jdbc:oracle:thin:@[호스트,ip]:[포트]/[SERVICE NAME]**포맷으로 입력해야 합니다.
+    * **jdbc:oracle:thin:@[호스트,ip]:[포트]:[SID]** 또는 **jdbc:oracle:thin:@[호스트,ip]:[포트]/[SERVICE NAME]** 포맷으로 입력해야 합니다.
 * 사용자 ID
     * 접속할 Oracle 계정명입니다.
 * 비밀번호
@@ -330,7 +330,7 @@ SELECT * FROM corona_facility_us
 
 ### Oracle 데이터 소스 쿼리 실행
 
-* PostgreSQL 데이터 소스에 대한 쿼리는 Trino-Oracle을 기반으로 수행됩니다.
+* Oracle 데이터 소스에 대한 쿼리는 Trino-Oracle을 기반으로 수행됩니다.
 * Oracle 데이터 소스의 스키마와 테이블은 소문자명을 기반으로 동작하고 표현됩니다.
 * 대소문자가 다른 같은 이름의 테이블이 있으면 쿼리 실행 및 스키마 수집이 정상 동작하지 않을 수 있습니다.
 * 제약 사항
