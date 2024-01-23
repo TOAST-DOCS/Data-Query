@@ -1,5 +1,10 @@
 ## Data & Analytics > DataQuery > Release Notes
 
+### January 23, 2024   
+#### Trino Version Upgrade
+* Upgraded the Trino version provided by DataQuery from 398 to 434.
+* Added PostgreSQL, Oracle, and EDB to data source types.
+
 ### October 31, 23
 #### Feature Updates
 * Added a feature to select a cluster type
