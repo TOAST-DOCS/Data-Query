@@ -1,8 +1,8 @@
 ## Data & Analytics > DataQuery > Release Notes
 
-### 2024. 02. 27.
-#### 기능 추가
-- 사용자가 자주 사용하는 쿼리를 저장 및 관리할 수 있는 기능이 추가되었습니다.
+### February 27, 2024
+#### Feature Updates
+- Added the feature to save and manage frequently used queries.
 
 ### January 23, 2024   
 #### Trino Version Upgrade
