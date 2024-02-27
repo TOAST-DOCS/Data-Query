@@ -1,5 +1,9 @@
 ## Data & Analytics > DataQuery > Release Notes
 
+### February 27, 2024
+#### Feature Updates
+- Added the feature to save and manage frequently used queries.
+
 ### January 23, 2024   
 #### Trino Version Upgrade
 * Upgraded the Trino version provided by DataQuery from 398 to 434.
