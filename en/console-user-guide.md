@@ -22,7 +22,7 @@ The service is available through following procedures.
 
 ### Object Storage Data Source Type
 
-* **데이터 소스 추가**를 클릭한 뒤 데이터 소스 추가 페이지에서 Object Storage 정보를 입력합니다.
+* Click **Add Data Source**, and then on the Add data source page, enter the Object Storage information.
     * Data source name
         * This is a separator used to perform queries, and must be unique value among data sources.
     * Access key, secret key, region
@@ -94,7 +94,7 @@ The service is available through following procedures.
 
 ## Query Editor
 
-* 쿼리 편집기는 클러스터 영역, 스키마 영역, 저장된 쿼리 영역, 편집기 영역, 결과/콘솔 실행 영역으로 구분됩니다.
+* Query Editor is divided into Cluster area, Schema area, Saved query area, Editor area, and Result/Console execution area.
 
 <img src="https://kr1-api-object-storage.nhncloudservice.com/v1/AUTH_2acdfabf4efe4efc8a04c00b348110c9/cdn_origin/prod_dataquery/dataquery_console_01_en.png"/>
 
@@ -115,18 +115,18 @@ The service is available through following procedures.
 * Click Refresh for respective item to refresh data sources, schema, tables, and column information.
     * However, refreshing parent Schema does not reload the child Schema information. When you refresh Table, only its Table list is imported and respective column’s information is not to be updated.
 
-### 3. 저장된 쿼리 영역
+### 3. Saved Query Area
 
-* 사용자가 저장한 쿼리를 관리할 수 있습니다.
-* **열기**를 클릭해 현재 열려 있는 쿼리 편집기 영역에 저장한 쿼리를 불러올 수 있습니다.
-* **새 탭 열기**를 클릭해 새로운 쿼리 편집기 영역에 저장된 쿼리를 불러올 수 있습니다.
-* **쿼리 복사**를 클릭해 클립보드에 저장된 쿼리를 복사할 수 있습니다.
+* You can manage queries saved by users.
+* Click **Open**to import the query you saved in the currently open query editor area.
+* Click **Open New Tab**to import the query you saved in the new query editor area.
+* Copy a query saved to the clipboard by clicking **Copy Query**.
 
 ### 4. Editor Area
 
 * You can create maximum 10 Query Editors by clicking **\+ Add Query**.
 * You can execute Query by clicking **Run** or typing **ctrl + enter**, and can check progress of running Query at the bottom of Editor and cause log in case of failure.
-* **쿼리 저장**을 클릭해 사용자가 자주 사용하는 쿼리를 저장할 수 있습니다.
+* Click **Save Query** to save your favorite queries.
 * Supports automatic completion of data sources, schemas, tables, and column names collected while creating queries.
 
 #### SQL Guide
@@ -149,7 +149,7 @@ The service is available through following procedures.
 
 ### 5. Results/Console Execution Query Area
 
-* Can check the results of Query executed in Query Editor.
+* You can check the results of Query executed in Query Editor.
     * Provides limited results, about 1 MB or about 5,000, depending on the size of the data.
     * Query results can be downloaded maximum 30 MB.
         * Directly link Trino (ex. JDBC, CLI) to obtain data for entire Query performance results. Refer to Setup Menu Guide.
