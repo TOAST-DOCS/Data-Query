@@ -118,8 +118,8 @@ The service is available through following procedures.
 ### 3. Saved Query Area
 
 * You can manage queries saved by users.
-* Click **Open**to import the query you saved in the currently open query editor area.
-* Click **Open New Tab**to import the query you saved in the new query editor area.
+* Click **Open** to import the query you saved in the currently open query editor area.
+* Click **Open New Tab** to import the query you saved in the new query editor area.
 * Copy a query saved to the clipboard by clicking **Copy Query**.
 
 ### 4. Editor Area
