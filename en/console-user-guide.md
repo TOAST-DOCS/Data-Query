@@ -22,7 +22,7 @@ The service is available through following procedures.
 
 ### Object Storage Data Source Type
 
-* Click **Add Data Source** and enter Object Storage information in the dialog box.
+* Click **Add Data Source**, and then on the Add data source page, enter the Object Storage information.
     * Data source name
         * This is a separator used to perform queries, and must be unique value among data sources.
     * Access key, secret key, region
@@ -94,9 +94,9 @@ The service is available through following procedures.
 
 ## Query Editor
 
-* Query Editor is divided into Cluster area, Schema area, Editor area, and Result/Console execution area.
+* Query Editor is divided into Cluster area, Schema area, Saved query area, Editor area, and Result/Console execution area.
 
-<img src="https://static.toastoven.net/prod_dataquery/dataquery_console_01_en.png"/>
+<img src="https://kr1-api-object-storage.nhncloudservice.com/v1/AUTH_2acdfabf4efe4efc8a04c00b348110c9/cdn_origin/prod_dataquery/dataquery_console_01_en.png"/>
 
 ### 1. Cluster Area
 
@@ -115,10 +115,18 @@ The service is available through following procedures.
 * Click Refresh for respective item to refresh data sources, schema, tables, and column information.
     * However, refreshing parent Schema does not reload the child Schema information. When you refresh Table, only its Table list is imported and respective column’s information is not to be updated.
 
-### 3. Editor Area
+### 3. Saved Query Area
+
+* You can manage queries saved by users.
+* Click **Open** to import the query you saved in the currently open query editor area.
+* Click **Open New Tab** to import the query you saved in the new query editor area.
+* Copy a query saved to the clipboard by clicking **Copy Query**.
+
+### 4. Editor Area
 
 * You can create maximum 10 Query Editors by clicking **\+ Add Query**.
 * You can execute Query by clicking **Run** or typing **ctrl + enter**, and can check progress of running Query at the bottom of Editor and cause log in case of failure.
+* Click **Save Query** to save your favorite queries.
 * Supports automatic completion of data sources, schemas, tables, and column names collected while creating queries.
 
 #### SQL Guide
@@ -139,9 +147,9 @@ The service is available through following procedures.
     * [Trino Query](https://trino.io/docs/434/sql.html)
     * [Embedded function](https://trino.io/docs/434/functions.html)
 
-### 4. Results/Console Execution Query Area
+### 5. Results/Console Execution Query Area
 
-* Can check the results of Query executed in Query Editor.
+* You can check the results of Query executed in Query Editor.
     * Provides limited results, about 1 MB or about 5,000, depending on the size of the data.
     * Query results can be downloaded maximum 30 MB.
         * Directly link Trino (ex. JDBC, CLI) to obtain data for entire Query performance results. Refer to Setup Menu Guide.
@@ -149,7 +157,7 @@ The service is available through following procedures.
     * Right-click mouse to execute copy and export query results from the console.
 * Provides list of queries executed by Query Editor.
 
-<img src="https://static.toastoven.net/prod_dataquery/dataquery_console_02_en.png"/>
+<img src="https://kr1-api-object-storage.nhncloudservice.com/v1/AUTH_2acdfabf4efe4efc8a04c00b348110c9/cdn_origin/prod_dataquery/dataquery_console_02_en.png"/>
 
 * ① Click Query History.
 * ② Additional query window is created where the corresponding query is entered.
@@ -160,7 +168,7 @@ The service is available through following procedures.
 * Click the collapse button in rightmost column to check additional execution information for query, or click **Download** to download full execution information for query.
     * Downloaded file does not include the query results.
 
-<img src="https://static.toastoven.net/prod_dataquery/dataquery_console_03_en.png"/>
+<img src="https://kr1-api-object-storage.nhncloudservice.com/v1/AUTH_2acdfabf4efe4efc8a04c00b348110c9/cdn_origin/prod_dataquery/dataquery_console_03_en.png"/>
 
 ## Settings
 
@@ -247,7 +255,7 @@ system.sync_partition_metadata(schema_name, table_name, mode, case_sensitive)
 
 1. [Download](https://static.toastoven.net/prod_dataquery/files/facility-boundary-us-all.csv) the sample CSV file and upload to Object Storage.
 
-<img src="https://static.toastoven.net/prod_dataquery/dataquery_console_04_en.png"/>
+<img src="https://kr1-api-object-storage.nhncloudservice.com/v1/AUTH_2acdfabf4efe4efc8a04c00b348110c9/cdn_origin/prod_dataquery/dataquery_console_04_en.png"/>
 
 2. Obtain access keys, secret keys from Object Storage console.
 3. Enter Object Storage data source using access key, secret key, and endpoint of Object Storage.
@@ -281,7 +289,7 @@ with (
 
 6. Refresh the table to check if the table is added normally.
 
-<img src="https://static.toastoven.net/prod_dataquery/dataquery_console_05_en.png" width=220/>
+<img src="https://kr1-api-object-storage.nhncloudservice.com/v1/AUTH_2acdfabf4efe4efc8a04c00b348110c9/cdn_origin/prod_dataquery/dataquery_console_05_en.png" width=220/>
 
 7. Run the query from the table as follows.
 
