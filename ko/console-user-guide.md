@@ -157,7 +157,7 @@ DataQuery 서비스를 사용하려면 반드시 데이터 소스를 추가해�
     * 마우스 오른쪽 버튼을 클릭하여 콘솔 쿼리 결과 복사, 내보내기를 실행할 수 있습니다.
 * 쿼리 편집기에서 실행한 쿼리 목록을 제공합니다.
 
-<img src="https://kr1-api-object-storage.nhncloudservice.com/v1/AUTH_2acdfabf4efe4efc8a04c00b348110c9/cdn_origin/prod_dataquery/dataquery_console_02_kr.png"/>
+<img src="https://kr1-api-object-storage.nhncloudservice.com/v1/AUTH_2acdfabf4efe4efc8a04c00b348110c9/cdn_origin/prod_dataquery/dataquery_console_02_ko.png"/>
 
 * ① 쿼리 이력을 클릭합니다.
 * ② 해당 쿼리가 입력된 쿼리 창이 추가 생성됩니다.
@@ -168,7 +168,7 @@ DataQuery 서비스를 사용하려면 반드시 데이터 소스를 추가해�
 * 가장 오른쪽 열의 펼침 버튼을 클릭해 쿼리의 추가적인 실행 정보를 확인할 수 있으며, **다운로드**를 클릭해 쿼리의 전체 실행 정보를 내려받을 수 있습니다.
     * 다운로드 파일에 쿼리 결과는 포함되지 않습니다.
 
-<img src="https://kr1-api-object-storage.nhncloudservice.com/v1/AUTH_2acdfabf4efe4efc8a04c00b348110c9/cdn_origin/prod_dataquery/dataquery_console_03_kr.png"/>
+<img src="https://kr1-api-object-storage.nhncloudservice.com/v1/AUTH_2acdfabf4efe4efc8a04c00b348110c9/cdn_origin/prod_dataquery/dataquery_console_03_ko.png"/>
 
 ## 설정
 
