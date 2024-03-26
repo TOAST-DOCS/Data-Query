@@ -22,7 +22,7 @@ DataQuery 서비스를 사용하려면 반드시 데이터 소스를 추가해�
 
 ### Object Storage 데이터 소스 유형
 
-* **데이터 소스 추가**를 클릭한 뒤 대화 상자에 Object Storage 정보를 입력합니다.
+* **데이터 소스 추가**를 클릭한 뒤 데이터 소스 추가 페이지에서 Object Storage 정보를 입력합니다.
     * 데이터 소스 이름
         * 쿼리 수행 시 사용되는 구분자이며, 데이터 소스 사이에서 고유한 값이어야 합니다.
     * 액세스 키, 비밀 키, 리전
@@ -94,9 +94,9 @@ DataQuery 서비스를 사용하려면 반드시 데이터 소스를 추가해�
 
 ## 쿼리 편집기
 
-* 쿼리 편집기는 클러스터 영역, 스키마 영역, 편집기 영역, 결과/콘솔 실행 영역으로 구분됩니다.
+* 쿼리 편집기는 클러스터 영역, 스키마 영역, 저장된 쿼리 영역, 편집기 영역, 결과/콘솔 실행 영역으로 구분됩니다.
 
-<img src="https://static.toastoven.net/prod_dataquery/dataquery_console_01_ko.png"/>
+<img src="https://kr1-api-object-storage.nhncloudservice.com/v1/AUTH_2acdfabf4efe4efc8a04c00b348110c9/cdn_origin/prod_dataquery/dataquery_console_01_ko.png"/>
 
 ### 1. 클러스터 영역
 
@@ -115,10 +115,18 @@ DataQuery 서비스를 사용하려면 반드시 데이터 소스를 추가해�
 * 각 항목의 새로 고침 아이콘을 클릭해 데이터 소스, 스키마, 테이블, 칼럼 정보를 새롭게 가져올 수 있습니다.
     * 단, 상위 스키마를 새로 고침하더라도 하위 정보는 새로 불러오지 않습니다. 테이블을 새로 고침할 경우 테이블 목록만 새로 가져오고 각 테이블의 칼럼 정보는 업데이트되지 않습니다.
 
-### 3. 편집기 영역
+### 3. 저장된 쿼리 영역
+
+* 사용자가 저장한 쿼리를 관리할 수 있습니다.
+* **열기**를 클릭해 현재 열려 있는 쿼리 편집기 영역에 저장한 쿼리를 불러올 수 있습니다.
+* **새 탭 열기**를 클릭해 새로운 쿼리 편집기 영역에 저장된 쿼리를 불러올 수 있습니다.
+* **쿼리 복사**를 클릭해 클립보드에 저장된 쿼리를 복사할 수 있습니다.
+
+### 4. 편집기 영역
 
 * **\+ 쿼리 추가**를 클릭해 쿼리 편집기를 최대 10개까지 생성할 수 있습니다.
 * **실행**을 클릭하거나 **ctrl + enter**를 입력하여 쿼리를 실행할 수 있으며, 편집기 하단에서 실행 중인 쿼리의 진행 상태와 실패 시 원인 로그를 확인할 수 있습니다.
+* **쿼리 저장**을 클릭해 사용자가 자주 사용하는 쿼리를 저장할 수 있습니다.
 * 쿼리 작성 시 수집된 데이터 소스, 스키마, 테이블, 칼럼명에 대한 자동 완성을 지원합니다.
 
 #### SQL 가이드
@@ -139,7 +147,7 @@ DataQuery 서비스를 사용하려면 반드시 데이터 소스를 추가해�
     * [Trino 쿼리](https://trino.io/docs/434/sql.html)
     * [내장함수](https://trino.io/docs/434/functions.html)
 
-### 4. 결과/콘솔 실행 쿼리 영역
+### 5. 결과/콘솔 실행 쿼리 영역
 
 * 쿼리 편집기에서 실행된 쿼리 결과를 확인할 수 있습니다.
     * 데이터 크기에 따라 약 1MB 또는 약 5,000개 정도의 제한된 결과를 제공합니다.
@@ -149,7 +157,7 @@ DataQuery 서비스를 사용하려면 반드시 데이터 소스를 추가해�
     * 마우스 오른쪽 버튼을 클릭하여 콘솔 쿼리 결과 복사, 내보내기를 실행할 수 있습니다.
 * 쿼리 편집기에서 실행한 쿼리 목록을 제공합니다.
 
-<img src="https://static.toastoven.net/prod_dataquery/dataquery_console_02_ko.png"/>
+<img src="https://kr1-api-object-storage.nhncloudservice.com/v1/AUTH_2acdfabf4efe4efc8a04c00b348110c9/cdn_origin/prod_dataquery/dataquery_console_02_ko.png"/>
 
 * ① 쿼리 이력을 클릭합니다.
 * ② 해당 쿼리가 입력된 쿼리 창이 추가 생성됩니다.
@@ -160,7 +168,7 @@ DataQuery 서비스를 사용하려면 반드시 데이터 소스를 추가해�
 * 가장 오른쪽 열의 펼침 버튼을 클릭해 쿼리의 추가적인 실행 정보를 확인할 수 있으며, **다운로드**를 클릭해 쿼리의 전체 실행 정보를 내려받을 수 있습니다.
     * 다운로드 파일에 쿼리 결과는 포함되지 않습니다.
 
-<img src="https://static.toastoven.net/prod_dataquery/dataquery_console_03_ko.png"/>
+<img src="https://kr1-api-object-storage.nhncloudservice.com/v1/AUTH_2acdfabf4efe4efc8a04c00b348110c9/cdn_origin/prod_dataquery/dataquery_console_03_ko.png"/>
 
 ## 설정
 
@@ -247,7 +255,7 @@ system.sync_partition_metadata(schema_name, table_name, mode, case_sensitive)
 
 1. 샘플 CSV 파일을 [다운로드](https://static.toastoven.net/prod_dataquery/files/facility-boundary-us-all.csv)하여 Object Storage에 업로드합니다.
 
-<img src="https://static.toastoven.net/prod_dataquery/dataquery_console_04_ko.png"/>
+<img src="https://kr1-api-object-storage.nhncloudservice.com/v1/AUTH_2acdfabf4efe4efc8a04c00b348110c9/cdn_origin/prod_dataquery/dataquery_console_04_ko.png"/>
 
 2. Object Storage 콘솔에서 액세스 키, 시크릿 키를 발급 받습니다.
 3. Object Storage의 액세스 키, 시크릿 키, 엔드포인트를 이용하여 Object Storage 데이터 소스를 입력합니다.
@@ -281,7 +289,7 @@ with (
 
 6. 테이블이 정상적으로 추가되었는지 확인하기 위해 테이블을 새로 고침합니다.
 
-<img src="https://static.toastoven.net/prod_dataquery/dataquery_console_05_ko.png" width=220/>
+<img src="https://kr1-api-object-storage.nhncloudservice.com/v1/AUTH_2acdfabf4efe4efc8a04c00b348110c9/cdn_origin/prod_dataquery/dataquery_console_05_ko.png" width=220/>
 
 7. 해당 테이블에서 아래와 같이 쿼리를 실행합니다.
 

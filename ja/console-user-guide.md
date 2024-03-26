@@ -22,7 +22,7 @@ DataQueryサービスを使用するには、必ずデータソースを追加�
 
 ### Object Storageデータソースタイプ
 
-* **データソース追加**をクリックし、ダイアログボックスにObject Storage情報を入力します。
+* **データソースの追加**をクリックした後、データソースの追加ページでObject Storage情報を入力します。
     * データソース名
         * クエリ実行時に使用されるセパレータで、データソース間で一意の値なければなりません。
     * アクセスキー、秘密鍵、リージョン
@@ -94,9 +94,9 @@ DataQueryサービスを使用するには、必ずデータソースを追加�
 
 ## クエリエディタ
 
-* クエリエディタはクラスタ領域、スキーマ領域、エディタ領域、結果/コンソール実行領域nに区分されます。
+* クエリエディタはクラスタ領域、スキーマ領域、保存されたクエリ領域、エディタ領域、結果/コンソール実行領域に区分されます。
 
-<img src="https://static.toastoven.net/prod_dataquery/dataquery_console_01_en.png"/>
+<img src="https://kr1-api-object-storage.nhncloudservice.com/v1/AUTH_2acdfabf4efe4efc8a04c00b348110c9/cdn_origin/prod_dataquery/dataquery_console_01_en.png"/>
 
 ### 1. クラスタ領域
 
@@ -115,10 +115,18 @@ DataQueryサービスを使用するには、必ずデータソースを追加�
 * 各項目の更新アイコンをクリックして、データソース、スキーマ、テーブル、カラム情報を新しく取得できます。
     * ただし、上位スキーマを更新しても下位情報は全部新しく読み込みません。テーブルを更新する場合、テーブルリストのみ新たに取得し、各テーブルのカラム情報はアップデートされません。
 
-### 3. エディタ領域
+### 3. 保存されたクエリ領域
+
+* ユーザーが保存したクエリを管理できます。
+* **開く**をクリックすると、現在開いているクエリエディタ領域に保存したクエリを呼び出すことができます。
+* **新しいタブを開く**をクリックすると、新しいクエリエディタ領域に保存されたクエリを呼び出すことができます。
+* **クエリのコピー**をクリックすると、クリップボードに保存されたクエリをコピーできます。
+
+### 4. エディタ領域
 
 * **\+ クエリ追加**をクリックしてクエリエディタを最大10個まで作成できます。
 * **実行**をクリックするか、**ctrl + enter**を入力してクエリを実行でき、エディタ下部で実行中のクエリの進行状態と失敗時の原因ログを確認できます。
+* **クエリの保存**をクリックすると、ユーザーがよく使うクエリを保存できます。
 * クエリ作成時に収集されたデータソース、スキーマ、テーブル、カラム名のオートコンプリートをサポートします。
 
 #### SQLガイド
@@ -139,7 +147,7 @@ DataQueryサービスを使用するには、必ずデータソースを追加�
     * [Trinoクエリ](https://trino.io/docs/434/sql.html)
     * [組み込み関数](https://trino.io/docs/434/functions.html)
 
-### 4. 結果/コンソール実行クエリ領域
+### 5. 結果/コンソール実行クエリ領域
 
 * クエリエディタで実行されたクエリ結果を確認できます。
     * データサイズに応じて約1MBまたは約5,000個程度の制限された結果を提供します。
@@ -149,7 +157,7 @@ DataQueryサービスを使用するには、必ずデータソースを追加�
     * マウス右クリックしてコンソールクエリ結果のコピー、エクスポートを実行できます。
 * クエリエディタで実行したクエリリストを提供します。
 
-<img src="https://static.toastoven.net/prod_dataquery/dataquery_console_02_en.png"/>
+<img src="https://kr1-api-object-storage.nhncloudservice.com/v1/AUTH_2acdfabf4efe4efc8a04c00b348110c9/cdn_origin/prod_dataquery/dataquery_console_02_en.png"/>
 
 * ①クエリ履歴をクリックします。
 * ②該当クエリが入力されたクエリウィンドウが追加作成されます。
@@ -160,7 +168,7 @@ DataQueryサービスを使用するには、必ずデータソースを追加�
 * 一番右の列の展開ボタンをクリックしてクエリの追加の実行情報を確認できます。**ダウンロード**をクリックしてクエリの全体実行情報をダウンロードできます。
     * ダウンロードファイルにクエリ結果は含まれません。
 
-<img src="https://static.toastoven.net/prod_dataquery/dataquery_console_03_en.png"/>
+<img src="https://kr1-api-object-storage.nhncloudservice.com/v1/AUTH_2acdfabf4efe4efc8a04c00b348110c9/cdn_origin/prod_dataquery/dataquery_console_03_en.png"/>
 
 ## 設定
 
@@ -248,7 +256,7 @@ system.sync_partition_metadata(schema_name, table_name, mode, case_sensitive)
 
 1. サンプルCSVファイルを[ダウンロード](https://static.toastoven.net/prod_dataquery/files/facility-boundary-us-all.csv)してObject Storageにアップロードします。
 
-<img src="https://static.toastoven.net/prod_dataquery/dataquery_console_04_en.png"/>
+<img src="https://kr1-api-object-storage.nhncloudservice.com/v1/AUTH_2acdfabf4efe4efc8a04c00b348110c9/cdn_origin/prod_dataquery/dataquery_console_04_en.png"/>
 
 2. Object Storageコンソールでアクセスキー、シークレットキーを発行します。
 3. Object Storageのアクセスキー、シークレットキー、エンドポイントを利用してObject Storageデータソースを入力します。
@@ -282,7 +290,7 @@ with (
 
 6. テーブルが正常に追加されたことを確認するためにテーブルを更新します。
 
-<img src="https://static.toastoven.net/prod_dataquery/dataquery_console_05_en.png" width=220/>
+<img src="https://kr1-api-object-storage.nhncloudservice.com/v1/AUTH_2acdfabf4efe4efc8a04c00b348110c9/cdn_origin/prod_dataquery/dataquery_console_05_en.png" width=220/>
 
 7. 該当テーブルで、次のようにクエリを実行します。
 
