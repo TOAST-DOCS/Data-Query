@@ -374,7 +374,7 @@ SELECT * FROM corona_facility_us
 
 * You can run queries from command line with credentials issued through the Settings menu, access information, and CLI tools supported by Trino.
   * Please use the latest version of the CLI tool supported by Trino.
-  *  The current version of Trino that DataQuery provides is 434.
+  * The current version of Trino that DataQuery provides is 434.
     * [Trino CLI](https://repo1.maven.org/maven2/io/trino/trino-cli/398/trino-cli-398-executable.jar)
     
 ```
