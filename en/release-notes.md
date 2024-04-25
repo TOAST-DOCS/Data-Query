@@ -1,5 +1,10 @@
 ## Data & Analytics > DataQuery > Release Notes
 
+### May 1, 2024
+#### Feature Updates
+* Changed the maximum registration number of Object Storage data sources to five.
+* Removed the minimum registration limit for Object Storage data sources.
+
 ### February 27, 2024
 #### Feature Updates
 - Added the feature to save and manage frequently used queries.
