@@ -12,9 +12,7 @@ The service is available through following procedures.
 ### Add Data Source
 
 * Restrictions for Data Source Setup and Reflection
-    * Data sources of Object Storage type must exist before adding other data sources.
-    * Data sources of Object Storage type have to exist before the cluster can be activated and query runs.
-    * Only one data source of Object Storage type can be registered.
+    * Up to 5 data sources of Object Storage type can be registered.
     * You must use the DataQuery IP fixation feature when connecting to data sources with access control enabled.
         * To enable the DataQuery IP fixation feature, contact the Customer Center.
 * Click **Add Data Source**.
@@ -103,8 +101,7 @@ The service is available through following procedures.
 * You can turn the cluster on or off.
 * In order to reflect the added, changed, and deleted data source information to actual activity, DataQuery cluster have to be restarted. 
 * If a data source has been added, changed, deleted, the Restart Cluster message appears as shown below.
-    * As Object Storage is a required data source, once Object Storage data source is deleted, it is impossible to start a cluster.
-* It may take 1~2 minutes to turn off and 3~4 minutes to turn on.
+* It may take 1~2 minutes to turn off and 5~7 minutes to turn on.
 * DataQuery cluster reflects all data sources and cannot apply individual data sources.
 * If Cluster **on** or **off** persists to fail, contact the Customer Center.
 
@@ -376,6 +373,8 @@ SELECT * FROM corona_facility_us
 ### Trino cli
 
 * You can run queries from command line with credentials issued through the Settings menu, access information, and CLI tools supported by Trino.
+  * Please use the latest version of the CLI tool supported by Trino.
+  * The current version of Trino that DataQuery provides is 434.
     * [Trino CLI](https://repo1.maven.org/maven2/io/trino/trino-cli/398/trino-cli-398-executable.jar)
     
 ```
