@@ -1,5 +1,9 @@
 ## Data & Analytics > DataQuery > Release Notes
 
+### May 28, 2024
+#### Feature Updates
+* Changed the storage period for query information to 90 days.
+
 ### May 1, 2024
 #### Feature Updates
 * Changed the maximum registration number of Object Storage data sources to five.

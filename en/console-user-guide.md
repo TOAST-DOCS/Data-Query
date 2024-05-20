@@ -162,6 +162,7 @@ The service is available through following procedures.
 ## Query History
 
 * You can check query information you run on **Query History** screen.
+    * The query information can be viewed for up to 90 days after query execution.
 * Click the collapse button in rightmost column to check additional execution information for query, or click **Download** to download full execution information for query.
     * Downloaded file does not include the query results.
 
