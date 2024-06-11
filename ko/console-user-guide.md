@@ -385,7 +385,7 @@ SELECT * FROM corona_facility_us
 
 ### MariaDB 데이터 소스 쿼리 실행
 
-* MariaDB 데이터 소스에 대한 쿼리는 Trino-MariaDB을 기반으로 수행됩니다.
+* MariaDB 데이터 소스에 대한 쿼리는 Trino-MariaDB를 기반으로 수행됩니다.
 * MariaDB 데이터 소스의 스키마와 테이블은 소문자명을 기반으로 동작하고 표현됩니다.
 * 대소문자가 다른 같은 이름의 테이블이 있으면 쿼리 실행 및 스키마 수집이 정상 동작하지 않을 수 있습니다.
 * 제약 사항
@@ -457,4 +457,4 @@ jdbc:trino://${host}:${port}/${catalog}/${schema}
         * 연결을 원하는 스키마 이름
 * 접속 정보 예시
     * jdbc:trino://test-dataquery-domain-12345abcd.kr1-cluster-dataquery.nhncloudservice.com:443/catalog/schema
-* 더 자세한 정보는 [Trino JDBC 가이드 �
+* 더 자세한 정보는 [Trino JDBC 가이드 페이지](https://trino.io/docs/434/client/jdbc.html)를 참고하십시오.
