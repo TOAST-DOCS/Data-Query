@@ -78,7 +78,7 @@ The service is available through following procedures.
     * Default number of decimal places: Set the default number of decimal places for numbers that don't have a full significant digits (PRECISION) or decimal places (SCALE) setting.
     * Number rounding: Set the rounding policy for the Oracle NUMBER data type.
 
-### EDB Data source types
+### EDB Data Source Type
 
 * Data source name
     * This is a separator used to perform queries, and must be unique value among data sources.
@@ -90,19 +90,19 @@ The service is available through following procedures.
 * Password
     * EDB Password to access.
 
-### MariaDB 데이터 소스 유형
+### MariaDB Data Source Type
 
-* 데이터 소스 이름
-    * 쿼리 수행 시 사용되는 구분자이며, 데이터 소스 사이에서 고유한 값이어야 합니다.
-* 접속 URL
-    * MariaDB 데이터베이스 접속 주소입니다.
-    * **jdbc:mariadb://[호스트,ip]:[포트]?[파라미터]** 포맷으로 입력해야 합니다.
-    * 타임존 처리가 필요할 경우 serverTimezone 파라미터를 설정해야 합니다.
-        * ex) jdbc:mariadb://localhost:10000?**serverTimezone=Asia/Seoul**
-* 사용자 ID
-    * 접속할 MariaDB 계정명입니다.
-* 비밀번호
-    * 접속할 MariaDB 비밀번호입니다.
+* Data source name 
+    * This is a separator used when performing queries, and must be unique among data sources 
+* Access URL 
+    * The MariaDB database access address. 
+    * Must be entered in the format **jdbc:mariadb://[host,ip]:[port]?[parameter]**.
+    * If timezone processing is required, the serverTimezone parameter must be set. 
+        * ex) jdbc:mariadb://localhost:10000**serverTimezone=Asia/Seoul** 
+    * User ID 
+        * MariaDB account name to access. 
+    * Password 
+        * MariaDB password to access.
 
 ## Query Editor
 
@@ -383,22 +383,22 @@ SELECT * FROM corona_facility_us
         * You can't update all columns in a table at the same time.
         * [Details](https://trino.io/docs/434/connector/postgresql.html#update)
 
-### MariaDB 데이터 소스 쿼리 실행
+### Execute MariaDB Data Source Query
 
-* MariaDB 데이터 소스에 대한 쿼리는 Trino-MariaDB를 기반으로 수행됩니다.
-* MariaDB 데이터 소스의 스키마와 테이블은 소문자명을 기반으로 동작하고 표현됩니다.
-* 대소문자가 다른 같은 이름의 테이블이 있으면 쿼리 실행 및 스키마 수집이 정상 동작하지 않을 수 있습니다.
-* 제약 사항
-    * DELETE는 특정 조건이 충족될 때만 제한적으로 수행할 수 있습니다.
-        * where 절이 존재할 때 조건자(Predicate)가 데이터 소스로 온전히 푸시다운(Pushdown)될 수 있어야 합니다.
-        * 텍스트 타입의 열은 푸시다운이 지원되지 않습니다.
-        * [상세 정보](https://trino.io/docs/434/connector/mariadb.html#predicate-pushdown-support)
-    * UPDATE는 특정 조건이 충족될 때만 제한적으로 수행할 수 있습니다.
-        * 상수 값으로의 할당 및 조건자(Predicate)가 존재할 경우에만 수행할 수 있습니다.
-        * 산술 표현식, 함수 호출 및 상수가 아닌 값으로의 UPDATE문은 지원되지 않습니다.
-        * 조건 절을 AND로 구성할 수 없습니다.
-        * 테이블의 모든 열을 동시에 업데이트할 수 없습니다.
-        * [상세 정보](https://trino.io/docs/434/connector/mariadb.html#update)
+* Queries to the MariaDB data source are performed based on Trino-MariaDB 
+* Schema and tables in MariaDB data source are operated and represented based on lowercase names 
+* If there are tables with the same name with different case, query execution and schema collection may not work normally 
+* Restrictions 
+    * DELETE can be performed only when certain conditions are met 
+        * When a where clause is present, the predicate must be able to be pushed down to the data source entirely.
+        * Pushdown is not supported for text-type columns 
+        * [Deatils](https://trino.io/docs/434/connector/mariadb.html#predicate-pushdown-support) 
+    * UPDATE can only be performed restrictively when certain conditions are met 
+        * Assignment to a constant value and can only be done if a predicate exists.
+        * Arithmetic expressions, function calls, and UPDATE statements to non-constant values are not supported.
+        * You can't configure conditional clauses as ANDs.
+        * You can't update all columns in a table at the same time.
+        * [Details](https://trino.io/docs/434/connector/mariadb.html#update)
 
 ## External Integration
 ### Trino cli
