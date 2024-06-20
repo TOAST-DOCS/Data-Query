@@ -78,7 +78,7 @@ The service is available through following procedures.
     * Default number of decimal places: Set the default number of decimal places for numbers that don't have a full significant digits (PRECISION) or decimal places (SCALE) setting.
     * Number rounding: Set the rounding policy for the Oracle NUMBER data type.
 
-### EDB Data source types
+### EDB Data Source Type
 
 * Data source name
     * This is a separator used to perform queries, and must be unique value among data sources.
@@ -88,7 +88,21 @@ The service is available through following procedures.
 * User ID
     * EDB Account name to access.
 * Password
-    * EDB Password to access.  
+    * EDB Password to access.
+
+### MariaDB Data Source Type
+
+* Data source name 
+    * This is a separator used when performing queries, and must be unique among data sources 
+* Access URL 
+    * The MariaDB database access address. 
+    * Must be entered in the format **jdbc:mariadb://[host,ip]:[port]?[parameter]**.
+    * If timezone processing is required, the serverTimezone parameter must be set. 
+        * ex) jdbc:mariadb://localhost:10000?**serverTimezone=Asia/Seoul** 
+    * User ID 
+        * MariaDB account name to access. 
+    * Password 
+        * MariaDB password to access.
 
 ## Query Editor
 
@@ -369,6 +383,22 @@ SELECT * FROM corona_facility_us
         * You can't update all columns in a table at the same time.
         * [Details](https://trino.io/docs/434/connector/postgresql.html#update)
 
+### Execute MariaDB Data Source Query
+
+* Queries to the MariaDB data source are performed based on Trino-MariaDB. 
+* Schema and tables in MariaDB data source are operated and represented based on lowercase names. 
+* If there are tables with the same name with different case, query execution and schema collection may not work normally. 
+* Restrictions
+    * DELETE can be performed only when certain conditions are met. 
+        * When a where clause is present, the predicate must be able to be pushed down to the data source entirely.
+        * Pushdown is not supported for text-type columns. 
+        * [Deatils](https://trino.io/docs/434/connector/mariadb.html#predicate-pushdown-support) 
+    * UPDATE can only be performed restrictively when certain conditions are met. 
+        * Assignment to a constant value and can only be done if a predicate exists.
+        * Arithmetic expressions, function calls, and UPDATE statements to non-constant values are not supported.
+        * You can't configure conditional clauses as ANDs.
+        * You can't update all columns in a table at the same time.
+        * [Details](https://trino.io/docs/434/connector/mariadb.html#update)
 
 ## External Integration
 ### Trino cli

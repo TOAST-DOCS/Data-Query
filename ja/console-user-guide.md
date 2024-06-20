@@ -88,7 +88,21 @@ DataQueryサービスを使用するには、必ずデータソースを追加�
 * ユーザーID
     * 接続するEDBアカウント名です。
 * パスワード
-    * 接続するEDBパスワードです。  
+    * 接続するEDBパスワードです。 
+
+### MariaDBデータソースタイプ
+
+* データソース名
+    * クエリ実行時に使用される名前で、データソース間で固有の値でなければなりません。
+* 接続URL
+    * MariaDBデータベース接続アドレスです。
+    * **jdbc:mariadb://[ホスト、ip]:[ポート]?[パラメータ]** フォーマットで入力する必要があります。
+    * タイムゾーン処理が必要な場合serverTimezoneパラメータを設定する必要があります。
+        * ex) jdbc:mariadb://localhost:10000?**serverTimezone=Asia/Seoul**
+* ユーザーID
+    * 接続するMariaDBアカウント名です。
+* パスワード
+    * 接続するMariaDBパスワードです。
 
 ## クエリエディタ
 
@@ -370,6 +384,22 @@ SELECT * FROM corona_facility_us
         * テーブルのすべての列を同時に更新することはできません。
         * [詳細情報](https://trino.io/docs/434/connector/postgresql.html#update)
 
+### MariaDBデータソースクエリ実行
+
+* MariaDBデータソースに対するクエリはTrino-MariaDBに基づいて実行されます。
+* MariaDBデータソースのスキーマとテーブルは小文字の名前に基づいて動作し、表現されます。
+* 大文字と小文字が異なる同じ名前のテーブルがある場合、クエリの実行とスキーマの収集が正常に動作しない場合があります。
+* 制約事項
+    * DELETEは特定の条件が満たされた場合のみ制限的に実行できます。
+        * where節が存在する場合、Predicateがデータソースに完全にプッシュダウン(Pushdown)できる必要があります。
+        * テキストタイプの列はプッシュダウンがサポートされません。
+        * [詳細情報](https://trino.io/docs/434/connector/mariadb.html#predicate-pushdown-support)
+    * UPDATEは、特定の条件が満たされた場合のみ制限的に実行できます。
+        * 定数値への割り当てとPredicateが存在する場合のみ実行できます。
+        * 算術式、関数呼び出しおよび定数以外の値へのUPDATE文はサポートされません。
+        * 条件節をANDで構成することはできません。
+        * テーブルのすべての列を同時に更新することはできません。
+        * [詳細情報](https://trino.io/docs/434/connector/mariadb.html#update)
 
 ## 外部連動
 ### Trino cli
