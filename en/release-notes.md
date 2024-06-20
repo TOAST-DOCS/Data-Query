@@ -1,8 +1,8 @@
 ## Data & Analytics > DataQuery > Release Notes
 
-### 2024. 06. 25.
-#### 기능 추가
-* 데이터 소스 유형에 MariaDB가 추가되었습니다.
+### June 25, 2024
+#### Added Features
+* Added MariaDB to the data source types.
 
 ### May 28, 2024
 #### Feature Updates
