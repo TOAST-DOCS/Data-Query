@@ -3,6 +3,7 @@
 ### June 25, 2024
 #### Added Features
 * Added MariaDB to the data source types.
+* The query history save feature has been added.
 
 ### May 28, 2024
 #### Feature Updates
