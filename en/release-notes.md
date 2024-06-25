@@ -1,5 +1,10 @@
 ## Data & Analytics > DataQuery > Release Notes
 
+### June 25, 2024
+#### Added Features
+* Added MariaDB to the data source types.
+* The query history save feature has been added.
+
 ### May 28, 2024
 #### Feature Updates
 * Changed the storage period for query information to 90 days.
