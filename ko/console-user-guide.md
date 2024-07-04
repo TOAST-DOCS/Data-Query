@@ -199,6 +199,12 @@ DataQuery 서비스를 사용하려면 반드시 데이터 소스를 추가해�
     * 발급/재발급된 인증 키는 발급하고 5분이 지난 뒤부터 사용할 수 있습니다.
 * 인증 정보가 발급되었다면 Trino 엔드포인트 접속 정보가 화면 하단에 활성화됩니다.
 
+### 쿼리 이력 저장을 위한 Object Storage 연동 비활성화 안내 이메일
+
+* 쿼리 이력 저장을 위한 Object Storage 인증이 만료되어 연동이 비활성화되었을 때 알림 메일을 수신할 수 있습니다.
+* 기본 수신 대상
+    * 사용 중인 DataQuery 서비스가 활성화된 프로젝트의 DataQuery ADMIN 역할을 가진 멤버
+
 ## 데이터 소스 상세 가이드
 
 ### Object Storage 데이터 소스 쿼리 실행
@@ -208,6 +214,8 @@ DataQuery 서비스를 사용하려면 반드시 데이터 소스를 추가해�
 * DataQuery에서는 Object Storage 접근을 위해 S3 호환 레이어를 사용하며, 스키마 또는 테이블을 위한 데이터 경로 지정 시 s3a 프로토콜을 사용해야 합니다(ex. s3a://example/test).
 * Object Storage 상의 Parquet, JSON, ORC, CSV, Text 타입의 데이터에 대한 처리를 지원합니다.
 * Object Storage 데이터 소스는 default라는 이름의 기본 스키마를 제공하며, 해당 스키마에서 작업할 수 있습니다.
+> [참고]
+> Object Storage 쿼리에 사용하는 Hive의 성능 향상이 필요한 경우 고객센터로 문의 바랍니다.
 
 #### Hive 기능 동작을 위한 부가적인 문법
 
