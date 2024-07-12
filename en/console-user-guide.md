@@ -199,6 +199,12 @@ The service is available through following procedures.
     * Issued/reissued authentication key is available after 5 minutes of issuance.
 * Once credentials have been issued, Trino endpoint connection information is activated at the bottom of screen.
 
+### Disable Object Storage integration for Storing Query History
+
+* You can receive a notification when the integration is disabled because the Object Storage authentication for storing query history has expired.
+* Default Recipient
+    * A member with the DataQuery ADMIN role in the project where the DataQuery service you are using is enabled
+
 ## Data Source Detailed Guide
 
 ### Run Object Storage Data Source Query
@@ -208,6 +214,8 @@ The service is available through following procedures.
 * DataQuery uses S3-compatible layer for Object Storage access and requires use of s3a protocol when specifying path for data for Schemas or Tables (ex. s3a://example/test).
 * Supports processing of Parquet, JSON, ORC, CSV, and Text types of Data on Object Storage.
 * Object Storage data source provides default Schema named Default, and you can work in the corresponding schema.
+> [Note]
+> If you need performance improvements for Hive used for Object Storage queries, please contact the Custoer Center.
 
 #### Additional Grammar to operate Hive feature  
 
