@@ -1,5 +1,9 @@
 ## Data & Analytics > DataQuery > Release Notes
 
+### July 23, 2024
+#### Feature Updates
+* Improved to send email notifications for disabling integration when Object Storage credentials for storing query history expire.
+
 ### June 25, 2024
 #### Added Features
 * Added MariaDB to the data source types.
