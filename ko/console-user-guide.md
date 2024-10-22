@@ -593,7 +593,7 @@ ALTER TABLE test_table EXECUTE remove_orphan_files(retention_threshold => '7d')
 ### Trino cli
 
 * 설정 메뉴를 통해 발급 받은 인증 정보, 접속 정보와 Trino에서 지원하는 CLI 툴을 통해 커맨드라인에서 쿼리를 실행할 수 있습니다.
-  * 현재 DataQuery에서 제공하고 있는 Trino의 기반 버전은 455입니다.
+  * DataQuery는 현재 Trino 455 버전을 기반으로 서비스하고 있습니다.
   * [Trino CLI](https://repo1.maven.org/maven2/io/trino/trino-cli/455/trino-cli-455-executable.jar)
 
 ```
