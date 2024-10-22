@@ -104,6 +104,23 @@ DataQuery 서비스를 사용하려면 반드시 데이터 소스를 추가해�
 * 비밀번호
     * 접속할 MariaDB 비밀번호입니다.
 
+
+### Iceberg 데이터 소스 유형
+
+* 데이터 소스 이름
+    * 쿼리 수행 시 사용되는 구분자이며, 데이터 소스 사이에서 고유한 값이어야 합니다.
+* 액세스 키, 비밀 키, 리전
+    * 연동할 Iceberg 테이블 데이터 또는 연동할 데이터가 존재하는 Object Storage의 연결 정보입니다.
+    * 액세스 키와 비밀 키는 Object Storage 콘솔에서 발급할 수 있습니다. 자세한 내용은 [Object Storage 콘솔 사용 가이드](https://docs.toast.com/ko/Storage/Object%20Storage/ko/console-guide/#s3-api)를 참고하세요.
+        * 리전은 Object Storage 가이드의 리전별 [S3 리전](https://docs.toast.com/ko/Storage/Object%20Storage/ko/s3-api-guide/#aws-cli)을 참고하세요.
+    * 버킷 이름
+        * 시스템에서 기본 Iceberg 테이블 정보를 저장하기 위해 사용하는 Object Storage 컨테이너명은 dataquery-warehouse이고 하위 경로는 iceberg입니다.
+        * 연동할 기존 데이터들은 다른 경로에 존재할 수도 있습니다.
+
+> [주의]
+> DataQuery와 연동할 Object Storage가 서로 동일한 리전이 아닐 경우 네트워크 트래픽으로 인한 추가 요금이 발생할 수 있습니다.
+
+
 ## 쿼리 편집기
 
 * 쿼리 편집기는 클러스터 영역, 스키마 영역, 저장된 쿼리 영역, 편집기 영역, 결과/콘솔 실행 영역으로 구분됩니다.
@@ -154,9 +171,9 @@ DataQuery 서비스를 사용하려면 반드시 데이터 소스를 추가해�
         * 메타데이터를 확인할 수 있는 구문: SHOW CATALOGS, SHOW SCHEMAS, SHOW TABLES, SHOW STATS FOR
         * 시스템의 내장 프로시저(Procedure)를 확인하거나 쿼리의 실행 계획을 확인할 수 있는 구문: CALL, EXPLAIN
 * 자세한 사항은 Trino의 가이드 문서를 참고하십시오.
-    * [키워드, 데이터 타입](https://trino.io/docs/434/language.html)
-    * [Trino 쿼리](https://trino.io/docs/434/sql.html)
-    * [내장함수](https://trino.io/docs/434/functions.html)
+    * [키워드, 데이터 타입](https://trino.io/docs/455/language.html)
+    * [Trino 쿼리](https://trino.io/docs/455/sql.html)
+    * [내장 함수](https://trino.io/docs/455/functions.html)
 
 ### 5. 결과/콘솔 실행 쿼리 영역
 
@@ -219,7 +236,7 @@ DataQuery 서비스를 사용하려면 반드시 데이터 소스를 추가해�
 
 #### Hive 기능 동작을 위한 부가적인 문법
 
-* Trino-Hive는 기본적으로 표준 SQL 문법을 따르지만 Hive 동작 대응을 위한 부가적인 기능/문법이 존재합니다. [상세 정보](https://trino.io/docs/434/connector/hive.html)
+* Trino-Hive는 기본적으로 표준 SQL 문법을 따르지만 Hive 동작 대응을 위한 부가적인 기능/문법이 존재합니다. [상세 정보](https://trino.io/docs/455/connector/hive.html)
 * 지원 데이터 포맷
     * 기본 포맷은 ORC로 지정되어 있으며, 설정으로 Parquet, JSON, ORC, CSV, Text 등을 지정할 수 있습니다.
     * 테이블 생성 시 with절의 format 값으로 지정할 수 있습니다.
@@ -269,7 +286,7 @@ system.sync_partition_metadata(schema_name, table_name, mode, case_sensitive)
     * External table의 external\_location 경로명에 한글이 들어갈 경우 정상적으로 데이터가 처리되지 않습니다.
     * 테이블과 연결된 Object Storage 버킷이 삭제되면 테이블 DROP 쿼리가 실패합니다.
     * DELETE, UPDATE는 파티션 데이터에 대해서만 제한적으로 수행할 수 있습니다.
-        * [상세 정보](https://trino.io/docs/434/connector/hive.html#data-management)
+        * [상세 정보](https://trino.io/docs/455/connector/hive.html#data-management)
 
 #### 외부 테이블 쿼리 이용 튜토리얼
 
@@ -330,13 +347,12 @@ SELECT * FROM corona_facility_us
     * DELETE는 특정 조건이 충족될 때만 제한적으로 수행할 수 있습니다.
         * where 절이 존재할 때 조건자(Predicate)가 데이터 소스로 온전히 푸시다운(Pushdown)될 수 있어야 합니다.
         * 텍스트 타입의 열은 푸시다운이 지원되지 않습니다.
-        * [상세 정보](https://trino.io/docs/434/connector/mysql.html#predicate-pushdown-support)
+        * [상세 정보](https://trino.io/docs/455/connector/mysql.html#predicate-pushdown-support)
     * UPDATE는 특정 조건이 충족될 때만 제한적으로 수행할 수 있습니다.
         * 상수 값으로의 할당 및 조건자(Predicate)가 존재할 경우에만 수행할 수 있습니다.
         * 산술 표현식, 함수 호출 및 상수가 아닌 값으로의 UPDATE문은 지원되지 않습니다.
-        * 조건 절을 AND로 구성할 수 없습니다.
         * 테이블의 모든 열을 동시에 업데이트할 수 없습니다.
-        * [상세 정보](https://trino.io/docs/434/connector/mysql.html#update)
+        * [상세 정보](https://trino.io/docs/455/connector/mysql.html#update)
 
 ### PostgreSQL 데이터 소스 쿼리 실행
 
@@ -348,13 +364,12 @@ SELECT * FROM corona_facility_us
         * where 절이 존재할 때 조건자(Predicate)가 데이터 소스로 온전히 푸시다운(Pushdown)될 수 있어야 합니다.
         * CHAR 또는 VARCHAR와 같은 문자열 유형에 대한 범위 조건(>, < 또는 BETWEEN)은 푸시다운이 지원되지 않습니다.
         * 텍스트 타입에 대한 동등 비교 조건(IN, =, !=)은 푸시다운이 지원됩니다.
-        * [상세 정보](https://trino.io/docs/434/connector/postgresql.html#predicate-pushdown-support)
+        * [상세 정보](https://trino.io/docs/455/connector/postgresql.html#predicate-pushdown-support)
     * UPDATE는 특정 조건이 충족될 때만 제한적으로 수행할 수 있습니다.
         * 상수 값으로의 할당 및 조건자(Predicate)가 존재할 경우에만 수행할 수 있습니다.
         * 산술 표현식, 함수 호출 및 상수가 아닌 값으로의 UPDATE문은 지원되지 않습니다.
-        * 조건 절을 AND로 구성할 수 없습니다.
         * 테이블의 모든 열을 동시에 업데이트할 수 없습니다.
-        * [상세 정보](https://trino.io/docs/434/connector/postgresql.html#update)
+        * [상세 정보](https://trino.io/docs/455/connector/postgresql.html#update)
 
 ### Oracle 데이터 소스 쿼리 실행
 
@@ -365,13 +380,12 @@ SELECT * FROM corona_facility_us
     * DELETE, UPDATE는 특정 조건이 충족될 때만 제한적으로 수행할 수 있습니다.
         * where 절이 존재할 때 조건자(Predicate)가 데이터 소스로 온전히 푸시다운(Pushdown)될 수 있어야 합니다.
         * CLOB, NCLOB, BLOB, or RAW(n)인 Oracle 타입의 열은 푸시다운이 지원되지 않습니다.
-        * [상세 정보](https://trino.io/docs/434/connector/oracle.html#predicate-pushdown-support)
+        * [상세 정보](https://trino.io/docs/455/connector/oracle.html#predicate-pushdown-support)
     * UPDATE는 특정 조건이 충족될 때만 제한적으로 수행할 수 있습니다.
         * 상수 값으로의 할당 및 조건자(Predicate)가 존재할 경우에만 수행할 수 있습니다.
         * 산술 표현식, 함수 호출 및 상수가 아닌 값으로의 UPDATE문은 지원되지 않습니다.
-        * 조건 절을 AND로 구성할 수 없습니다.
         * 테이블의 모든 열을 동시에 업데이트할 수 없습니다.
-        * [상세 정보](https://trino.io/docs/434/connector/oracle.html#update)
+        * [상세 정보](https://trino.io/docs/455/connector/oracle.html#update)
 
 ### EDB 데이터 소스 쿼리 실행
 
@@ -383,13 +397,12 @@ SELECT * FROM corona_facility_us
         * where 절이 존재할 때 조건자(Predicate)가 데이터 소스로 온전히 푸시다운(Pushdown)될 수 있어야 합니다.
         * CHAR 또는 VARCHAR와 같은 문자열 유형에 대한 범위 조건(>, < 또는 BETWEEN)은 푸시다운이 지원되지 않습니다.
         * 텍스트 타입에 대한 동등 비교 조건(IN, =, !=)은 푸시다운이 지원됩니다.
-        * [상세 정보](https://trino.io/docs/434/connector/postgresql.html#predicate-pushdown-support)
+        * [상세 정보](https://trino.io/docs/455/connector/postgresql.html#predicate-pushdown-support)
     * UPDATE는 특정 조건이 충족될 때만 제한적으로 수행할 수 있습니다.
         * 상수 값으로의 할당 및 조건자(Predicate)가 존재할 경우에만 수행할 수 있습니다.
         * 산술 표현식, 함수 호출 및 상수가 아닌 값으로의 UPDATE문은 지원되지 않습니다.
-        * 조건 절을 AND로 구성할 수 없습니다.
         * 테이블의 모든 열을 동시에 업데이트할 수 없습니다.
-        * [상세 정보](https://trino.io/docs/434/connector/postgresql.html#update)
+        * [상세 정보](https://trino.io/docs/455/connector/postgresql.html#update)
 
 ### MariaDB 데이터 소스 쿼리 실행
 
@@ -400,27 +413,194 @@ SELECT * FROM corona_facility_us
     * DELETE는 특정 조건이 충족될 때만 제한적으로 수행할 수 있습니다.
         * where 절이 존재할 때 조건자(Predicate)가 데이터 소스로 온전히 푸시다운(Pushdown)될 수 있어야 합니다.
         * 텍스트 타입의 열은 푸시다운이 지원되지 않습니다.
-        * [상세 정보](https://trino.io/docs/434/connector/mariadb.html#predicate-pushdown-support)
+        * [상세 정보](https://trino.io/docs/455/connector/mariadb.html#predicate-pushdown-support)
     * UPDATE는 특정 조건이 충족될 때만 제한적으로 수행할 수 있습니다.
         * 상수 값으로의 할당 및 조건자(Predicate)가 존재할 경우에만 수행할 수 있습니다.
         * 산술 표현식, 함수 호출 및 상수가 아닌 값으로의 UPDATE문은 지원되지 않습니다.
-        * 조건 절을 AND로 구성할 수 없습니다.
         * 테이블의 모든 열을 동시에 업데이트할 수 없습니다.
-        * [상세 정보](https://trino.io/docs/434/connector/mariadb.html#update)
+        * [상세 정보](https://trino.io/docs/455/connector/mariadb.html#update)
+
+
+### Iceberg 데이터 소스 쿼리 실행
+
+* Iceberg 데이터 소스에 대한 쿼리는 Trino-Iceberg를 기반으로 수행됩니다.
+* Object Storage에 존재하는 Iceberg 테이블 데이터 및 지원하는 포맷의 데이터에 대해 연동할 수 있습니다.
+    * PARQUET(기본 포맷), ORC, AVRO 타입의 데이터를 지원합니다.
+* Object Storage 접근을 위해 S3 호환 레이어를 사용하며, 스키마 또는 테이블을 위한 데이터 경로 지정 시 s3a 프로토콜을 사용해야 합니다(예: s3a://example/test).
+
+#### 스키마
+
+* CREATE SCHEMA 문을 통해 생성할 수 있습니다.
+
+```sql
+# 기본 경로에 스키마 생성
+CREATE SCHEMA example_schema;
+# 지정 경로에 스키마 생성
+CREATE SCHEMA example_schema
+WITH (location = 's3a://my-bucket/example_schema/');
+```
+
+#### 테이블
+
+* CREATE TABLE 또는 CREATE TABLE AS 문을 통해 생성할 수 있습니다.
+* 테이블 속성 지정으로 테이블에 대한 메타데이터를 설정할 수 있습니다.
+    * 테이블 속성은 WITH 절을 사용하여 지정할 수 있습니다.
+
+```sql
+CREATE TABLE example_table (c1 INTEGER, c2 DATE, c3 DOUBLE);
+## 속성 지정
+CREATE TABLE example_table (c1 INTEGER, c2 DATE, c3 DOUBLE)
+WITH (
+    format = 'PARQUET',
+    partitioning = ARRAY['c1', 'c2'],
+    sorted_by = ARRAY['c3'],
+    location = 's3a://my-bucket/example_schema/example_table/'
+);
+```
+
+* 테이블 속성
+    * 테이블에 대한 메타데이터를 설정할 수 있습니다. [추가 정보](https://trino.io/docs/455/connector/iceberg.html#table-properties)
+
+| 속성 이름 | 설명 |
+| ----- | --- |
+| format | 테이블 데이터 파일의 형식을 지정합니다. PARQUET, ORC, 또는 AVRO. <br> 기본값은 PARQUET입니다. |
+| partitioning | 테이블 파티션을 지정합니다. 테이블이 c1 열과 c2 열로 분할된 경우 partitioning=ARRAY['c1', 'c2']로 지정할 수 있습니다. |
+| sorted\_by | 개별 데이터 파일 저장 시 지정한 열의 값으로 정렬하여 저장합니다. |
+| location | 테이블에 대한 Object Storage 경로를 지정합니다.<br>속성을 설정하지 않을 경우 기본 경로 하위의 스키마 경로에 저장됩니다. |
+
+#### 파티션
+
+* 테이블 속성을 통해 테이블 데이터가 분할 저장된 구조의 분할된(파티션된) 테이블을 만들 수 있습니다.
+    * 파티션 열이 c1 열과 c2 열로 지정되어 있을 경우, 해당 파티션의 데이터는 테이블 데이터 경로 하위의 `/c1=<c1 값>/c2=<c2 값>`에 저장됩니다.
+* Iceberg는 쓰기(write)된 데이터의 값을 통해 파티션을 자동으로 관리해 주기 때문에 파티션을 수동으로 추가/관리할 수 없습니다.
+* 테이블 열을 이용(변환)하여 파티션을 지정할 수 있는 기능을 지원합니다.
+    * year, month, day, hour, bucket, truncate [추가 정보](https://trino.io/docs/455/connector/iceberg.html#partitioned-tables)
+
+| 변환 | 지원 유형 | 설명 |
+| --- | ----- | --- |
+| year(ts) | DATE, TIMESTAMP | 연도별 |
+| month(ts) | DATE, TIMESTAMP | 월별 |
+| day(ts) | DATE, TIMESTAMP | 일별 |
+| hour(ts) | DATE, TIMESTAMP | 시간별 |
+
+#### 메타데이터 테이블
+
+* 메타데이터 테이블을 조회하여 Iceberg 테이블의 메타정보를 확인할 수 있습니다. [추가 정보](https://trino.io/docs/455/connector/iceberg.html#metadata-tables)
+    * $properties
+        * 테이블 속성
+    * $history
+        * 테이블의 메타데이터가 변경된 이력
+    * $snapshots
+        * 데이터에 변화가 발생할 때 기록된 테이블 형상 이력
+    * $manifests
+        * 데이터 파일의 묶음을 관리하는 파일의 정보
+    * $partitions
+        * 테이블의 상세한 파티션 정보
+    * $files
+        * 현재 테이블의 스냅숏
+
+```sql
+## 테이블 속성 조회
+SELECT * FROM "test_table$properties"
+```
+
+#### 데이터 관리
+
+* 테이블 등록
+    * 이미 파일로 존재하는 Iceberg 테이블이 존재하지만 등록되지 않은 Iceberg 테이블을 등록하는 방법입니다.
+    * register\_table을 호출하여 등록할 수 있습니다.
+
+```sql
+CALL example.system.register_table(schema_name => 'example_schema', table_name => 'example_table', table_location => 's3a://my-bucket/example_schema/example_table')
+```
+
+* 테이블 삭제
+    * DROP TABLE 문을 통해 테이블을 삭제할 수 있습니다. 이 명령은 실제 Iceberg 데이터를 삭제합니다.
+* 테이블 제외
+    * 테이블을 삭제(DROP) 하지 않고 테이블 목록에서만 제외할 때 사용할 수 있습니다.
+
+```sql
+CALL example.system.unregister_table(schema_name => 'example_schema', table_name => 'example_table')
+```
+
+* 스키마 진화(schema evolution)
+    * Iceberg는 메타데이터만을 변경하는 스키마 진화을 지원합니다. 스키마 업데이트를 수행할 때 데이터 파일 자체가 변경되지 않습니다.
+    * 열 추가, 삭제, 재정렬, 이름 변경, 타입 변경을 지원합니다.
+    * 타입 변경은 기존 타입에서 확장되는 타입의 변경만 지원합니다.
+        * INTEGER에서 BIGINT
+        * REAL에서 DOUBLE
+        * DECIMAL의 정밀도 증가
+* 스냅숏 정리
+    * 쓰기, 변경, 압축 등으로 인해 생성된 스냅숏을 정리합니다.
+    * 불필요해진 정보와 데이터 파일을 제거하여 메타데이터의 크기를 유지할 수 있습니다.
+    * 테이블 메타데이터의 크기를 작게 유지하려면 스냅숏을 정기적으로 정리하는 것이 좋습니다.
+
+```sql
+ALTER TABLE test_table EXECUTE expire_snapshots(retention_threshold => '7d')
+```
+
+* 고아 파일 정리
+    * 현재 존재하는 메타데이터와 관련이 없어진 데이터 파일을 삭제합니다.
+        * 해당 파일들 중에 지정 시간 이전에 생성된 대상을 삭제합니다.
+    * 테이블의 데이터 디렉터리 크기를 관리하려면 파일을 정리하는 것이 좋습니다.
+
+```sql
+ALTER TABLE test_table EXECUTE remove_orphan_files(retention_threshold => '7d')
+```
+
+#### Iceberg 타입 맵핑 정보
+
+* Iceberg 타입은 DataQuery에서 처리할 수 있는 타입으로 아래와 같이 맵핑됩니다.
+
+| DataQuery 타입 | Iceberg 타입 |
+| ----------- | --------- |
+| BOOLEAN | BOOLEAN |
+| INTEGER | INT |
+| BIGINT | LONG |
+| REAL | FLOAT |
+| DOUBLE | DOUBLE |
+| DECIMAL(p,s) | DECIMAL(p,s) |
+| DATE | DATE |
+| TIME(6) | TIME |
+| TIMESTAMP(6) | TIMESTAMP |
+| TIMESTAMP(6) WITH TIME ZONE | TIMESTAMPTZ |
+| VARCHAR | STRING |
+| UUID | UUID |
+| VARBINARY | BINARY |
+| ROW(...) | STRUCT(...) |
+| ARRAY(e) | LIST(e) |
+| MAP(k,v) | MAP(k,v) |
+
+#### 주의 및 제약 사항
+
+* 동일 경로에 Iceberg 테이블을 중복해서 생성하는 것은 불가능합니다.
+* 열을 변환하여 파티션을 구성할 때, 동일한 열을 사용할 수 없습니다.
+    * 예: 하나의 DATE 타입을 가지는 열로 year, month 두 개의 파티션을 설정할 수 없습니다.
+
+#### FAQ
+
+* 이미 Object Storage에 Iceberg 데이터가 존재합니다. 어떻게 DataQuery에 적용할 수 있나요?
+    * register_table을 실행하여 등록할 수 있습니다. 데이터 관리 > 테이블 등록을 확인하세요.
+* Object Storage에는 Parquet 파일만 존재합니다. 어떻게 Iceberg 테이블로 만들 수 있나요?
+    * 현재 DataQuery에서는 해당 기능을 제공하지 않습니다. 해당 기능을 도입하기 위해 준비 중입니다.
+    * 현재는 Object Storage 데이터 소스를 만들어서 Parquet 테이블을 생성하고, Iceberg 데이터 소스의 테이블로 CREATE TABLE AS 나 INSERT INTO 등을 사용한다면 Iceberg를 사용할 수 있습니다.
+* 이미 존재하는 Iceberg 테이블에 Parquet 데이터만 추가하고 싶습니다.
+    * 현재 DataQuery에서는 해당 기능을 제공하지 않습니다. 해당 기능을 도입하기 위해 준비 중입니다.
+    * 현재는 Object Storage 데이터 소스를 만들어서 Parquet 테이블을 생성하고, Iceberg 데이터 소스의 테이블로 CREATE TABLE AS 나 INSERT INTO 등을 사용한다면 Iceberg를 사용할 수 있습니다.
+
 
 ## 외부 연동
 ### Trino cli
 
 * 설정 메뉴를 통해 발급 받은 인증 정보, 접속 정보와 Trino에서 지원하는 CLI 툴을 통해 커맨드라인에서 쿼리를 실행할 수 있습니다.
-  * Trino에서 지원하는 CLI 툴은 최신 버전을 사용하십시오.
-  * 현재 DataQuery에서 제공하고 있는 Trino 버전은 434입니다.
-  * [Trino CLI](https://repo1.maven.org/maven2/io/trino/trino-cli/434/trino-cli-434-executable.jar)
+  * DataQuery는 현재 Trino 455 버전을 기반으로 서비스하고 있습니다.
+  * [Trino CLI](https://repo1.maven.org/maven2/io/trino/trino-cli/455/trino-cli-455-executable.jar)
 
 ```
 # 파일에 실행 권한이 필요합니다. chmod +x로 부여할 수 있습니다.
-# ex) chmod +x trino-cli-434-executable.jar
+# 예: chmod +x trino-cli-455-executable.jar
 
-./trino-cli-434-executable.jar --server <접속URL(필수)> \
+./trino-cli-455-executable.jar --server <접속URL(필수)> \
   --user <아이디(필수)> --password \
   --catalog <데이터 소스 이름> \
   --schema <스키마 이름>
@@ -442,7 +622,7 @@ SELECT * FROM corona_facility_us
 * catalog, schema 값은 명령을 수행할 연결에 대한 값으로, 입력하지 않아도 cli를 실행할 수 있으며 아래 쿼리를 이용해 catalog나 schema 목록을 확인할 수 있습니다.
     * show catalogs
     * show schemas
-* 더 자세한 정보는 [Trino 가이드 페이지](https://trino.io/docs/434/client/cli.html)를 참고하십시오.
+* 더 자세한 정보는 [Trino 가이드 페이지](https://trino.io/docs/455/client/cli.html)를 참고하세요.
 
 ### JDBC 연결
 
@@ -465,4 +645,4 @@ jdbc:trino://${host}:${port}/${catalog}/${schema}
         * 연결을 원하는 스키마 이름
 * 접속 정보 예시
     * jdbc:trino://test-dataquery-domain-12345abcd.kr1-cluster-dataquery.nhncloudservice.com:443/catalog/schema
-* 더 자세한 정보는 [Trino JDBC 가이드 페이지](https://trino.io/docs/434/client/jdbc.html)를 참고하십시오.
+* 더 자세한 정보는 [Trino JDBC 가이드 페이지](https://trino.io/docs/455/client/jdbc.html)를 참고하세요.
