@@ -104,6 +104,23 @@ The service is available through following procedures.
     * Password 
         * MariaDB password to access.
 
+
+### Iceberg Data Source Type
+
+* Data source name
+    * This is a separator used to perform queries, and must be unique value among data sources.
+* Access key, secret key, region
+    * The Iceberg table data to integrate with or the connection information for the Object Storage where the data exists.
+    * Access keys and secret keys can be issued from the Object Storage console. For more details, refer to [Object Storage Console Guide](https://docs.toast.com/ko/Storage/Object%20Storage/ko/console-guide/#s3-api).
+        * For regions, refer to [S3 Region](https://docs.toast.com/ko/Storage/Object%20Storage/ko/s3-api-guide/#aws-cli) from Object Storage Guide of respective region.
+    * Bucket Name
+        * The Object Storage container that the system uses to store basic Iceberg table information is named dataquery-warehouse and has a child path of iceberg.
+        * The existing data you want to integrate may exist in a different path.
+
+> [Caution]
+> If Object Storage to link with DataQuery is not in the same region, network traffic may incur additional charges.
+
+
 ## Query Editor
 
 * Query Editor is divided into Cluster area, Schema area, Saved query area, Editor area, and Result/Console execution area.
@@ -154,9 +171,9 @@ The service is available through following procedures.
         * Syntax to check Metadata: SHOW CATALOGS, SHOW SCHEMAS, SHOW TABLES, SHOW STATS FOR
         * Syntax to check system's embedded procedure or to check execution plan of Query: CALL, EXPLAIN
 * See Trino's Guide for more information.
-    * [Keyword, Data Type](https://trino.io/docs/434/language.html)
-    * [Trino Query](https://trino.io/docs/434/sql.html)
-    * [Embedded function](https://trino.io/docs/434/functions.html)
+    * [Keyword, Data Type](https://trino.io/docs/455/language.html)
+    * [Trino Query](https://trino.io/docs/455/sql.html)
+    * [Embedded function](https://trino.io/docs/455/functions.html)
 
 ### 5. Results/Console Execution Query Area
 
@@ -219,7 +236,7 @@ The service is available through following procedures.
 
 #### Additional Grammar to operate Hive feature  
 
-* Trino-Hive basically follows standard SQL grammar, but there is additional feature/Grammar for Hive activity response. [Details](https://trino.io/docs/434/connector/hive.html)
+* Trino-Hive basically follows standard SQL grammar, but there is additional feature/Grammar for Hive activity response. [Details](https://trino.io/docs/455/connector/hive.html)
 * Supported data format
     * Default format is designated as ORC, and you can specify Parquet, JSON, ORC, CSV, Text, etc. as Settings.
     * When creating Table, you can specify Format value in With clause.
@@ -269,7 +286,7 @@ system.sync_partition_metadata(schema_name, table_name, mode, case_sensitive)
     * If external\_location path name of external table contains Korean characters, the data will not be processed properly.
     * If Object Storage bucket associated with table is deleted, the Table DROP query fails.
     * DELETE, UPDATE can only be performed on partition data on limited basis.
-        * [Details](https://trino.io/docs/434/connector/hive.html#data-management)
+        * [Details](https://trino.io/docs/455/connector/hive.html#data-management)
 
 #### External Table Query Utilization Tutorial
 
@@ -330,13 +347,12 @@ SELECT * FROM corona_facility_us
    * DELETE can only be performed on a limited basis when certain conditions are met.
         * When a where clause is present, the predicate must be able to be pushed down to the data source entirely.
         * Pushdowns are not supported for columns with a text type.
-        * [Details](https://trino.io/docs/434/connector/mysql.html#predicate-pushdown-support)
+        * [Details](https://trino.io/docs/455/connector/mysql.html#predicate-pushdown-support)
     * UPDATE can only be performed on a limited basis when certain conditions are met.
         * Assignment to a constant value and can only be done if a predicate exists.
         * Arithmetic expressions, function calls, and UPDATE statements to non-constant values are not supported.
-        * You can't configure conditional clauses as ANDs.
         * You can't update all columns in a table at the same time.
-        * [Details](https://trino.io/docs/434/connector/mysql.html#update)
+        * [Details](https://trino.io/docs/455/connector/mysql.html#update)
 
 ### Execute PostgreSQL Data Source Query
 
@@ -348,13 +364,12 @@ SELECT * FROM corona_facility_us
         * When a where clause is present, the predicate must be able to be pushed down to the data source entirely.
         * Pushdown is not supported for range conditions (>, <, or BETWEEN) on string types such as CHAR or VARCHAR.
         * Equality comparison conditions (IN, =, !=) for text types support pushdown.
-        * [Details](https://trino.io/docs/434/connector/postgresql.html#predicate-pushdown-support)
+        * [Details](https://trino.io/docs/455/connector/postgresql.html#predicate-pushdown-support)
     * UPDATE can only be performed on a limited basis when certain conditions are met.
         * Assignment to a constant value and can only be done if a predicate exists.
         * Arithmetic expressions, function calls, and UPDATE statements to non-constant values are not supported.
-        * You can't configure conditional clauses as ANDs.
         * You can't update all columns in a table at the same time.
-        * [Details](https://trino.io/docs/434/connector/postgresql.html#update)
+        * [Details](https://trino.io/docs/455/connector/postgresql.html#update)
 
 ### Execute Oracle Data Source Query
 
@@ -365,13 +380,12 @@ SELECT * FROM corona_facility_us
     * DELETE and UPDATE can only be performed on a limited basis when certain conditions are met.
         * When a where clause is present, the predicate must be able to be pushed down to the data source entirely.
         * Pushdown is not supported for Oracle-type columns that are CLOB, NCLOB, BLOB, or RAW(n).
-        * [Details](https://trino.io/docs/434/connector/oracle.html#predicate-pushdown-support)
+        * [Details](https://trino.io/docs/455/connector/oracle.html#predicate-pushdown-support)
     * UPDATE can only be performed on a limited basis when certain conditions are met.
         * Assignment to a constant value and can only be done if a predicate exists.
         * Arithmetic expressions, function calls, and UPDATE statements to non-constant values are not supported.
-        * You can't configure conditional clauses as ANDs.
         * You can't update all columns in a table at the same time.
-        * [Details](https://trino.io/docs/434/connector/oracle.html#update)
+        * [Details](https://trino.io/docs/455/connector/oracle.html#update)
 
 ### Execute EDB Data Source Query
 
@@ -383,13 +397,12 @@ SELECT * FROM corona_facility_us
         * When a where clause is present, the predicate must be able to be pushed down to the data source entirely.
         * Pushdown is not supported for range conditions (>, <, or BETWEEN) on string types such as CHAR or VARCHAR.
         * Equality comparison conditions (IN, =, !=) for text types support pushdown.
-        * [Details](https://trino.io/docs/434/connector/postgresql.html#predicate-pushdown-support)
+        * [Details](https://trino.io/docs/455/connector/postgresql.html#predicate-pushdown-support)
     * UPDATE can only be performed on a limited basis when certain conditions are met.
         * Assignment to a constant value and can only be done if a predicate exists.
         * Arithmetic expressions, function calls, and UPDATE statements to non-constant values are not supported.
-        * You can't configure conditional clauses as ANDs.
         * You can't update all columns in a table at the same time.
-        * [Details](https://trino.io/docs/434/connector/postgresql.html#update)
+        * [Details](https://trino.io/docs/455/connector/postgresql.html#update)
 
 ### Execute MariaDB Data Source Query
 
@@ -400,13 +413,239 @@ SELECT * FROM corona_facility_us
     * DELETE can be performed only when certain conditions are met. 
         * When a where clause is present, the predicate must be able to be pushed down to the data source entirely.
         * Pushdown is not supported for text-type columns. 
-        * [Deatils](https://trino.io/docs/434/connector/mariadb.html#predicate-pushdown-support) 
+        * [Deatils](https://trino.io/docs/455/connector/mariadb.html#predicate-pushdown-support) 
     * UPDATE can only be performed restrictively when certain conditions are met. 
         * Assignment to a constant value and can only be done if a predicate exists.
         * Arithmetic expressions, function calls, and UPDATE statements to non-constant values are not supported.
         * You can't configure conditional clauses as ANDs.
         * You can't update all columns in a table at the same time.
-        * [Details](https://trino.io/docs/434/connector/mariadb.html#update)
+        * [Details](https://trino.io/docs/455/connector/mariadb.html#update)
+
+### Run Iceberg Data Source Queries
+
+* Queries to the Iceberg data source are performed based on Trino-Iceberg.
+* You can integrate with Iceberg table data that exists in Object Storage and for data in supported formats.
+    * Supports data of type PARQUET (native format), ORC, and AVRO.
+* Uses S3-compatible layer for Object Storage access and requires use of s3a protocol when specifying path for data for Schemas or Tables (ex. s3a://example/test).
+
+#### Schema
+
+* You can create them through the CREATE SCHEMA statement.
+
+```sql
+# Create schema in the default path
+CREATE SCHEMA example_schema;
+# create schema in the specified path
+CREATE SCHEMA example_schema
+WITH (location = 's3a://my-bucket/example_schema/');
+```
+
+#### Tables
+
+* You can create them with a CREATE TABLE or CREATE TABLE AS statement.
+* You can set metadata for a table by specifying table properties.
+    * Table properties can be specified using the WITH clause.
+
+```sql
+CREATE TABLE example_table (c1 INTEGER, c2 DATE, c3 DOUBLE);
+## Specify attributes
+CREATE TABLE example_table (c1 INTEGER, c2 DATE, c3 DOUBLE)
+WITH (
+    format = 'PARQUET',
+    partitioning = ARRAY['c1', 'c2'],
+    sorted_by = ARRAY['c3'],
+    location = 's3a://my-bucket/example_schema/example_table/'
+);
+```
+
+* Table Properties
+    * You can set metadata for the table. [Additional information](https://trino.io/docs/455/connector/iceberg.html#table-properties)
+
+| Property name | Description |
+| ----- | --- |
+| format | Specify the format of the table data file. PARQUET, ORC, or AVRO. <br> The default is PARQUET. |
+| partitioning | Specifies the table partition. If the table is partitioned into columns c1 and c2, you can specify partitioning=ARRAY['c1', 'c2']. |
+| sorted_by | When saving individual data files, sort them by the values in the columns you specify. |
+| location | Specify the Object Storage path for the table.<br>If the property is not set, it is stored in the schema path under the default path. |
+
+#### Partitions
+
+* Table properties allow you to create partitioned (partitioned) tables in a structure where the table data is stored partitioned.
+    * If the partition columns are specified as columns C1 and C2, the data in those partitions is stored at `/C1=<C1 value>/C2=<C2 value>` down the table data path.
+* You can't add/manage partitions manually because Iceberg automatically manages partitions based on the value of the data written to them.
+* Supports the feature to specify partitions using (transforming) table columns.
+    * [More about](https://trino.io/docs/455/connector/iceberg.html#partitioned-tables) year, month, day, hour, bucket, truncate
+
+| Convert | Supported type | Description |
+| --- | ----- | --- |
+| year(ts) | DATE, TIMESTAMP | Yearly |
+| month(ts) | DATE, TIMESTAMP | Monthly |
+| day(ts) | DATE, TIMESTAMP | Daily |
+| hour(ts) | DATE, TIMESTAMP | Hourly |
+
+#### Metadata Table
+
+* You can view metadata for an Iceberg table by looking up the metadata table. [Additional information](https://trino.io/docs/455/connector/iceberg.html#metadata-tables)
+    * $properties
+        * Table Properties
+    * $history
+        * History of metadata changes to a table
+    * $snapshots
+        * A history of table geometry recorded as changes occur in the data.
+    * $manifests
+        * Information about the file that manages the bundle of data files
+    * $partitions
+        * Detailed partition information for a table
+    * $files
+        * A snapshot of the current table
+
+```sql
+## Get table properties
+SELECT * FROM "test_table$properties"
+```
+
+#### Data Management
+
+* Registering a table
+    * This is how to register an Iceberg table that already exists as a file, but is not registered.
+    * You can register by calling register_table.
+
+```sql
+CALL example.system.register_table(schema_name => 'example_schema', table_name => 'example_table', table_location => 's3a://my-bucket/example_schema/example_table')
+```
+
+* Deleting a table
+    * You can drop a table with the DROP TABLE statement. This command deletes the actual Iceberg data.
+* Exclude tables
+    * This can be used to exclude a table from a list of tables only, without dropping it (DROP).
+
+```sql
+CALL example.system.unregister_table(schema_name => 'example_schema', table_name => 'example_table')
+```
+
+* Schema evolution
+    * Iceberg supports schema evolution, which changes only metadata. The data files themselves do not change when you perform a schema update.
+    * Supports adding, deleting, reordering, renaming, and changing the type of columns.
+    * Type changes only support changes to types that extend from existing types.
+        * INTEGER to BIGINT
+        * REAL to DOUBLE
+        * Increasing the precision of DECIMAL
+* Organizing snapshots
+    * Clean up snapshots created by writes, changes, compression, etc.
+    * You can maintain the size of your metadata by removing unnecessary information and data files.
+    * To keep the size of your table metadata small, it's a good idea to clean up your snapshots regularly.
+
+```sql
+ALTER TABLE test_table EXECUTE expire_snapshots(retention_threshold => '7d')
+```
+
+* Clean up orphan files
+    * Delete data files that are no longer relevant to the metadata that currently exists.
+        * Deletes targets that were created before the specified time among those files.
+    * To manage the size of your table's data directory, we recommend that you clean up your files.
+
+```sql
+ALTER TABLE test_table EXECUTE remove_orphan_files(retention_threshold => '7d')
+```
+
+#### Iceberg Type Information
+
+* Iceberg types map to types that can be processed by DataQuery, as shown below.
+
+| DataQuery Type | Iceberg type |
+| ----------- | --------- |
+| BOOLEAN | BOOLEAN |
+| INTEGER | INT |
+| BIGINT | LONG |
+| REAL | FLOAT |
+| DOUBLE | DOUBLE |
+| DECIMAL(p,s) | DECIMAL(p,s) |
+| DATE | DATE |
+| TIME(6) | TIME |
+| TIMESTAMP(6) | TIMESTAMP |
+| TIMESTAMP(6) WITH TIME ZONE | TIMESTAMPTZ |
+| VARCHAR | STRING |
+| UUID | UUID |
+| VARBINARY | BINARY |
+| ROW(...) | STRUCT(...) |
+| ARRAY(e) | LIST(e) |
+| MAP(k,v) | MAP(k,v) |
+
+#### Cautions and Constraints
+
+* It is not possible to create duplicate Iceberg tables in the same path.
+* When converting columns to organize partitions, you can't use the same columns.
+    * Example: You cannot set up two partitions, year and month, with columns that have a single DATE type.
+
+#### FAQ
+
+* Iceberg data already exists in Object Storage. How can I apply it to a DataQuery?
+    * You can register by running register_table. See Data management > Register a table.
+* Only Parquet files exist in Object Storage. How can I make them into Iceberg tables?
+    * Currently, DataQuery does not provide this functionality, but we are working to introduce it.
+    * Currently, you can use Iceberg by creating an Object Storage data source to create a Parquet table, and then using CREATE TABLE AS or INSERT INTO with the table in the Iceberg data source.
+* I want to add only Parquet data to an Iceberg table that already exists.
+    * Currently, DataQuery does not provide this functionality, but we are working to introduce it.
+    * Currently, you can use Iceberg by creating an Object Storage data source to create a Parquet table, and then using CREATE TABLE AS or INSERT INTO with the table in the Iceberg data source.
+
+
+## External Integration
+### Trino cli
+
+* You can run queries from command line with credentials issued through the Settings menu, access information, and CLI tools supported by Trino.
+  * DataQuery is currently running on version 455 of Trino.
+  * [Trino CLI](https://repo1.maven.org/maven2/io/trino/trino-cli/455/trino-cli-455-executable.jar)
+
+```
+# The file needs execute permissions, which can be granted with chmod +x.
+# Example: chmod +x trino-cli-455-executable.jar
+
+./trino-cli-455-executable.jar --server <connectionURL (required)> \.
+  --user <ID (required)> --password \.
+  --catalog <datasource name> \
+  --schema <Schema name> \ --schema <Schema name
+```
+
+* Setting Parameter
+    * Access URL (Required)
+        * Access URL provided on the Settings screen (ex. [https://x-x-x-x-x.kr1-cluster-dataquery.nhncloudservice.com](https://x-x-x-x-x.kr1-cluster-dataquery.nhncloudservice.com))
+    * ID (Required)
+        * ID provided on credentials screen
+    * Password (Required)
+        * Password provided on credentials screen
+        * You can enter it in Prompt window that appears when running the command, or you can preset password with `export TRINO_PASSWORD=<Password>`
+    * Data source name
+        * Data source name to be linked
+    * Schema name
+        * Schema that has linked
+* Additional debug information can be output by adding the `--debug` option.
+* Catalog, schema value is the value for connection for which you want to run command, and you can run cli without entering it, and you can use Query below to check Catalog or Schema list.
+    * show catalogs
+    * show schemas
+* For more information, see the [Trino guide page](https://trino.io/docs/455/client/cli.html).
+
+### Connect to JDBC
+
+* You can connect to JDBC using the authentication information issued from the **Settings** menu, access information, and the JDBC driver supported by Trino.
+
+```
+jdbc:trino://${host}:${port}
+jdbc:trino://${host}:${port}/${catalog}
+jdbc:trino://${host}:${port}/${catalog}/${schema}
+```
+
+* Setting Parameter
+    * host (Required)
+        * In the connection URL provided in the setting screen, enter the rest except for `https://` (ex . x-x-x-x-x.kr1-cluster-dataquery.nhncloudservice.com).
+    * port (Required)
+        * Enter 443.
+    * catalog
+        * Data source name to connect
+    * schema
+        * Schema name to connect
+* Example of connection information
+    * jdbc:trino://test-dataquery-domain-12345abcd.kr1-cluster-dataquery.nhncloudservice.com:443/catalog/schema
+* For more information, see the [Trino JDBC guide page](https://trino.io/docs/455/client/jdbc.html).
 
 ## External Integration
 ### Trino cli
@@ -442,7 +681,7 @@ SELECT * FROM corona_facility_us
 * Catalog, schema value is the value for connection for which you want to run command, and you can run cli without entering it, and you can use Query below to check Catalog or Schema list.
     * show catalogs
     * show schemas
-* For more information, refer to the [Trino Guide](https://trino.io/docs/434/client/cli.html).
+* For more information, refer to the [Trino Guide](https://trino.io/docs/455/client/cli.html).
 
 ### Connect to JDBC
 
@@ -465,4 +704,4 @@ jdbc:trino://${host}:${port}/${catalog}/${schema}
         * Schema name to connect
 * Example of connection information
     * jdbc:trino://test-dataquery-domain-12345abcd.kr1-cluster-dataquery.nhncloudservice.com:443/catalog/schema
-* For more details, see [Trino JDBC Guide](https://trino.io/docs/434/client/jdbc.html).
+* For more details, see [Trino JDBC Guide](https://trino.io/docs/455/client/jdbc.html).
