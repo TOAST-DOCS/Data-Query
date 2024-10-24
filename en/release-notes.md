@@ -1,5 +1,13 @@
 ## Data & Analytics > DataQuery > Release Notes
 
+### October 29, 2024
+#### Trino Version Upgrade
+* Upgraded DataQuery to work based on Trino 455 version. 
+* Made performance improvements and bug fixes for some queries.
+
+#### Added Features
+* Added Iceberg to the data source type.
+
 ### July 23, 2024
 #### Feature Updates
 * Improved to send email notifications for disabling integration when Object Storage credentials for storing query history expire.
