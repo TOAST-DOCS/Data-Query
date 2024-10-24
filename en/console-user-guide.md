@@ -597,17 +597,17 @@ ALTER TABLE test_table EXECUTE remove_orphan_files(retention_threshold => '7d')
   * [Trino CLI](https://repo1.maven.org/maven2/io/trino/trino-cli/455/trino-cli-455-executable.jar)
 
 ```
-# The file needs execute permissions, which can be granted with chmod +x.
-# Example: chmod +x trino-cli-455-executable.jar
+# Permission to run the file is required. Use chmod +x.
+# ex) chmod +x trino-cli-455-executable.jar
 
-./trino-cli-455-executable.jar --server <connectionURL (required)> \.
-  --user <ID (required)> --password \.
-  --catalog <datasource name> \
-  --schema <Schema name> \ --schema <Schema name
+./trino-cli-455-executable.jar --server <Connection URL(Required)> \
+  --user <ID (Required)> --password \
+  --catalog <Data source name> \
+  --schema <Schema name>
 ```
 
 * Setting Parameter
-    * Access URL (Required)
+    * Access URL (Required) 
         * Access URL provided on the Settings screen (ex. [https://x-x-x-x-x.kr1-cluster-dataquery.nhncloudservice.com](https://x-x-x-x-x.kr1-cluster-dataquery.nhncloudservice.com))
     * ID (Required)
         * ID provided on credentials screen
@@ -622,7 +622,7 @@ ALTER TABLE test_table EXECUTE remove_orphan_files(retention_threshold => '7d')
 * Catalog, schema value is the value for connection for which you want to run command, and you can run cli without entering it, and you can use Query below to check Catalog or Schema list.
     * show catalogs
     * show schemas
-* For more information, see the [Trino guide page](https://trino.io/docs/455/client/cli.html).
+* For more information, refer to the [Trino Guide](https://trino.io/docs/455/client/cli.html).
 
 ### Connect to JDBC
 
@@ -634,7 +634,7 @@ jdbc:trino://${host}:${port}/${catalog}
 jdbc:trino://${host}:${port}/${catalog}/${schema}
 ```
 
-* Setting Parameter
+* Setting parameters
     * host (Required)
         * In the connection URL provided in the setting screen, enter the rest except for `https://` (ex . x-x-x-x-x.kr1-cluster-dataquery.nhncloudservice.com).
     * port (Required)
@@ -645,4 +645,4 @@ jdbc:trino://${host}:${port}/${catalog}/${schema}
         * Schema name to connect
 * Example of connection information
     * jdbc:trino://test-dataquery-domain-12345abcd.kr1-cluster-dataquery.nhncloudservice.com:443/catalog/schema
-* For more information, see the [Trino JDBC guide page](https://trino.io/docs/455/client/jdbc.html).
+* For more details, see [Trino JDBC Guide](https://trino.io/docs/455/client/jdbc.html).
