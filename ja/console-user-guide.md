@@ -104,6 +104,23 @@ DataQueryサービスを使用するには、必ずデータソースを追加�
 * パスワード
     * 接続するMariaDBパスワードです。
 
+
+### Icebergデータソースタイプ
+
+* データソース名
+    * クエリ実行時に使用される区切り文字で、データソース間で固有の値でなければなりません。
+* アクセスキー、秘密鍵、リージョン
+    * 連動するIcebergテーブルデータまたは連動するデータが存在するObject Storageの接続情報です。
+    * アクセスキーと秘密鍵はObject Storageコンソールで発行できます。詳細は[Object Storageコンソール使用ガイド](https://docs.toast.com/ko/Storage/Object%20Storage/ko/console-guide/#s3-api)を参照してください。
+        * リージョンはObject Storageガイドのリージョン別[S3リージョン](https://docs.toast.com/ko/Storage/Object%20Storage/ko/s3-api-guide/#aws-cli)を参考してください。
+    * バケット名
+        * システムで基本Icebergテーブル情報を保存するために使用するObject Storageコンテナ名はdataquery-warehouseで、下位パスはicebergです。
+        * 連動する既存のデータは他のパスに存在する可能性があります。
+
+> [注意]
+> DataQueryと連動するObject Storageが同じリージョンでない場合、ネットワークトラフィックによる追加料金が発生する可能性があります。
+
+
 ## クエリエディタ
 
 * クエリエディタはクラスタ領域、スキーマ領域、保存されたクエリ領域、エディタ領域、結果/コンソール実行領域に区分されます。
@@ -154,9 +171,9 @@ DataQueryサービスを使用するには、必ずデータソースを追加�
         * メタデータを確認できる構文：SHOW CATALOGS、SHOW SCHEMAS、SHOW TABLES、SHOW STATS FOR
         * システムの内蔵プロシージャ(Procedure)を確認したりクエリの実行計画を確認したりできる構文：CALL、EXPLAIN
 * 詳細については、Trinoのガイド文書をご覧ください。
-    * [キーワード、データ型](https://trino.io/docs/434/language.html)
-    * [Trinoクエリ](https://trino.io/docs/434/sql.html)
-    * [組み込み関数](https://trino.io/docs/434/functions.html)
+    * [キーワード、データ型](https://trino.io/docs/455/language.html)
+    * [Trinoクエリ](https://trino.io/docs/455/sql.html)
+    * [組み込み関数](https://trino.io/docs/455/functions.html)
 
 ### 5. 結果/コンソール実行クエリ領域
 
@@ -220,7 +237,7 @@ DataQueryサービスを使用するには、必ずデータソースを追加�
 
 #### Hive機能動作のための追加の文法
 
-* Trino-Hiveは基本的に標準SQL文法に従いますが、Hive動作対応のための追加機能/文法が存在します。 [詳細情報](https://trino.io/docs/434/connector/hive.html)
+* Trino-Hiveは基本的に標準SQL文法に従いますが、Hive動作対応のための追加機能/文法が存在します。 [詳細情報](https://trino.io/docs/455/connector/hive.html)
 * サポートデータフォーマット
     * 基本フォーマットはORCに指定されており、設定でParquet、JSON、ORC、CSV、Textなどを指定できます。
     * テーブル作成時、with節のformat値で指定できます。
@@ -270,7 +287,7 @@ system.sync_partition_metadata(schema_name, table_name, mode, case_sensitive)
     * External tableのexternal\_locationパス名にハングルが入っている場合は正常にデータが処理されません。
     * テーブルに接続されたObject Storageバケットが削除されるとテーブルDROPクエリが失敗します。
     * DELETE、UPDATEはパーティションデータに対してのみ制限的に実行できます。
-        * [詳細情報](https://trino.io/docs/434/connector/hive.html#data-management)
+        * [詳細情報](https://trino.io/docs/455/connector/hive.html#data-management)
 
 #### 外部テーブルクエリ利用チュートリアル
 
@@ -331,13 +348,12 @@ SELECT * FROM corona_facility_us
     * DELETEは特定の条件が満たされた場合のみ制限的に実行できます。
         * where句が存在する時、術語(Predicate)がデータソースに完全にプッシュダウン(Pushdown)できる必要があります。
         * テキストタイプの列はプッシュダウンがサポートされません。
-        * [詳細情報](https://trino.io/docs/434/connector/mysql.html#predicate-pushdown-support)
+        * [詳細情報](https://trino.io/docs/455/connector/mysql.html#predicate-pushdown-support)
     * UPDATEは、特定の条件が満たされる場合のみ制限的に実行できます。
         * 定数値への割り当てと術語(Predicate)が存在する場合のみ実行することができます。
         * 算術式、関数呼び出しおよび定数以外の値へのUPDATE文はサポートされません。
-        * 条件節をANDで構成することはできません。
         * テーブルのすべての列を同時に更新することはできません。
-        * [詳細情報](https://trino.io/docs/434/connector/mysql.html#update)
+        * [詳細情報](https://trino.io/docs/455/connector/mysql.html#update)
 
 ### PostgreSQLデータソースクエリの実行
 
@@ -349,13 +365,12 @@ SELECT * FROM corona_facility_us
         * where句が存在する時、術語(Predicate)がデータソースに完全にプッシュダウン(Pushdown)できる必要があります。
         * CHAR または VARCHAR のような文字列タイプに対する範囲条件(>, < または BETWEEN)はプッシュダウンがサポートされません。
         * テキストタイプに対する等価比較条件(IN, =, !=)はプッシュダウンがサポートされます。
-        * [詳細情報](https://trino.io/docs/434/connector/postgresql.html#predicate-pushdown-support)
+        * [詳細情報](https://trino.io/docs/455/connector/postgresql.html#predicate-pushdown-support)
     * UPDATEは、特定の条件が満たされる場合のみ制限的に実行できます。
         * 定数値への割り当てと術語(Predicate)が存在する場合のみ実行することができます。
         * 算術式、関数呼び出しおよび定数以外の値へのUPDATE文はサポートされません。
-        * 条件節をANDで構成することはできません。
         * テーブルのすべての列を同時に更新することはできません。
-        * [詳細情報](https://trino.io/docs/434/connector/postgresql.html#update)
+        * [詳細情報](https://trino.io/docs/455/connector/postgresql.html#update)
 
 ### Oracleデータソースクエリの実行
 
@@ -366,13 +381,12 @@ SELECT * FROM corona_facility_us
     * DELETE, UPDATEは特定の条件が満たされる場合のみ制限的に実行できます。
         * where句が存在する時、術語(Predicate)がデータソースに完全にプッシュダウン(Pushdown)できる必要があります。
         * CLOB, NCLOB, BLOB, or RAW(n)であるOracleタイプの列はプッシュダウンがサポートされません。
-        * [詳細情報](https://trino.io/docs/434/connector/oracle.html#predicate-pushdown-support)
+        * [詳細情報](https://trino.io/docs/455/connector/oracle.html#predicate-pushdown-support)
     * UPDATEは、特定の条件が満たされる場合のみ制限的に実行できます。
         * 定数値への割り当てと術語(Predicate)が存在する場合のみ実行することができます。
         * 算術式、関数呼び出しおよび定数以外の値へのUPDATE文はサポートされません。
-        * 条件節をANDで構成することはできません。
         * テーブルのすべての列を同時に更新することはできません。
-        * [詳細情報](https://trino.io/docs/434/connector/oracle.html#update)
+        * [詳細情報](https://trino.io/docs/455/connector/oracle.html#update)
 
 ### EDBデータソースクエリの実行
 
@@ -384,13 +398,12 @@ SELECT * FROM corona_facility_us
         * where句が存在する時、術語(Predicate)がデータソースに完全にプッシュダウン(Pushdown)できる必要があります。
         * CHAR または VARCHAR のような文字列タイプに対する範囲条件(>, < または BETWEEN)はプッシュダウンがサポートされません。
         * テキストタイプに対する等価比較条件(IN, =, !=)はプッシュダウンがサポートされます。
-        * [詳細情報](https://trino.io/docs/434/connector/postgresql.html#predicate-pushdown-support)
+        * [詳細情報](https://trino.io/docs/455/connector/postgresql.html#predicate-pushdown-support)
     * UPDATEは、特定の条件が満たされる場合のみ制限的に実行できます。
         * 定数値への割り当てと術語(Predicate)が存在する場合のみ実行することができます。
         * 算術式、関数呼び出しおよび定数以外の値へのUPDATE文はサポートされません。
-        * 条件節をANDで構成することはできません。
         * テーブルのすべての列を同時に更新することはできません。
-        * [詳細情報](https://trino.io/docs/434/connector/postgresql.html#update)
+        * [詳細情報](https://trino.io/docs/455/connector/postgresql.html#update)
 
 ### MariaDBデータソースクエリ実行
 
@@ -401,27 +414,194 @@ SELECT * FROM corona_facility_us
     * DELETEは特定の条件が満たされた場合のみ制限的に実行できます。
         * where節が存在する場合、Predicateがデータソースに完全にプッシュダウン(Pushdown)できる必要があります。
         * テキストタイプの列はプッシュダウンがサポートされません。
-        * [詳細情報](https://trino.io/docs/434/connector/mariadb.html#predicate-pushdown-support)
+        * [詳細情報](https://trino.io/docs/455/connector/mariadb.html#predicate-pushdown-support)
     * UPDATEは、特定の条件が満たされた場合のみ制限的に実行できます。
         * 定数値への割り当てとPredicateが存在する場合のみ実行できます。
         * 算術式、関数呼び出しおよび定数以外の値へのUPDATE文はサポートされません。
-        * 条件節をANDで構成することはできません。
         * テーブルのすべての列を同時に更新することはできません。
-        * [詳細情報](https://trino.io/docs/434/connector/mariadb.html#update)
+        * [詳細情報](https://trino.io/docs/455/connector/mariadb.html#update)
+
+
+### Icebergデータソースクエリ実行
+
+* Icebergデータソースに対するクエリは、Trino-Icebergに基づいて実行されます。
+* Object Storageに存在するIcebergテーブルデータ及びサポートするフォーマットのデータに対して連動できます。
+    * PARQUET(基本フォーマット), ORC, AVROタイプのデータをサポートします。
+* Object StorageへのアクセスにS3互換レイヤーを使用し、スキーマまたはテーブルのデータパス指定時にs3aプロトコルを使用する必要があります(例：s3a://example/test)。
+
+#### スキーマ
+
+* CREATE SCHEMA文で作成できます。
+
+```sql
+# 基本パスにスキーマ作成
+CREATE SCHEMA example_schema;
+# 指定パスにスキーマ作成
+CREATE SCHEMA example_schema
+WITH (location = 's3a://my-bucket/example_schema/');
+```
+
+#### テーブル
+
+* CREATE TABLEまたはCREATE TABLE AS文で作成できます。
+* テーブルプロパティ指定でテーブルのメタデータを設定できます。
+    * テーブルプロパティはWITH節を使用して指定できます。
+
+```sql
+CREATE TABLE example_table (c1 INTEGER, c2 DATE, c3 DOUBLE);
+## プロパティ指定
+CREATE TABLE example_table (c1 INTEGER, c2 DATE, c3 DOUBLE)
+WITH (
+    format = 'PARQUET',
+    partitioning = ARRAY['c1', 'c2'],
+    sorted_by = ARRAY['c3'],
+    location = 's3a://my-bucket/example_schema/example_table/'
+);
+```
+
+* テーブルプロパティ
+    * テーブルのメタデータを設定できます。 [追加情報](https://trino.io/docs/455/connector/iceberg.html#table-properties)
+
+| プロパティ名 | 説明 |
+| ----- | --- |
+| format | テーブルデータファイルの形式を指定します。 PARQUET, ORC、またはAVRO. <br> デフォルト値はPARQUETです。 |
+| partitioning | テーブルパーティションを指定します。テーブルがc1列とc2列に分割されている場合、partitioning=ARRAY['c1', 'c2']で指定できます。 |
+| sorted\_by | 個別データファイルを保存する際、指定した列の値でソートして保存します。 |
+| location | テーブルのObject Storageパスを指定します。<br>プロパティを設定しない場合、デフォルトのパスより下のスキーマパスに保存されます。 |
+
+#### パーティション
+
+* テーブルプロパティを使用して、テーブルデータが分割保存された構造の分割された(パーティションされた)テーブルを作成できます。
+    * パーティション列がc1列とc2列に指定されている場合、該当パーティションのデータはテーブルデータパス下位の`/c1=<c1値>/c2=<c2値>`に保存されます。
+* Icebergは書き込み(write)されたデータの値を通じてパーティションを自動的に管理してくれるので、パーティションを手動で追加/管理できません。
+* テーブル列を利用(変換)してパーティションを指定できる機能をサポートします。
+    * year, month, day, hour, bucket, truncate [追加情報](https://trino.io/docs/455/connector/iceberg.html#partitioned-tables)
+
+| 変換 | サポートタイプ | 説明 |
+| --- | ----- | --- |
+| year(ts) | DATE, TIMESTAMP | 年度別 |
+| month(ts) | DATE, TIMESTAMP | 月別 |
+| day(ts) | DATE, TIMESTAMP | 日別 |
+| hour(ts) | DATE, TIMESTAMP | 時間別 |
+
+#### メタデータテーブル
+
+* メタデータテーブルを照会してIcebergテーブルのメタ情報を確認できます。 [追加情報](https://trino.io/docs/455/connector/iceberg.html#metadata-tables)
+    * $properties
+        * テーブルプロパティ
+    * $history
+        * テーブルのメタデータが変更された履歴
+    * $snapshots
+        * データに変化が発生したときに記録されたテーブル形状履歴
+    * $manifests
+        * データファイルの集合を管理するファイルの情報
+    * $partitions
+        * テーブルの詳細なパーティション情報
+    * $files
+        * 現在のテーブルのスナップショット
+
+```sql
+## テーブルプロパティ照会
+SELECT * FROM "test_table$properties"
+```
+
+#### データ管理
+
+* テーブル登録
+    * すでにファイルとして存在するIcebergテーブルが存在するが、登録されていないIcebergテーブルを登録する方法です。
+    * register\_tableを呼び出して登録できます。
+
+```sql
+CALL example.system.register_table(schema_name => 'example_schema', table_name => 'example_table', table_location => 's3a://my-bucket/example_schema/example_table')
+```
+
+* テーブル削除
+    * DROP TABLE文でテーブルを削除できます。このコマンドは、実際のIcebergデータを削除します。
+* テーブル除外
+    * テーブルを削除(DROP)せず、テーブルリストから除外する時に使用できます。
+
+```sql
+CALL example.system.unregister_table(schema_name => 'example_schema', table_name => 'example_table')
+```
+
+* スキーマ進化(schema evolution)
+    * Icebergはメタデータだけを変更するスキーマ進化をサポートします。スキーマアップデートを実行する際、データファイル自体は変更されません。
+    * 列の追加、削除、再ソート、名前変更、タイプ変更をサポートします。
+    * タイプ変更は既存タイプから拡張されるタイプの変更のみをサポートします。
+        * INTEGERからBIGINT
+        * REALからDOUBLE
+        * DECIMALの精度向上
+* スナップショット整理
+    * 書き込み、変更、圧縮などで作成されたスナップショットを整理します。
+    * 不要になった情報とデータファイルを除去してメタデータのサイズを維持できます。
+    * テーブルメタデータのサイズを小さく維持するにはスナップショットを定期的に整理することを推奨します。
+
+```sql
+ALTER TABLE test_table EXECUTE expire_snapshots(retention_threshold => '7d')
+```
+
+* 孤立したファイルの整理
+    * 現在存在するメタデータと関連がなくなったデータファイルを削除します。
+        * 該当ファイルのうち、指定時間以前に作成された対象を削除します。
+    * テーブルのデータディレクトリサイズを管理するにはファイルを整理することを推奨します。
+
+```sql
+ALTER TABLE test_table EXECUTE remove_orphan_files(retention_threshold => '7d')
+```
+
+#### Icebergタイプマッピング情報
+
+* IcebergタイプはDataQueryで処理できるタイプで、下記のようにマッピングされます。
+
+| DataQueryタイプ | Icebergタイプ |
+| ----------- | --------- |
+| BOOLEAN | BOOLEAN |
+| INTEGER | INT |
+| BIGINT | LONG |
+| REAL | FLOAT |
+| DOUBLE | DOUBLE |
+| DECIMAL(p,s) | DECIMAL(p,s) |
+| DATE | DATE |
+| TIME(6) | TIME |
+| TIMESTAMP(6) | TIMESTAMP |
+| TIMESTAMP(6) WITH TIME ZONE | TIMESTAMPTZ |
+| VARCHAR | STRING |
+| UUID | UUID |
+| VARBINARY | BINARY |
+| ROW(...) | STRUCT(...) |
+| ARRAY(e) | LIST(e) |
+| MAP(k,v) | MAP(k,v) |
+
+#### 注意及び制約事項
+
+* 同じパスにIcebergテーブルを重複して作成することはできません。
+* 列を変換してパーティションを構成する際、同じ列を使用することはできません。
+    * 例：1つのDATEタイプを持つ列でyear, month 2つのパーティションを設定できません。
+
+#### FAQ
+
+* 既にObject StorageにIcebergデータが存在します。どのようにDataQueryに適用できますか？
+    * register_tableを実行して登録できます。データ管理 > テーブル登録をご確認ください。
+* Object StorageにはParquetファイルのみ存在します。どのようにIcebergテーブルにすることができますか？
+    * 現在DataQueryでは該当機能を提供していません。該当機能を導入するために準備中です。
+    * 現在はObject Storageデータソースを作成してParquetテーブルを作成し、IcebergデータソースのテーブルとしてCREATE TABLE ASやINSERT INTOなどを使用すれば、Icebergを使用できます。
+* すでに存在するIcebergテーブルにParquetデータだけ追加したいです。
+    * 現在DataQueryでは該当機能を提供していません。該当機能を導入するために準備中です。
+    * 現在はObject Storageデータソースを作成してParquetテーブルを作成し、IcebergデータソースのテーブルとしてCREATE TABLE ASやINSERT INTOなどを使用すれば、Icebergを使用できます。
+
 
 ## 外部連動
 ### Trino cli
 
 * 設定メニューから発行された認証情報、接続情報、TrinoでサポートするCLIツールを利用してコマンドラインからクエリを実行できます。
-  * TrinoでサポートするCLIツールは最新バージョンを使用してください。
-  * 現在DataQueryで提供しているTrinoのバージョンは434です。
-  * [Trino CLI](https://repo1.maven.org/maven2/io/trino/trino-cli/434/trino-cli-434-executable.jar)
+  * DataQueryは現在Trino 455バージョンを基盤にサービスしています。
+  * [Trino CLI](https://repo1.maven.org/maven2/io/trino/trino-cli/455/trino-cli-455-executable.jar)
 
 ```
 # ファイルに実行権限が必要です。chmod +xで付与できます。
-# ex) chmod +x trino-cli-434-executable.jar
+# 例) chmod +x trino-cli-455-executable.jar
 
-./trino-cli-434-executable.jar --server <接続URL(必須)> \
+./trino-cli-455-executable.jar --server <接続URL(必須)> \
   --user <ID(必須)> --password \
   --catalog <データソース名> \
   --schema <スキーマ名>
@@ -443,7 +623,7 @@ SELECT * FROM corona_facility_us
 * catalog、schema値はコマンドを実行する接続に対する値で、入力しなくてもcli実行することができ、以下のクエリを利用してcatalogやschemaリストを確認できます。
     * show catalogs
     * show schemas
-* 詳細は[Trinoガイドページ](https://trino.io/docs/434/client/cli.html)をご覧ください。
+* 詳細は[Trinoガイドページ](https://trino.io/docs/455/client/cli.html)をご覧ください。
 
 ### JDBC接続
 
@@ -466,4 +646,4 @@ jdbc:trino://${host}:${port}/${catalog}/${schema}
         * 接続したいスキーマ名
 * 接続情報例
     * jdbc:trino://test-dataquery-domain-12345abcd.kr1-cluster-dataquery.nhncloudservice.com:443/catalog/schema
-* 詳細は[Trino JDBCガイドページ](https://trino.io/docs/434/client/jdbc.html)をご覧ください。
+* 詳細は[Trino JDBCガイドページ](https://trino.io/docs/455/client/jdbc.html)をご覧ください。
