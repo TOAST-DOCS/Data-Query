@@ -31,6 +31,9 @@ The service is available through following procedures.
         * Object Storage container name (dataquery-warehouse) that the system uses to store Default table information, management table information, and data.
             * Create and use your own dataquery-warehouse container.
         * Existing data to be linked may exist outside the dataquery-warehouse container.
+  * 추가 설정 정보
+        * 재귀적 경로 읽기: 하위 디렉터리를 포함한 쿼리를 실행할 수 있습니다.
+        * 파일 저장 형식: 스토리지에 저장될 파일 타입을 설정합니다. ORC, Parquet, CSV 등의 타입을 지원합니다.
 * Others
     * Object Storage to be linked may exist outside the same NHN Cloud project.
 > [Note]
