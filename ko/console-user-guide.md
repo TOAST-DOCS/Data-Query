@@ -31,6 +31,9 @@ DataQuery 서비스를 사용하려면 반드시 데이터 소스를 추가해�
         * 시스템에서 기본 테이블 정보나 관리 테이블 정보, 데이터를 저장하기 위해 사용하는 Object Storage 컨테이너명(dataquery-warehouse)입니다.
             * 자체적으로 dataquery-warehouse 컨테이너를 생성해 사용합니다.
         * 연동할 기존 데이터들은 dataquery-warehouse 컨테이너 외부에 존재할 수 있습니다.
+    * 추가 설정 정보
+        * 재귀적 경로 읽기: 하위 디렉터리를 포함한 쿼리를 실행할 수 있습니다.
+        * 파일 저장 형식: 스토리지에 저장될 파일 타입을 설정합니다. ORC, Parquet, CSV 등의 타입을 지원합니다.
 * 그 외 사항
     * 연동할 Object Storage는 같은 NHN Cloud 프로젝트 외부에 존재할 수 있습니다.
 > [주의]
