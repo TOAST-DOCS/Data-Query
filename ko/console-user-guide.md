@@ -278,8 +278,28 @@ SELECT * FROM default"sample$partitions"
 #파티션을 조작
 system.create_empty_partition(schema_name, table_name, partition_columns, partition_values)
 system.sync_partition_metadata(schema_name, table_name, mode, case_sensitive)
+system.register_partition(schema_name, table_name, partition_columns, partition_values, location)
 ```
-
+* 파티션 함수
+  * sync_partition_metadata
+    * 오브젝트들의 경로에서 파티션 값을 유추해서 자동으로 파티션 값을 등록, 삭제할 수 있습니다.
+      
+      | 모드 | 설명                                                                                |
+      | ----- |-----------------------------------------------------------------------------------|
+      | ADD | 파티션 값이 테이블에 등록되어 있지 않고, Object Storage 오브젝트들이 Hive 파티션 경로에 맞게 존재할 때 파티션 값을 추가합니다. |
+      | DROP | 파티션 값이 이미 테이블에 등록되었지만, Object Storage 오브젝트들이 Hive 파티션 경로에 존재하지 않는다면 파티션 값을 삭제합니다. |
+      | FULL | ADD, DROP을 차례대로 수행합니다.                                                            |
+    * Object Storage 오브젝트들의 경로를 기준으로 Hive 파티션 값을 유추하는 방법은 아래와 같습니다.
+      * 정의된 external\_location 하위에 있는 모든 오브젝트를 조회한 뒤 경로를 추출합니다.
+      * 파티션 열이 c1 열과 c2 열로 지정되어 있을 경우, Hive 파티션으로 유효한 경로는 `/c1=<c1 값>/c2=<c2 값>`를 포함해야 합니다.
+      * 예를 들어서 external\_location='s3a://location/tmp/', partitioned_by=ARRAY['year', 'month', 'day'] 로 정의된 테이블이 있다고 했을 때, external_location 하위 모든 오브젝트의 경로를 추출한 뒤 그 경로가 s3a://location/tmp/year=yyyy/month=MM/day=dd/와 같은 형식을 포함할 때 Hive 파티션 경로로 `유효`하다고 판단하고 파티션 값을 유추합니다.
+    * 주의
+      * sync_partition_metadata을 실행 하기 위해서는 테이블에서 정의한 external\_location에 컨테이너 이하 경로가 반드시 하나 더 존재해야 합니다. 예를 들어, external\_location='s3a://location/tmp/'와 같이 컨테이너가 location일 때 하위에 tmp로 경로가 하나 더 있어야 합니다.
+  * register_partition
+    * 사용자가 지정한 경로를 파티션의 값으로 직접 등록할 수 있습니다.
+    * 세번째 파라미터인 partition_columns에는 Hive 테이블에서 정의한 파티션 열을 입력합니다.
+    * 네번째 파라미터인 partition_values에는 등록하려는 파티션 값을 입력합니다.
+    * 다섯번째 파라미터인 location에 오브젝트가 반드시 하나 이상 존재해야 합니다.
 * 제약 사항
     * CSV 타입의 테이블 칼럼은 VARCHAR 타입만 지원됩니다.
     * DataQuery에서는 Object Storage 접근을 위해 S3 호환 레이어를 사용하며, 스키마 또는 테이블을 위한 데이터 경로 지정 시 s3a 프로토콜을 사용해야 합니다(ex. s3a://example/test).
@@ -484,7 +504,7 @@ WITH (
 | year(ts) | DATE, TIMESTAMP | 연도별 |
 | month(ts) | DATE, TIMESTAMP | 월별 |
 | day(ts) | DATE, TIMESTAMP | 일별 |
-| hour(ts) | DATE, TIMESTAMP | 시간별 |
+| hour(ts) | TIMESTAMP | 시간별 |
 
 #### 메타데이터 테이블
 
@@ -573,7 +593,39 @@ ALTER TABLE test_table EXECUTE remove_orphan_files(retention_threshold => '7d')
 | ROW(...) | STRUCT(...) |
 | ARRAY(e) | LIST(e) |
 | MAP(k,v) | MAP(k,v) |
+#### Object Storage에 존재하는 Parquet 파일을 Iceberg 테이블에 추가
+* 특정 파일 혹은 특정 경로 하위의 파일들을 Iceberg 테이블에 데이터로 추가할 수 있습니다.
+* 파티션이 없는 테이블은 add_files, 파티션이 정의된 테이블은 add_files_with_partition으로 데이터 파일과 파티션 값을 추가할 수 있습니다.
+* add_files 함수
 
+  |인자  | 지원하는 값                    | 설명                                                                                                                                               |
+  | --- |---------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
+  | location | 데이터 파일 경로                 | 추가하려는 데이터 파일 경로                                                                                                                                  |
+  | format | PARQUET(기본 포맷), ORC, AVRO | 추가하려는 데이터 파일 포맷                                                                                                                                  |
+  | recursive_directory | FAIL(기본 값), TRUE, FALSE   | FAIL => 입력한 데이터 파일 위치가 2단계 깊이로 재귀 탐색이 가능하다면 쿼리를 실패하게 합니다.<br> TRUE => 입력한 데이터 파일 위치 하위를 재귀로 모두 탐색합니다.<br>FALSE => 입력한 데이터 파일 위치 2단계 깊이부터는 무시합니다. |
+  |duplicate_file  | FAIL(기본 값), SKIP, ADD     | FAIL => iceberg 테이블에 이미 등록된 데이터 파일과 비교해서 중복된 데이터 파일이 있으면 쿼리 실패합니다.<br>SKIP => 중복된 파일은 무시합니다.<br>ADD => 데이터 파일을 추가합니다.                            |
+```sql
+## example_table에 mybucket/a/path 하위 데이터 파일을 추가
+ALTER TABLE example.system.example_table 
+EXECUTE add_files(location => 's3://my-bucket/a/path', format => 'PARQUET', recursive_directory => 'FAIL', duplicate_file => 'FAIL')
+```
+* add_files_with_partition 함수
+  * 파티션 변형을 정의한 테이블도 지원합니다.
+  * 등록하려는 파티션 열 타입이 DATE일 때는 `YYYY-MM-DD`, TIMESTAMP일 때는`YYYY-MM-DD HH:mm:ss`의 형식으로 입력해야 합니다. timezone이 있는 TIMESTAMP인 경우 `YYYY-MM-DD HH:mm:ss Asia/Seoul`과 같이 끝에 zoneId가 명시되어야 합니다.
+ 
+    |인자  | 지원하는 값                    | 설명                                                                                                                                                |
+    | --- |---------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------|
+    | location | 데이터 파일 경로                 | 추가하려는 데이터 파일 경로                                                                                                                                   |
+    |partition_columns| ARRAY['partition_column'] | iceberg 테이블에 정의된 파티션 열을 나열하며 테이블이 c1, c2열로 분할된 경우 ARRAY['c1', 'c2']로 입력                                                                           |
+    |partition_values| ARRAY['partition_value']  | 등록하려는 파티션 값                                                                                                                                       |
+    | format | PARQUET(기본 포맷), ORC, AVRO | 추가하려는 데이터 파일의 포맷                                                                                                                                  |
+    | recursive_directory | FAIL(기본 값), TRUE, FALSE   | FAIL => 입력한 데이터 파일 위치가 2단계 깊이로 재귀 탐색이 가능하다면 쿼리를 실패하게 합니다.<br> TRUE => 입력한 데이터 파일 위치 하위를 재귀로 모두 탐색합니다.<br>FALSE => 입력한 데이터 파일의 위치 2단계 깊이부터는 무시합니다. |
+    |duplicate_file  | FAIL(기본 값), SKIP, ADD     | FAIL => iceberg 테이블에 이미 등록된 데이터 파일과 비교해서 중복된 데이터 파일이 있으면 쿼리 실패합니다.<br>SKIP => 중복된 파일은 무시합니다.<br>ADD => 데이터 파일을 추가합니다.                             |
+```sql
+## 파티션 열이 year이면서 day 변환이 적용된 iceberg 테이블
+ALTER TABLE example.system.example_table 
+EXECUTE add_files_with_partition(location => 's3://my-bucket/a/path', partition_columns => ARRAY['year'], partition_values => ARRAY['2024-11-21'], format => 'PARQUET', recursive_directory => 'TRUE', duplicate_file => 'FAIL')
+```
 #### 주의 및 제약 사항
 
 * 동일 경로에 Iceberg 테이블을 중복해서 생성하는 것은 불가능합니다.
@@ -584,12 +636,6 @@ ALTER TABLE test_table EXECUTE remove_orphan_files(retention_threshold => '7d')
 
 * 이미 Object Storage에 Iceberg 데이터가 존재합니다. 어떻게 DataQuery에 적용할 수 있나요?
     * register_table을 실행하여 등록할 수 있습니다. 데이터 관리 > 테이블 등록을 확인하세요.
-* Object Storage에는 Parquet 파일만 존재합니다. 어떻게 Iceberg 테이블로 만들 수 있나요?
-    * 현재 DataQuery에서는 해당 기능을 제공하지 않습니다. 해당 기능을 도입하기 위해 준비 중입니다.
-    * 현재는 Object Storage 데이터 소스를 만들어서 Parquet 테이블을 생성하고, Iceberg 데이터 소스의 테이블로 CREATE TABLE AS 나 INSERT INTO 등을 사용한다면 Iceberg를 사용할 수 있습니다.
-* 이미 존재하는 Iceberg 테이블에 Parquet 데이터만 추가하고 싶습니다.
-    * 현재 DataQuery에서는 해당 기능을 제공하지 않습니다. 해당 기능을 도입하기 위해 준비 중입니다.
-    * 현재는 Object Storage 데이터 소스를 만들어서 Parquet 테이블을 생성하고, Iceberg 데이터 소스의 테이블로 CREATE TABLE AS 나 INSERT INTO 등을 사용한다면 Iceberg를 사용할 수 있습니다.
 
 
 ## 외부 연동
