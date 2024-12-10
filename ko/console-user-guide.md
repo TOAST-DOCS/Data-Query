@@ -297,8 +297,8 @@ system.register_partition(schema_name, table_name, partition_columns, partition_
       * sync_partition_metadata을 실행 하기 위해서는 테이블에서 정의한 external\_location에 컨테이너 이하 경로가 반드시 하나 더 존재해야 합니다. 예를 들어, external\_location='s3a://location/tmp/'와 같이 컨테이너가 location일 때 하위에 tmp로 경로가 하나 더 있어야 합니다.
   * register_partition
     * 사용자가 지정한 경로를 파티션의 값으로 직접 등록할 수 있습니다.
-    * 세번째 파라미터인 partition_columns에는 Hive 테이블에서 정의한 파티션 열을 입력합니다.
-    * 네번째 파라미터인 partition_values에는 등록하려는 파티션 값을 입력합니다.
+    * 세번째 파라미터인 partition_columns에는 Hive 테이블에서 정의한 파티션 열들을 입력합니다.
+    * 네번째 파라미터인 partition_values에는 등록하려는 파티션 값들을 입력합니다.
     * 다섯번째 파라미터인 location에 오브젝트가 반드시 하나 이상 존재해야 합니다.
 * 제약 사항
     * CSV 타입의 테이블 칼럼은 VARCHAR 타입만 지원됩니다.
