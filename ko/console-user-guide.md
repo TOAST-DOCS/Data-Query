@@ -598,12 +598,12 @@ ALTER TABLE test_table EXECUTE remove_orphan_files(retention_threshold => '7d')
 * 파티션이 없는 테이블은 add_files, 파티션이 정의된 테이블은 add_files_with_partition으로 데이터 파일과 파티션 값을 추가할 수 있습니다.
 * add_files 함수
 
-  |인자  | 지원하는 값                    | 설명                                                                                                                                               |
-  | --- |---------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
-  | location | 데이터 파일 경로                 | 추가하려는 데이터 파일 경로                                                                                                                                  |
-  | format | PARQUET(기본 포맷), ORC, AVRO | 추가하려는 데이터 파일 포맷                                                                                                                                  |
-  | recursive_directory | FAIL(기본 값), TRUE, FALSE   | FAIL => 입력한 데이터 파일 경로가 2단계 깊이로 재귀 탐색이 가능하다면 쿼리를 실패하게 합니다.<br> TRUE => 입력한 데이터 파일 경로 하위를 재귀로 모두 탐색합니다.<br>FALSE => 입력한 데이터 파일 경로 2단계 깊이부터는 무시합니다. |
-  |duplicate_file  | FAIL(기본 값), SKIP, ADD     | FAIL => iceberg 테이블에 이미 등록된 데이터 파일과 비교해서 중복된 데이터 파일이 있으면 쿼리 실패합니다.<br>SKIP => 중복된 파일은 무시합니다.<br>ADD => 데이터 파일을 추가합니다.                            |
+  |인자  | 지원하는 값                    | 설명                                                                                                                                                                                     |
+  | --- |---------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+  | location | 데이터 파일 경로                 | 추가하려는 데이터 파일 경로                                                                                                                                                                        |
+  | format | PARQUET(기본 포맷), ORC, AVRO | 추가하려는 데이터 파일 포맷                                                                                                                                                                        |
+  | recursive_directory | FAIL(기본 값), TRUE, FALSE   | location 이하 경로를 재귀로 탐색할 수 있을 때의 동작<br>FAIL => 입력한 데이터 파일 경로가 2단계 깊이로 재귀 탐색이 가능하다면 쿼리를 실패하게 합니다.<br> TRUE => 입력한 데이터 파일 경로 하위를 재귀로 모두 탐색합니다.<br>FALSE => 입력한 데이터 파일 경로 2단계 깊이부터는 무시합니다. |
+  |duplicate_file  | FAIL(기본 값), SKIP, ADD     | 등록하려는 데이터 파일이 이미 등록된 iceberg 테이블의 데이터 파일과 중복일 때의 동작<br>FAIL => iceberg 테이블에 이미 등록된 데이터 파일과 비교해서 중복된 데이터 파일이 있으면 쿼리 실패합니다.<br>SKIP => 중복된 파일은 무시합니다.<br>ADD => 데이터 파일을 추가합니다.           |
 ```sql
 ## example_table에 mybucket/a/path 하위 데이터 파일을 추가
 ALTER TABLE example.system.example_table 
@@ -613,14 +613,14 @@ EXECUTE add_files(location => 's3://my-bucket/a/path', format => 'PARQUET', recu
   * 파티션 변형을 정의한 테이블도 지원합니다.
   * 등록하려는 파티션 열 타입이 DATE일 때는 `YYYY-MM-DD`, TIMESTAMP일 때는`YYYY-MM-DD HH:mm:ss`의 형식으로 입력해야 합니다. timezone이 있는 TIMESTAMP인 경우 `YYYY-MM-DD HH:mm:ss Asia/Seoul`과 같이 끝에 zoneId가 명시되어야 합니다.
  
-    |인자  | 지원하는 값                    | 설명                                                                                                                                                |
-    | --- |---------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------|
-    | location | 데이터 파일 경로                 | 추가하려는 데이터 파일 경로                                                                                                                                   |
-    |partition_columns| ARRAY['partition_column'] | iceberg 테이블에 정의된 파티션 열을 나열하며 테이블이 c1, c2열로 분할된 경우 ARRAY['c1', 'c2']로 입력                                                                           |
-    |partition_values| ARRAY['partition_value']  | 등록하려는 파티션 값                                                                                                                                       |
-    | format | PARQUET(기본 포맷), ORC, AVRO | 추가하려는 데이터 파일의 포맷                                                                                                                                  |
-    | recursive_directory | FAIL(기본 값), TRUE, FALSE   | FAIL => 입력한 데이터 파일 경로가 2단계 깊이로 재귀 탐색이 가능하다면 쿼리를 실패하게 합니다.<br> TRUE => 입력한 데이터 파일 경로 하위를 재귀로 모두 탐색합니다.<br>FALSE => 입력한 데이터 파일의 경로 2단계 깊이부터는 무시합니다. |
-    |duplicate_file  | FAIL(기본 값), SKIP, ADD     | FAIL => iceberg 테이블에 이미 등록된 데이터 파일과 비교해서 중복된 데이터 파일이 있으면 쿼리 실패합니다.<br>SKIP => 중복된 파일은 무시합니다.<br>ADD => 데이터 파일을 추가합니다.                             |
+    |인자  | 지원하는 값                    | 설명                                                                                                                                                                                      |
+    | --- |---------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+    | location | 데이터 파일 경로                 | 추가하려는 데이터 파일 경로                                                                                                                                                                         |
+    |partition_columns| ARRAY['partition_column'] | iceberg 테이블에 정의된 파티션 열을 나열하며 테이블이 c1, c2열로 분할된 경우 ARRAY['c1', 'c2']로 입력                                                                                                                 |
+    |partition_values| ARRAY['partition_value']  | 등록하려는 파티션 값                                                                                                                                                                             |
+    | format | PARQUET(기본 포맷), ORC, AVRO | 추가하려는 데이터 파일의 포맷                                                                                                                                                                        |
+    | recursive_directory | FAIL(기본 값), TRUE, FALSE   | location 이하 경로를 재귀로 탐색할 수 있을 때의 동작<br>FAIL => 입력한 데이터 파일 경로가 2단계 깊이로 재귀 탐색이 가능하다면 쿼리를 실패하게 합니다.<br> TRUE => 입력한 데이터 파일 경로 하위를 재귀로 모두 탐색합니다.<br>FALSE => 입력한 데이터 파일의 경로 2단계 깊이부터는 무시합니다. |
+    |duplicate_file  | FAIL(기본 값), SKIP, ADD     | 등록하려는 데이터 파일이 이미 등록된 iceberg 테이블의 데이터 파일과 중복일 때의 동작<br>FAIL => iceberg 테이블에 이미 등록된 데이터 파일과 비교해서 중복된 데이터 파일이 있으면 쿼리 실패합니다.<br>SKIP => 중복된 파일은 무시합니다.<br>ADD => 데이터 파일을 추가합니다.            |
 ```sql
 ## 파티션 열이 year이면서 day 변환이 적용된 iceberg 테이블
 ALTER TABLE example.system.example_table 
