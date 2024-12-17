@@ -637,7 +637,7 @@ EXECUTE add_files_with_partition(location => 's3://my-bucket/a/path', partition_
 * 이미 Object Storage에 Iceberg 데이터가 존재합니다. 어떻게 DataQuery에 적용할 수 있나요?
     * register_table을 실행하여 등록할 수 있습니다. 데이터 관리 > 테이블 등록을 확인하세요.
 * Object Storage에는 Parquet 파일만 존재합니다. 어떻게 Iceberg 테이블로 만들 수 있나요?
-    * Iceberg 테이블을 생성 한 뒤, add_files, add_files_with_partition 함수를 사용하여 데이터를 추가할 수 있습니다.
+    * Iceberg 테이블을 생성한 뒤, add_files, add_files_with_partition 함수를 사용하여 데이터를 추가할 수 있습니다.
 * 이미 존재하는 Iceberg 테이블에 Parquet 데이터만 추가하고 싶습니다.
     * add_files, add_files_with_partition 함수를 사용하여 데이터를 추가할 수 있습니다.
 
