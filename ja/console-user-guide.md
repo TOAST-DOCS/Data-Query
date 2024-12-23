@@ -31,6 +31,9 @@ DataQueryサービスを使用するには、必ずデータソースを追加�
         * システムで基本テーブル情報や管理テーブル情報、データを保存するために使用するObject Storageコンテナ名(dataquery-warehouse)です。
             * 独自にdataquery-warehouseコンテナを作成して使用します。
         * 連動する既存データは、dataquery-warehouseコンテナ外部に存在できます。
+    * 追加設定情報
+        * 再帰的経路の読み取り：サブディレクトリを含むクエリを実行できます。
+        * ファイル保存形式:ストレージに保存されるファイルタイプを設定します。ORC、Parquet、CSVなどのタイプをサポートします。
 * その他の事項
     * 連動するObject Storageは、同じNHN Cloudプロジェクト外部に存在できます。
 > [注意]
@@ -103,6 +106,23 @@ DataQueryサービスを使用するには、必ずデータソースを追加�
     * 接続するMariaDBアカウント名です。
 * パスワード
     * 接続するMariaDBパスワードです。
+
+
+### Icebergデータソースタイプ
+
+* データソース名
+    * クエリ実行時に使用される区切り文字で、データソース間で固有の値でなければなりません。
+* アクセスキー、秘密鍵、リージョン
+    * 連動するIcebergテーブルデータまたは連動するデータが存在するObject Storageの接続情報です。
+    * アクセスキーと秘密鍵はObject Storageコンソールで発行できます。詳細は[Object Storageコンソール使用ガイド](https://docs.toast.com/ko/Storage/Object%20Storage/ko/console-guide/#s3-api)を参照してください。
+        * リージョンはObject Storageガイドのリージョン別[S3リージョン](https://docs.toast.com/ko/Storage/Object%20Storage/ko/s3-api-guide/#aws-cli)を参照してください。
+    * バケット名
+        * システムで基本Icebergテーブル情報を保存するために使用するObject Storageコンテナ名はdataquery-warehouseで、サブパスはicebergです。
+        * 連連動する既存のデータは他のパスに存在する可能性があります。
+
+> [注意]
+> DataQueryと連動するObject Storageが同じリージョンでない場合、ネットワークトラフィックによる追加料金が発生する可能性があります。
+
 
 ## クエリエディタ
 
@@ -192,7 +212,6 @@ DataQueryサービスを使用するには、必ずデータソースを追加�
     * 設定はクラスターがオフの状態(OFF)でのみ修正できます。
 
 ### 外部連動
-
 * 外部ツール(JDBC、CLI、BIソリューションなど)と連動できるようにTrinoエンドポイントを提供し、**設定**ページで提供する情報を利用して連動できます。
 * エンドポイント接続には、個人別の認証情報が必要で、**設定**メニューで**認証キー**発行をクリックして発行できます。
     * 個人別の認証情報は、IDと認証キーで構成されており、エンドポイントに接続する時、ユーザー名(ID)とパスワード(認証キー)として活用されます。
@@ -259,8 +278,28 @@ SELECT * FROM default"sample$partitions"
 #パーティションを操作
 system.create_empty_partition(schema_name, table_name, partition_columns, partition_values)
 system.sync_partition_metadata(schema_name, table_name, mode, case_sensitive)
+system.register_partition(schema_name, table_name, partition_columns, partition_values, location)
 ```
-
+* パーティション関数
+  * sync_partition_metadata
+    * オブジェクトのパスからパーティション値を推測して、自動的にパーティション値を登録、削除できます。
+      
+      | モード | 説明                                                                              |
+      | ----- |-----------------------------------------------------------------------------------|
+      | ADD | パーティション値がテーブルに登録されておらず、Object StorageオブジェクトがHiveのパーティションパスに合わせて存在するときに、パーティション値を追加します。 |
+      | DROP | パーティション値がすでにテーブルに登録されているが、Object StorageオブジェクトがHiveパーティションパスに存在しない場合は、パーティション値を削除します。 |
+      | FULL | ADD, DROPを順番に実行します。                                                            |
+    * Object Storageオブジェクトのパスを基準にHiveパーティションの値を推論する方法は次のとおりです。
+      * 定義されたexternal\_locationの下にある全てのオブジェクトを照会した後、パスを抽出します。
+      * パーティション列がc1列とc2列で指定されている場合、Hiveパーティションとして有効なパスは`/c1=<c1 value>/c2=<c2 value>`を含む必要があります。
+      * 例えば、external\_location='s3a://location/tmp/', partitioned_by=ARRAY['year', 'month', 'day']で定義されたテーブルがある場合、 external_locationの下にある全てのオブジェクトのパスを抽出した後、そのパスがs3a://location/tmp/year=yyyy/month=MM/day=dd/のような形式を含む場合、Hiveパーティションパスとして「有効」と判断し、パーティション値を推測します。
+    * 注意
+      * sync_partition_metadataを実行するには、テーブルで定義したexternal\_locationにコンテナ以下のパスが必ず1つ以上存在する必要があります。例えば、external\_location='s3a://location/tmp/'のように、コンテナがlocationの場合、その下にtmpというパスが1つ以上存在する必要があります。
+  * register_partition
+    * ユーザーが指定したパスをパーティションの値として直接登録できます。
+    * 3番目のパラメータであるpartition_columnsには、Hiveテーブルで定義したパーティション列を入力します。
+    * 4番目のパラメータであるpartition_valuesには、登録したいパーティションの値を入力します。
+    *  5番目のパラメータであるlocationにオブジェクトが必ず1つ以上存在する必要があります。
 * 制約事項
     * CSVタイプのテーブルカラムはVARCHARタイプのみサポートされます。
     * DataQueryではObject StorageアクセスのためにS3互換レイヤーを使用し、スキーマまたはテーブルのためのデータパス指定時、s3aプロトコルを使用する必要があります(ex. s3a://example/test)。
@@ -408,6 +447,205 @@ SELECT * FROM corona_facility_us
         * 条件節をANDで構成することはできません。
         * テーブルのすべての列を同時に更新することはできません。
         * [詳細情報](https://trino.io/docs/434/connector/mariadb.html#update)
+
+
+### Icebergデータソースクエリ実行
+
+* Icebergデータソースに対するクエリは、Trino-Icebergに基づいて実行されます。
+* Object Storageに存在するIcebergテーブルデータ及びサポートするフォーマットのデータに対して連動できます。
+    * PARQUET(基本フォーマット), ORC, AVROタイプのデータをサポートします。
+* Object StorageへのアクセスにS3互換レイヤーを使用し、スキーマまたはテーブルのデータパス指定時にs3aプロトコルを使用する必要があります(例：s3a://example/test).
+
+#### スキーマ
+
+* CREATE SCHEMA文で作成できます。
+
+```sql
+# 基本パスにスキーマを作成
+CREATE SCHEMA example_schema;
+# 指定したパスにスキーマを作成
+CREATE SCHEMA example_schema
+WITH (location = 's3a://my-bucket/example_schema/');
+```
+
+#### テーブル
+
+* CREATE TABLEまたはCREATE TABLE AS文で作成できます。
+* テーブル属性指定でテーブルのメタデータを設定できます。
+    * テーブル属性はWITH節を使用して指定できます。
+
+```sql
+CREATE TABLE example_table (c1 INTEGER, c2 DATE, c3 DOUBLE);
+## 属性の指定
+CREATE TABLE example_table (c1 INTEGER, c2 DATE, c3 DOUBLE)
+WITH (
+    format = 'PARQUET',
+    partitioning = ARRAY['c1', 'c2'],
+    sorted_by = ARRAY['c3'],
+    location = 's3a://my-bucket/example_schema/example_table/'
+);
+```
+
+* テーブル属性
+    * * テーブルのメタデータを設定できます。 [追加情報](https://trino.io/docs/455/connector/iceberg.html#table-properties)
+
+| 属性名 | 説明 |
+| ----- | --- |
+| format | テーブルデータファイルの形式を指定します。 PARQUET, ORC、またはAVRO. <br> デフォルト値はPARQUETです。 |
+| partitioning | テーブルパーティションを指定します。テーブルがc1列とc2列に分割されている場合、partitioning=ARRAY['c1', 'c2']で指定できます。 |
+| sorted\_by | 個々のデータファイルを保存する際、指定した列の値でソートして保存します。 |
+| location | テーブルのObject Storageのパスを指定します。<br>属性を設定しない場合、デフォルトパスより下のスキーマパスに保存されます。 |
+
+#### パーティション
+
+* テーブル属性を使用して、テーブルデータが分割保存された構造の分割された(パーティション化された)テーブルを作成できます。
+    * パーティション列がc1列とc2列で指定されている場合、そのパーティションのデータは、テーブルデータパス下位の`/c1=<c1値>/c2=<c2値>`に保存されます。
+* Icebergは、書き込み(write)されたデータの値を通じてパーティションを自動的に管理してくれるので、手動でパーティションを追加/管理することはできません。
+* テーブル列を利用(変換)してパーティションを指定できる機能をサポートします。
+    * year, month, day, hour, bucket, truncate [追加情報](https://trino.io/docs/455/connector/iceberg.html#partitioned-tables)
+
+| 変換 | サポートタイプ | 説明 |
+| --- | ----- | --- |
+| year(ts) | DATE, TIMESTAMP | 年度別 |
+| month(ts) | DATE, TIMESTAMP | 月別 |
+| day(ts) | DATE, TIMESTAMP | 日別 |
+| hour(ts) | TIMESTAMP | 時間別 |
+
+#### メタデータテーブル
+
+* メタデータテーブルを照会してIcebergテーブルのメタ情報を確認できます。 [追加情報](https://trino.io/docs/455/connector/iceberg.html#metadata-tables)
+    * $properties
+        * テーブルの属性
+    * $history
+        * テーブルのメタデータが変更された履歴
+    * $snapshots
+        * データに変化が発生したときに記録されたテーブルの形状履歴
+    * $manifests
+        * データファイルの束を管理するファイルの情報
+    * $partitions
+        * テーブルの詳細なパーティション情報
+    * $files
+        * 現在のテーブルのスナップショット
+
+```sql
+## テーブルプロパティ照会
+SELECT * FROM "test_table$properties"
+```
+
+#### データ管理
+
+* テーブル登録
+    * 既にファイルとして存在するIcebergテーブルが存在するが、登録されていないIcebergテーブルを登録する方法です。
+    * register\_tableを呼び出して登録できます。
+
+```sql
+CALL example.system.register_table(schema_name => 'example_schema', table_name => 'example_table', table_location => 's3a://my-bucket/example_schema/example_table')
+```
+
+* テーブル削除
+    * DROP TABLE文でテーブルを削除できます。このコマンドは、実際のIcebergデータを削除します。
+* テーブル除外
+    * テーブルを削除(DROP)せず、テーブルリストから除外する時だけ使用できます。
+
+```sql
+CALL example.system.unregister_table(schema_name => 'example_schema', table_name => 'example_table')
+```
+
+* スキーマの進化(schema evolution)
+    * Icebergはメタデータだけを変更するスキーマの進化をサポートします。スキーマ更新を実行する際、データファイル自体は変更されません。
+    * 列の追加、削除、並べ替え、名前変更、タイプ変更をサポートします。
+    * タイプ変更は、既存のタイプから拡張されるタイプの変更のみをサポートします。
+        * INTEGERからBIGINT
+        * REALからDOUBLE
+        * DECIMALの精度向上
+* スナップショットのクリーンアップ
+    * 書き込み、変更、圧縮などで作成されたスナップショットをクリーンアップします。
+    * 不要になった情報とデータファイルを削除して、メタデータのサイズを維持できます。
+    * テーブルのメタデータのサイズを小さく維持するためには、定期的にスナップショットをクリーンアップすることを推奨します。
+
+```sql
+ALTER TABLE test_table EXECUTE expire_snapshots(retention_threshold => '7d')
+```
+
+* 孤立したファイルのクリーンアップ
+    * 現在存在するメタデータと関連性がなくなったデータファイルを削除します。
+        * 該当ファイルのうち、指定時間以前に作成された対象を削除します。
+    * テーブルのデータディレクトリのサイズを管理するために、ファイルをクリーンアップすることを推奨します。
+
+```sql
+ALTER TABLE test_table EXECUTE remove_orphan_files(retention_threshold => '7d')
+```
+
+#### Icebergタイプマッピング情報
+
+* IcebergタイプはDataQueryで処理できるタイプで、下記のようにマッピングされます。
+
+| DataQueryタイプ | Icebergタイプ |
+| ----------- | --------- |
+| BOOLEAN | BOOLEAN |
+| INTEGER | INT |
+| BIGINT | LONG |
+| REAL | FLOAT |
+| DOUBLE | DOUBLE |
+| DECIMAL(p,s) | DECIMAL(p,s) |
+| DATE | DATE |
+| TIME(6) | TIME |
+| TIMESTAMP(6) | TIMESTAMP |
+| TIMESTAMP(6) WITH TIME ZONE | TIMESTAMPTZ |
+| VARCHAR | STRING |
+| UUID | UUID |
+| VARBINARY | BINARY |
+| ROW(...) | STRUCT(...) |
+| ARRAY(e) | LIST(e) |
+| MAP(k,v) | MAP(k,v) |
+#### Object Storageに存在するParquetファイルをIcebergテーブルに追加
+* 特定のファイルまたは特定のパスの下のファイルをIcebergテーブルにデータとして追加できます。
+* パーティションがないテーブルはadd_files、パーティションが定義されたテーブルはadd_files_with_partitionでデータファイルとパーティション値を追加できます。
+* add_files関数
+
+  |引数 | サポートする値                  | 説明                                                                                                                                                                                   |
+  | --- |---------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+  | location | データファイルパス               | 追加したいデータファイルのパス                                                                                                                                                                      |
+  | format | PARQUET(基本フォーマット), ORC, AVRO | 追加したいデータファイルのフォーマット                                                                                                                                                                      |
+  | recursive_directory | FAIL(デフォルト値), TRUE, FALSE   | location以下のパスを再帰的に探索できる場合の動作<br>FAIL => 入力したデータファイルパスが2段階の深さまで再帰的に探索できる場合、クエリに失敗します。<br> TRUE => 入力したデータファイルパスより下を全て再帰的に探索します。<br>FALSE => 入力したデータファイルパス2段階の深さから無視します。 |
+  |duplicate_file  | FAIL(デフォルト値), SKIP, ADD     | 登録しようとするデータファイルが既に登録されたicebergテーブルのデータファイルと重複している場合の動作<br>FAIL => icebergテーブルに既に登録されたデータファイルと比較して重複したデータファイルがある場合、クエリに失敗します。<br>SKIP => 重複したファイルは無視します。<br>ADD => データファイルを追加します。           |
+```sql
+## example_tableにmybucket/a/path下位データファイルを追加
+ALTER TABLE example.system.example_table 
+EXECUTE add_files(location => 's3://my-bucket/a/path', format => 'PARQUET', recursive_directory => 'FAIL', duplicate_file => 'FAIL')
+```
+* add_files_with_partition関数
+  * パーティション変形を定義したテーブルもサポートします。
+  * 登録するパーティション列タイプがDATEの場合は`YYYY-MM-DD`, TIMESTAMPの場合は`YYYY-MM-DD HH:mm:ss`の形式で入力する必要があります。 timezoneがあるTIMESTAMPの場合は`YYYY-MM-DD HH:mm:ss Asia/Seoul`のように最後にzoneIdを指定する必要があります。
+ 
+    |引数 | サポートする値                  | 説明                                                                                                                                                                                    |
+    | --- |---------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+    | location | データファイルパス               | 追加したいデータファイルのパス                                                                                                                                                                       |
+    |partition_columns| ARRAY['partition_column'] | icebergテーブルに定義されたパーティション列を羅列し、テーブルがc1, c2列に分割されている場合はARRAY['c1', 'c2']と入力                                                                                                               |
+    |partition_values| ARRAY['partition_value']  | 登録したいパーティション値                                                                                                                                                                           |
+    | format | PARQUET(基本フォーマット), ORC, AVRO | 追加するデータファイルのフォーマット                                                                                                                                                                      |
+    | recursive_directory | FAIL(デフォルト値), TRUE, FALSE | location以下のパスを再帰的に探索できる場合の動作<br>FAIL => 入力したデータファイルのパスが2段階の深さまで再帰的に探索できる場合、クエリを失敗させます<br> TRUE => 入力したデータファイルのパスより下を再帰的に探索します<br>FALSE => 入力したデータファイルのパス2段階の深さから無視します。 |
+    |duplicate_file  | FAIL(デフォルト値), SKIP, ADD     | 登録しようとするデータファイルが既に登録されたicebergテーブルのデータファイルと重複している場合の動作<br>FAIL => icebergテーブルに既に登録されたデータファイルと比較して重複したデータファイルがある場合、クエリに失敗します<br>SKIP => 重複したファイルは無視します<br>ADD => データファイルを追加します。            |
+```sql
+## パーティション列がyearであり、day変換が適用されたicebergテーブル
+ALTER TABLE example.system.example_table 
+EXECUTE add_files_with_partition(location => 's3://my-bucket/a/path', partition_columns => ARRAY['year'], partition_values => ARRAY['2024-11-21'], format => 'PARQUET', recursive_directory => 'TRUE', duplicate_file => 'FAIL')
+```
+#### 注意及び制約事項
+
+* 同じパスにIcebergテーブルを重複して作成することはできません。
+* 列を変換してパーティションを構成する際、同じ列を使用することはできません。
+    * 例：1つのDATEタイプを持つ列でyear、month 2つのパーティションを設定することはできません。
+
+#### FAQ
+
+* 既にObject StorageにIcebergデータが存在します。どのようにDataQueryに適用できますか？
+    * register_tableを実行して登録できます。データ管理 > テーブル登録をご確認ください。
+* Object StorageにはParquetファイルのみ存在します。どのようにIcebergテーブルに作成できますか？
+    * Icebergテーブルを作成した後、add_files、add_files_with_partition関数を使用してデータを追加できます。
+* 既に存在するIcebergテーブルにParquetデータだけを追加したいです。
+    * add_files, add_files_with_partition関数を使用してデータを追加できます。
+
 
 ## 外部連動
 ### Trino cli
