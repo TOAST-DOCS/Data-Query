@@ -278,8 +278,28 @@ SELECT * FROM default"sample$partitions"
 # Control partition
 system.create_empty_partition(schema_name, table_name, partition_columns, partition_values)
 system.sync_partition_metadata(schema_name, table_name, mode, case_sensitive)
+system.register_partition(schema_name, table_name, partition_columns, partition_values, location)
 ```
-
+* Partition function
+  * sync_partition_metadata
+    * You can automatically register and delete partition values by inferring partition values from the paths of objects.
+      
+      | Mode | Description                                                                                |
+      | ----- |-----------------------------------------------------------------------------------|
+      | ADD | Add a partition value when the partition value is not registered in the table and the Object Storage objects exist against the Hive partition path. |
+      | DROP | If the partition value is already registered in the table, but the Object Storage objects do not exist in the Hive partition path, delete the partition value. |
+      | FULL | Perform ADD and DROP.                                                            |
+    * Here's how to infer the Hive partition value based on the paths of Object Storage objects.
+      * Retrieve all objects under the defined external_location and extracts the path.
+      * If the partition columns are specified as columns c1 and c2, a valid path to a Hive partition must contain `/c1=<c1 value>/c2=<c2 value>`.
+      * For example, if you have a table defined as external_location='s3a://location/tmp/', partitioned_by=ARRAY['year', 'month', 'day'], it will extract the paths of all objects under external_location and infer the partition value by determining that, if the path contains the same format, it is `valid` as a Hive partition path.
+    * [Caution]
+      * To run sync_partition_metadata, there must be at least one path below the container in the external_location defined in the table, for example, external_location='s3a://location/tmp/'와, where the container is location and there must be at least one path below it to tmp.
+  * register_partition
+    * You can directly register a user-specified path as the value of a partition.
+    * In the third parameter, partition_columns, enter the partition columns that you defined in the Hive table.
+    * In the fourth parameter, partition_values, enter the partition values you want to register.
+    * At least one object must exist in the fifth parameter, location.
 * Restrictions
     * Table columns of CSV type are supported for VARCHAR type only.
     * DataQuery uses S3-compatible layer for Object Storage access and requires use of s3a protocol when specifying path for data for schemas or tables (ex. s3a://example/test).
@@ -484,7 +504,7 @@ WITH (
 | year(ts) | DATE, TIMESTAMP | Yearly |
 | month(ts) | DATE, TIMESTAMP | Monthly |
 | day(ts) | DATE, TIMESTAMP | Daily |
-| hour(ts) | DATE, TIMESTAMP | Hourly |
+| hour(ts) | TIMESTAMP | Hourly |
 
 #### Metadata Table
 
@@ -574,6 +594,39 @@ ALTER TABLE test_table EXECUTE remove_orphan_files(retention_threshold => '7d')
 | ARRAY(e) | LIST(e) |
 | MAP(k,v) | MAP(k,v) |
 
+#### Add Parquet Files that Exist in Object Storage to the Iceberg Table
+* You can add specific files or files under a specific path as data to an Iceberg table.
+* You can add data files and partition values with add_files for tables without partitions and add_files_with_partition for tables with defined partitions.
+* add_files function
+
+  |Argument  | Supported value                    | Description                                                                                                                                                                                     |
+  | --- |---------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+  | location | Data file path                 | Path to the data file you want to add                                                                                                                                                                        |
+  | format | PARQUET (native format), ORC, AVRO | The data file format you want to add                                                                                                                                                                        |
+  | recursive_directory | FAIL (default), TRUE, FALSE   | Behavior when paths below location can be recursively explored<br>FAIL => Causes the query to fail if the entered data file path is recursively traversable to a depth of 2 levels.<br> TRUE => Recursively explores all data file paths down the entered data file path.<br>FALSE => Ignores the entered data file path 2 levels deep. |
+  |duplicate_file  | FAIL (default), SKIP, ADD     | Behavior when the data file to be registered is a duplicate of the data file of the already registered iceberg table<br>FAIL => The query will fail if there are duplicate data files compared to those already registered in the iceberg table.<br>SKIP => Ignore duplicate files.<br>ADD => Add a data file.           |
+```sql
+## Add mybucket/a/path subdata file to example_table
+ALTER TABLE example.system.example_table 
+EXECUTE add_files(location => 's3://my-bucket/a/path', format => 'PARQUET', recursive_directory => 'FAIL', duplicate_file => 'FAIL')
+```
+* add_files_with_partition function
+  * It also supports tables that define partition variants.
+  * The partition column type you want to register must be entered in the following format: `YYYY-MM-DD` for DATE, YYYY-MM-DD`HH` `:``mm:ss` for TIMESTAMP. If it is a TIMESTAMP with a timezone, the zoneId must be specified at the end, such as `YYYY-MM-DD HH:mm:ss Asia/Seoul`.
+ 
+    |Argument  | Supported value                    | Description                                                                                                                                                                                      |
+    | --- |---------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+    | location | Data file path                 | Path to the data file you want to add                                                                                                                                                                         |
+    |partition_columns| ARRAY['partition_column'] | Lists the partition columns defined in the iceberg table, entered as ARRAY['c1', 'c2'] if the table is partitioned into columns c1, c2                                                                                                                 |
+    |partition_values| ARRAY['partition_value']  | The value of the partition you want to register                                                                                                                                                                             |
+    | format | PARQUET (native format), ORC, AVRO | The data file format you want to add                                                                                                                                                                        |
+    | recursive_directory | FAIL (default), TRUE, FALSE   | Behavior when paths below location can be recursively explored<br>FAIL => Causes the query to fail if the entered data file path is recursively traversable to a depth of 2 levels.<br> TRUE => Recursively explores all data file paths down the entered data file path.<br>FALSE => Ignore paths 2 levels deep into the entered data file. |
+    |duplicate_file  | FAIL (default), SKIP, ADD     | Behavior when the data file to be registered is a duplicate of the data file of the already registered iceberg table<br>FAIL => The query will fail if there are duplicate data files compared to those already registered in the iceberg table.<br>SKIP => Ignore duplicate files.<br>ADD => Add a data file.            |
+```sql
+## ICEBERG table with partition column YEAR and DAY transformation applied
+ALTER TABLE example.system.example_table 
+EXECUTE add_files_with_partition(location => 's3://my-bucket/a/path', partition_columns => ARRAY['year'], partition_values => ARRAY['2024-11-21'], format => 'PARQUET', recursive_directory => 'TRUE', duplicate_file => 'FAIL')
+```
 #### Cautions and Constraints
 
 * It is not possible to create duplicate Iceberg tables in the same path.
@@ -585,12 +638,9 @@ ALTER TABLE test_table EXECUTE remove_orphan_files(retention_threshold => '7d')
 * Iceberg data already exists in Object Storage. How can I apply it to a DataQuery?
     * You can register by running register_table. See Data management > Register a table.
 * Only Parquet files exist in Object Storage. How can I make them into Iceberg tables?
-    * Currently, DataQuery does not provide this functionality, but we are working to introduce it.
-    * Currently, you can use Iceberg by creating an Object Storage data source to create a Parquet table, and then using CREATE TABLE AS or INSERT INTO with the table in the Iceberg data source.
+    * After creating an Iceberg table, you can add data using the add_files and add_files_with_partition functions.
 * I want to add only Parquet data to an Iceberg table that already exists.
-    * Currently, DataQuery does not provide this functionality, but we are working to introduce it.
-    * Currently, you can use Iceberg by creating an Object Storage data source to create a Parquet table, and then using CREATE TABLE AS or INSERT INTO with the table in the Iceberg data source.
-
+    * You can add data using the add_files, add_files_with_partition functions.
 
 ## External Integration
 ### Trino cli
