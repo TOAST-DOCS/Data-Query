@@ -294,7 +294,7 @@ system.register_partition(schema_name, table_name, partition_columns, partition_
       * If the partition columns are specified as columns c1 and c2, a valid path to a Hive partition must contain `/c1=<c1 value>/c2=<c2 value>`.
       * For example, if you have a table defined as external_location='s3a://location/tmp/', partitioned_by=ARRAY['year', 'month', 'day'], it will extract the paths of all objects under external_location and infer the partition value by determining that, if the path contains the same format, it is `valid` as a Hive partition path.
     * [Caution]
-      * To run sync_partition_metadata, there must be at least one path below the container in the external_location defined in the table, for example, external_location='s3a://location/tmp/'와, where the container is location and there must be at least one path below it to tmp.
+      * To run sync_partition_metadata, one more path must be below the container in the external\_location defined in the table. For example, when the container is location, such as external\_location='s3a://location/tmp/', there must be one more path to tmp below the container.
   * register_partition
     * You can directly register a user-specified path as the value of a partition.
     * In the third parameter, partition_columns, enter the partition columns that you defined in the Hive table.
