@@ -174,9 +174,9 @@ The service is available through following procedures.
         * Syntax to check Metadata: SHOW CATALOGS, SHOW SCHEMAS, SHOW TABLES, SHOW STATS FOR
         * Syntax to check system's embedded procedure or to check execution plan of Query: CALL, EXPLAIN
 * See Trino's Guide for more information.
-    * [Keyword, Data Type](https://trino.io/docs/455/language.html)
-    * [Trino Query](https://trino.io/docs/455/sql.html)
-    * [Embedded function](https://trino.io/docs/455/functions.html)
+    * [Keyword, Data Type](https://trino.io/docs/462/language.html)
+    * [Trino Query](https://trino.io/docs/462/sql.html)
+    * [Embedded function](https://trino.io/docs/462/functions.html)
 
 ### 5. Results/Console Execution Query Area
 
@@ -239,7 +239,7 @@ The service is available through following procedures.
 
 #### Additional Grammar to operate Hive feature  
 
-* Trino-Hive basically follows standard SQL grammar, but there is additional feature/Grammar for Hive activity response. [Details](https://trino.io/docs/455/connector/hive.html)
+* Trino-Hive basically follows standard SQL grammar, but there is additional feature/Grammar for Hive activity response. [Details](https://trino.io/docs/462/connector/hive.html)
 * Supported data format
     * Default format is designated as ORC, and you can specify Parquet, JSON, ORC, CSV, Text, etc. as Settings.
     * When creating Table, you can specify Format value in With clause.
@@ -309,7 +309,7 @@ system.register_partition(schema_name, table_name, partition_columns, partition_
     * If external\_location path name of external table contains Korean characters, the data will not be processed properly.
     * If Object Storage bucket associated with table is deleted, the Table DROP query fails.
     * DELETE, UPDATE can only be performed on partition data on limited basis.
-        * [Details](https://trino.io/docs/455/connector/hive.html#data-management)
+        * [Details](https://trino.io/docs/462/connector/hive.html#data-management)
 
 #### External Table Query Utilization Tutorial
 
@@ -370,12 +370,12 @@ SELECT * FROM corona_facility_us
    * DELETE can only be performed on a limited basis when certain conditions are met.
         * When a where clause is present, the predicate must be able to be pushed down to the data source entirely.
         * Pushdowns are not supported for columns with a text type.
-        * [Details](https://trino.io/docs/455/connector/mysql.html#predicate-pushdown-support)
+        * [Details](https://trino.io/docs/462/connector/mysql.html#predicate-pushdown-support)
     * UPDATE can only be performed on a limited basis when certain conditions are met.
         * Assignment to a constant value and can only be done if a predicate exists.
         * Arithmetic expressions, function calls, and UPDATE statements to non-constant values are not supported.
         * You can't update all columns in a table at the same time.
-        * [Details](https://trino.io/docs/455/connector/mysql.html#update)
+        * [Details](https://trino.io/docs/462/connector/mysql.html#update)
 
 ### Execute PostgreSQL Data Source Query
 
@@ -387,12 +387,12 @@ SELECT * FROM corona_facility_us
         * When a where clause is present, the predicate must be able to be pushed down to the data source entirely.
         * Pushdown is not supported for range conditions (>, <, or BETWEEN) on string types such as CHAR or VARCHAR.
         * Equality comparison conditions (IN, =, !=) for text types support pushdown.
-        * [Details](https://trino.io/docs/455/connector/postgresql.html#predicate-pushdown-support)
+        * [Details](https://trino.io/docs/462/connector/postgresql.html#predicate-pushdown-support)
     * UPDATE can only be performed on a limited basis when certain conditions are met.
         * Assignment to a constant value and can only be done if a predicate exists.
         * Arithmetic expressions, function calls, and UPDATE statements to non-constant values are not supported.
         * You can't update all columns in a table at the same time.
-        * [Details](https://trino.io/docs/455/connector/postgresql.html#update)
+        * [Details](https://trino.io/docs/462/connector/postgresql.html#update)
 
 ### Execute Oracle Data Source Query
 
@@ -403,12 +403,12 @@ SELECT * FROM corona_facility_us
     * DELETE and UPDATE can only be performed on a limited basis when certain conditions are met.
         * When a where clause is present, the predicate must be able to be pushed down to the data source entirely.
         * Pushdown is not supported for Oracle-type columns that are CLOB, NCLOB, BLOB, or RAW(n).
-        * [Details](https://trino.io/docs/455/connector/oracle.html#predicate-pushdown-support)
+        * [Details](https://trino.io/docs/462/connector/oracle.html#predicate-pushdown-support)
     * UPDATE can only be performed on a limited basis when certain conditions are met.
         * Assignment to a constant value and can only be done if a predicate exists.
         * Arithmetic expressions, function calls, and UPDATE statements to non-constant values are not supported.
         * You can't update all columns in a table at the same time.
-        * [Details](https://trino.io/docs/455/connector/oracle.html#update)
+        * [Details](https://trino.io/docs/462/connector/oracle.html#update)
 
 ### Execute EDB Data Source Query
 
@@ -420,12 +420,12 @@ SELECT * FROM corona_facility_us
         * When a where clause is present, the predicate must be able to be pushed down to the data source entirely.
         * Pushdown is not supported for range conditions (>, <, or BETWEEN) on string types such as CHAR or VARCHAR.
         * Equality comparison conditions (IN, =, !=) for text types support pushdown.
-        * [Details](https://trino.io/docs/455/connector/postgresql.html#predicate-pushdown-support)
+        * [Details](https://trino.io/docs/462/connector/postgresql.html#predicate-pushdown-support)
     * UPDATE can only be performed on a limited basis when certain conditions are met.
         * Assignment to a constant value and can only be done if a predicate exists.
         * Arithmetic expressions, function calls, and UPDATE statements to non-constant values are not supported.
         * You can't update all columns in a table at the same time.
-        * [Details](https://trino.io/docs/455/connector/postgresql.html#update)
+        * [Details](https://trino.io/docs/462/connector/postgresql.html#update)
 
 ### Execute MariaDB Data Source Query
 
@@ -436,13 +436,13 @@ SELECT * FROM corona_facility_us
     * DELETE can be performed only when certain conditions are met. 
         * When a where clause is present, the predicate must be able to be pushed down to the data source entirely.
         * Pushdown is not supported for text-type columns. 
-        * [Deatils](https://trino.io/docs/455/connector/mariadb.html#predicate-pushdown-support) 
+        * [Deatils](https://trino.io/docs/462/connector/mariadb.html#predicate-pushdown-support) 
     * UPDATE can only be performed restrictively when certain conditions are met. 
         * Assignment to a constant value and can only be done if a predicate exists.
         * Arithmetic expressions, function calls, and UPDATE statements to non-constant values are not supported.
         * You can't configure conditional clauses as ANDs.
         * You can't update all columns in a table at the same time.
-        * [Details](https://trino.io/docs/455/connector/mariadb.html#update)
+        * [Details](https://trino.io/docs/462/connector/mariadb.html#update)
 
 ### Run Iceberg Data Source Queries
 
@@ -482,7 +482,7 @@ WITH (
 ```
 
 * Table Properties
-    * You can set metadata for the table. [Additional information](https://trino.io/docs/455/connector/iceberg.html#table-properties)
+    * You can set metadata for the table. [Additional information](https://trino.io/docs/462/connector/iceberg.html#table-properties)
 
 | Property name | Description |
 | ----- | --- |
@@ -497,7 +497,7 @@ WITH (
     * If the partition columns are specified as columns C1 and C2, the data in those partitions is stored at `/C1=<C1 value>/C2=<C2 value>` down the table data path.
 * You can't add/manage partitions manually because Iceberg automatically manages partitions based on the value of the data written to them.
 * Supports the feature to specify partitions using (transforming) table columns.
-    * [More about](https://trino.io/docs/455/connector/iceberg.html#partitioned-tables) year, month, day, hour, bucket, truncate
+    * [More about](https://trino.io/docs/462/connector/iceberg.html#partitioned-tables) year, month, day, hour, bucket, truncate
 
 | Convert | Supported type | Description |
 | --- | ----- | --- |
@@ -508,7 +508,7 @@ WITH (
 
 #### Metadata Table
 
-* You can view metadata for an Iceberg table by looking up the metadata table. [Additional information](https://trino.io/docs/455/connector/iceberg.html#metadata-tables)
+* You can view metadata for an Iceberg table by looking up the metadata table. [Additional information](https://trino.io/docs/462/connector/iceberg.html#metadata-tables)
     * $properties
         * Table Properties
     * $history
@@ -646,14 +646,14 @@ EXECUTE add_files_with_partition(location => 's3://my-bucket/a/path', partition_
 ### Trino cli
 
 * You can run queries from command line with credentials issued through the Settings menu, access information, and CLI tools supported by Trino.
-  * DataQuery is currently running on version 455 of Trino.
-  * [Trino CLI](https://repo1.maven.org/maven2/io/trino/trino-cli/455/trino-cli-455-executable.jar)
+  * DataQuery is currently running on version 462 of Trino.
+  * [Trino CLI](https://repo1.maven.org/maven2/io/trino/trino-cli/462/trino-cli-462-executable.jar)
 
 ```
 # Permission to run the file is required. Use chmod +x.
-# ex) chmod +x trino-cli-455-executable.jar
+# ex) chmod +x trino-cli-462-executable.jar
 
-./trino-cli-455-executable.jar --server <Connection URL(Required)> \
+./trino-cli-462-executable.jar --server <Connection URL(Required)> \
   --user <ID (Required)> --password \
   --catalog <Data source name> \
   --schema <Schema name>
@@ -675,7 +675,7 @@ EXECUTE add_files_with_partition(location => 's3://my-bucket/a/path', partition_
 * Catalog, schema value is the value for connection for which you want to run command, and you can run cli without entering it, and you can use Query below to check Catalog or Schema list.
     * show catalogs
     * show schemas
-* For more information, refer to the [Trino Guide](https://trino.io/docs/455/client/cli.html).
+* For more information, refer to the [Trino Guide](https://trino.io/docs/462/client/cli.html).
 
 ### Connect to JDBC
 
@@ -698,4 +698,4 @@ jdbc:trino://${host}:${port}/${catalog}/${schema}
         * Schema name to connect
 * Example of connection information
     * jdbc:trino://test-dataquery-domain-12345abcd.kr1-cluster-dataquery.nhncloudservice.com:443/catalog/schema
-* For more details, see [Trino JDBC Guide](https://trino.io/docs/455/client/jdbc.html).
+* For more details, see [Trino JDBC Guide](https://trino.io/docs/462/client/jdbc.html).
