@@ -31,7 +31,6 @@ DataQueryサービスを使用するには、必ずデータソースを追加�
         * システムで基本テーブル情報や管理テーブル情報、データを保存するために使用するObject Storageコンテナ名(dataquery-warehouse)です。
             * 独自にdataquery-warehouseコンテナを作成して使用します。
         * 連動する既存データは、dataquery-warehouseコンテナ外部に存在できます。
-    * 追加設定情報
         * 再帰的経路の読み取り：サブディレクトリを含むクエリを実行できます。
         * ファイル保存形式:ストレージに保存されるファイルタイプを設定します。ORC、Parquet、CSVなどのタイプをサポートします。
 * その他の事項
@@ -598,6 +597,7 @@ ALTER TABLE test_table EXECUTE remove_orphan_files(retention_threshold => '7d')
 | ROW(...) | STRUCT(...) |
 | ARRAY(e) | LIST(e) |
 | MAP(k,v) | MAP(k,v) |
+
 #### Object Storageに存在するParquetファイルをIcebergテーブルに追加
 * 特定のファイルまたは特定のパスの下のファイルをIcebergテーブルにデータとして追加できます。
 * パーティションがないテーブルはadd_files、パーティションが定義されたテーブルはadd_files_with_partitionでデータファイルとパーティション値を追加できます。
