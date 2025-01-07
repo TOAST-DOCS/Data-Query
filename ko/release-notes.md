@@ -1,5 +1,5 @@
 ## Data & Analytics > DataQuery > 릴리스 노트
-### 2025.01.21.
+### 2025. 01. 21.
 * DataQuery를 Trino 462 버전을 기반으로 서비스하도록 업그레이드하였습니다.
 * iceberg connector에 관한 add_files_with_partition 함수가 추가되었습니다.
 
