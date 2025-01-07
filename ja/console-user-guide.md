@@ -104,23 +104,6 @@ DataQueryサービスを使用するには、必ずデータソースを追加�
 * パスワード
     * 接続するMariaDBパスワードです。
 
-
-### Icebergデータソースタイプ
-
-* データソース名
-    * クエリ実行時に使用される区切り文字で、データソース間で固有の値でなければなりません。
-* アクセスキー、秘密鍵、リージョン
-    * 連動するIcebergテーブルデータまたは連動するデータが存在するObject Storageの接続情報です。
-    * アクセスキーと秘密鍵はObject Storageコンソールで発行できます。詳細は[Object Storageコンソール使用ガイド](https://docs.toast.com/ko/Storage/Object%20Storage/ko/console-guide/#s3-api)を参照してください。
-        * リージョンはObject Storageガイドのリージョン別[S3リージョン](https://docs.toast.com/ko/Storage/Object%20Storage/ko/s3-api-guide/#aws-cli)を参照してください。
-    * バケット名
-        * システムで基本Icebergテーブル情報を保存するために使用するObject Storageコンテナ名はdataquery-warehouseで、サブパスはicebergです。
-        * 連連動する既存のデータは他のパスに存在する可能性があります。
-
-> [注意]
-> DataQueryと連動するObject Storageが同じリージョンでない場合、ネットワークトラフィックによる追加料金が発生する可能性があります。
-
-
 ## クエリエディタ
 
 * クエリエディタはクラスタ領域、スキーマ領域、保存されたクエリ領域、エディタ領域、結果/コンソール実行領域に区分されます。
