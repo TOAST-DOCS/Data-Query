@@ -279,8 +279,28 @@ SELECT * FROM default"sample$partitions"
 #パーティションを操作
 system.create_empty_partition(schema_name, table_name, partition_columns, partition_values)
 system.sync_partition_metadata(schema_name, table_name, mode, case_sensitive)
+system.register_partition(schema_name, table_name, partition_columns, partition_values, location)
 ```
+* パーティション関数
+  * sync_partition_metadata
+    * オブジェクトのパスからパーティション値を推測して、自動的にパーティション値を登録、削除できます。
 
+      | モード | 説明                                                                              |
+      | ----- |-----------------------------------------------------------------------------------|
+      | ADD | パーティション値がテーブルに登録されておらず、Object StorageオブジェクトがHiveのパーティションパスに合わせて存在するときに、パーティション値を追加します。 |
+      | DROP | パーティション値がすでにテーブルに登録されているが、Object StorageオブジェクトがHiveパーティションパスに存在しない場合は、パーティション値を削除します。 |
+      | FULL | ADD, DROPを順番に実行します。                                                            |
+    * Object Storageオブジェクトのパスを基準にHiveパーティションの値を推論する方法は次のとおりです。
+      * 定義されたexternal\_locationの下にある全てのオブジェクトを照会した後、パスを抽出します。
+      * パーティション列がc1列とc2列で指定されている場合、Hiveパーティションとして有効なパスは`/c1=<c1 value>/c2=<c2 value>`を含む必要があります。
+      * 例えば、external\_location='s3a://location/tmp/', partitioned_by=ARRAY['year', 'month', 'day']で定義されたテーブルがある場合、 external_locationの下にある全てのオブジェクトのパスを抽出した後、そのパスがs3a://location/tmp/year=yyyy/month=MM/day=dd/のような形式を含む場合、Hiveパーティションパスとして「有効」と判断し、パーティション値を推測します。
+    * 注意
+      * sync_partition_metadataを実行するには、テーブルで定義したexternal\_locationにコンテナ以下のパスが必ず1つ以上存在する必要があります。例えば、external\_location='s3a://location/tmp/'のように、コンテナがlocationの場合、その下にtmpというパスが1つ以上存在する必要があります。
+  * register_partition
+    * ユーザーが指定したパスをパーティションの値として直接登録できます。
+    * 3番目のパラメータであるpartition_columnsには、Hiveテーブルで定義したパーティション列を入力します。
+    * 4番目のパラメータであるpartition_valuesには、登録したいパーティションの値を入力します。
+    *  5番目のパラメータであるlocationにオブジェクトが必ず1つ以上存在する必要があります。
 * 制約事項
     * CSVタイプのテーブルカラムはVARCHARタイプのみサポートされます。
     * DataQueryではObject StorageアクセスのためにS3互換レイヤーを使用し、スキーマまたはテーブルのためのデータパス指定時、s3aプロトコルを使用する必要があります(ex. s3a://example/test)。
@@ -485,7 +505,7 @@ WITH (
 | year(ts) | DATE, TIMESTAMP | 年度別 |
 | month(ts) | DATE, TIMESTAMP | 月別 |
 | day(ts) | DATE, TIMESTAMP | 日別 |
-| hour(ts) | DATE, TIMESTAMP | 時間別 |
+| hour(ts) | TIMESTAMP | 時間別 |
 
 #### メタデータテーブル
 
@@ -574,7 +594,39 @@ ALTER TABLE test_table EXECUTE remove_orphan_files(retention_threshold => '7d')
 | ROW(...) | STRUCT(...) |
 | ARRAY(e) | LIST(e) |
 | MAP(k,v) | MAP(k,v) |
+#### Object Storageに存在するParquetファイルをIcebergテーブルに追加
+* 特定のファイルまたは特定のパスの下のファイルをIcebergテーブルにデータとして追加できます。
+* パーティションがないテーブルはadd_files、パーティションが定義されたテーブルはadd_files_with_partitionでデータファイルとパーティション値を追加できます。
+* add_files関数
 
+  |引数 | サポートする値                  | 説明                                                                                                                                                                                   |
+  | --- |---------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+  | location | データファイルパス               | 追加したいデータファイルのパス                                                                                                                                                                      |
+  | format | PARQUET(基本フォーマット), ORC, AVRO | 追加したいデータファイルのフォーマット                                                                                                                                                                      |
+  | recursive_directory | FAIL(デフォルト値), TRUE, FALSE   | location以下のパスを再帰的に探索できる場合の動作<br>FAIL => 入力したデータファイルパスが2段階の深さまで再帰的に探索できる場合、クエリに失敗します。<br> TRUE => 入力したデータファイルパスより下を全て再帰的に探索します。<br>FALSE => 入力したデータファイルパス2段階の深さから無視します。 |
+  |duplicate_file  | FAIL(デフォルト値), SKIP, ADD     | 登録しようとするデータファイルが既に登録されたicebergテーブルのデータファイルと重複している場合の動作<br>FAIL => icebergテーブルに既に登録されたデータファイルと比較して重複したデータファイルがある場合、クエリに失敗します。<br>SKIP => 重複したファイルは無視します。<br>ADD => データファイルを追加します。           |
+```sql
+## example_tableにmybucket/a/path下位データファイルを追加
+ALTER TABLE example.system.example_table 
+EXECUTE add_files(location => 's3://my-bucket/a/path', format => 'PARQUET', recursive_directory => 'FAIL', duplicate_file => 'FAIL')
+```
+* add_files_with_partition関数
+  * パーティション変形を定義したテーブルもサポートします。
+  * 登録するパーティション列タイプがDATEの場合は`YYYY-MM-DD`, TIMESTAMPの場合は`YYYY-MM-DD HH:mm:ss`の形式で入力する必要があります。 timezoneがあるTIMESTAMPの場合は`YYYY-MM-DD HH:mm:ss Asia/Seoul`のように最後にzoneIdを指定する必要があります。
+
+    |引数 | サポートする値                  | 説明                                                                                                                                                                                    |
+    | --- |---------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+    | location | データファイルパス               | 追加したいデータファイルのパス                                                                                                                                                                       |
+    |partition_columns| ARRAY['partition_column'] | icebergテーブルに定義されたパーティション列を羅列し、テーブルがc1, c2列に分割されている場合はARRAY['c1', 'c2']と入力                                                                                                               |
+    |partition_values| ARRAY['partition_value']  | 登録したいパーティション値                                                                                                                                                                           |
+    | format | PARQUET(基本フォーマット), ORC, AVRO | 追加するデータファイルのフォーマット                                                                                                                                                                      |
+    | recursive_directory | FAIL(デフォルト値), TRUE, FALSE | location以下のパスを再帰的に探索できる場合の動作<br>FAIL => 入力したデータファイルのパスが2段階の深さまで再帰的に探索できる場合、クエリを失敗させます<br> TRUE => 入力したデータファイルのパスより下を再帰的に探索します<br>FALSE => 入力したデータファイルのパス2段階の深さから無視します。 |
+    |duplicate_file  | FAIL(デフォルト値), SKIP, ADD     | 登録しようとするデータファイルが既に登録されたicebergテーブルのデータファイルと重複している場合の動作<br>FAIL => icebergテーブルに既に登録されたデータファイルと比較して重複したデータファイルがある場合、クエリに失敗します<br>SKIP => 重複したファイルは無視します<br>ADD => データファイルを追加します。            |
+```sql
+## パーティション列がyearであり、day変換が適用されたicebergテーブル
+ALTER TABLE example.system.example_table 
+EXECUTE add_files_with_partition(location => 's3://my-bucket/a/path', partition_columns => ARRAY['year'], partition_values => ARRAY['2024-11-21'], format => 'PARQUET', recursive_directory => 'TRUE', duplicate_file => 'FAIL')
+```
 #### 注意及び制約事項
 
 * 同じパスにIcebergテーブルを重複して作成することはできません。
@@ -586,12 +638,9 @@ ALTER TABLE test_table EXECUTE remove_orphan_files(retention_threshold => '7d')
 * 既にObject StorageにIcebergデータが存在します。どのようにDataQueryに適用できますか？
     * register_tableを実行して登録できます。データ管理 > テーブル登録をご確認ください。
 * Object StorageにはParquetファイルのみ存在します。どのようにIcebergテーブルにすることができますか？
-    * 現在DataQueryでは該当機能を提供していません。該当機能を導入するために準備中です。
-    * 現在はObject Storageデータソースを作成してParquetテーブルを作成し、IcebergデータソースのテーブルとしてCREATE TABLE ASやINSERT INTOなどを使用すれば、Icebergを使用できます。
+    * Icebergテーブルを作成した後、add_files、add_files_with_partition関数を使用してデータを追加できます。
 * すでに存在するIcebergテーブルにParquetデータだけ追加したいです。
-    * 現在DataQueryでは該当機能を提供していません。該当機能を導入するために準備中です。
-    * 現在はObject Storageデータソースを作成してParquetテーブルを作成し、IcebergデータソースのテーブルとしてCREATE TABLE ASやINSERT INTOなどを使用すれば、Icebergを使用できます。
-
+    * Icebergテーブルを作成した後、add_files、add_files_with_partition関数を使用してデータを追加できます。
 
 ## 外部連動
 ### Trino cli
