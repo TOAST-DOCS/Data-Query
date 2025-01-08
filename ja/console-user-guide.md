@@ -646,14 +646,14 @@ EXECUTE add_files_with_partition(location => 's3://my-bucket/a/path', partition_
 ### Trino cli
 
 * 設定メニューから発行された認証情報、接続情報、TrinoでサポートするCLIツールを利用してコマンドラインからクエリを実行できます。
-  * DataQueryは現在Trino 455バージョンを基盤にサービスしています。
-  * [Trino CLI](https://repo1.maven.org/maven2/io/trino/trino-cli/455/trino-cli-455-executable.jar)
+  * DataQueryは現在Trino 462バージョンを基盤にサービスしています。
+  * [Trino CLI](https://repo1.maven.org/maven2/io/trino/trino-cli/462/trino-cli-462-executable.jar)
 
 ```
 # ファイルに実行権限が必要です。chmod +xで付与できます。
-# 例) chmod +x trino-cli-455-executable.jar
+# 例) chmod +x trino-cli-462-executable.jar
 
-./trino-cli-455-executable.jar --server <接続URL(必須)> \
+./trino-cli-462-executable.jar --server <接続URL(必須)> \
   --user <ID(必須)> --password \
   --catalog <データソース名> \
   --schema <スキーマ名>
