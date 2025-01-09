@@ -280,7 +280,7 @@ system.create_empty_partition(schema_name, table_name, partition_columns, partit
 system.sync_partition_metadata(schema_name, table_name, mode, case_sensitive)
 system.register_partition(schema_name, table_name, partition_columns, partition_values, location)
 ```
-* Partition function
+* Partition procedure
   * sync_partition_metadata
     * You can automatically register and delete partition values by inferring partition values from the paths of objects.
       
@@ -610,7 +610,7 @@ ALTER TABLE test_table EXECUTE remove_orphan_files(retention_threshold => '7d')
 ALTER TABLE example.system.example_table 
 EXECUTE add_files(location => 's3://my-bucket/a/path', format => 'PARQUET', recursive_directory => 'FAIL', duplicate_file => 'FAIL')
 ```
-* add_files_with_partition function
+* add_files_with_partition procedure
   * It also supports tables that define partition transforms.
   * The partition column type you want to register must be entered in the following format: `YYYY-MM-DD` for DATE, YYYY-MM-DD`HH` `:`mm:ss` for TIMESTAMP. If it is a TIMESTAMP with a timezone, the zoneId must be specified at the end, such as `YYYY-MM-DD HH:mm:ss Asia/Seoul`.
  
@@ -638,9 +638,9 @@ EXECUTE add_files_with_partition(location => 's3://my-bucket/a/path', partition_
 * Iceberg data already exists in Object Storage. How can I apply it to a DataQuery?
     * You can register by running register_table. See Data management > Register a table.
 * Only Parquet files exist in Object Storage. How can I make them into Iceberg tables?
-    * After creating an Iceberg table, you can add data using the add_files and add_files_with_partition functions.
+    * After creating an Iceberg table, you can add data using the add_files and add_files_with_partition procedures.
 * I want to add only Parquet data to an Iceberg table that already exists.
-    * You can add data using the add_files, add_files_with_partition functions.
+    * You can add data using the add_files, add_files_with_partition procedures.
 
 ## External Integration
 ### Trino cli
