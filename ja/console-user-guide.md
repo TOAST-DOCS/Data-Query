@@ -281,7 +281,7 @@ system.create_empty_partition(schema_name, table_name, partition_columns, partit
 system.sync_partition_metadata(schema_name, table_name, mode, case_sensitive)
 system.register_partition(schema_name, table_name, partition_columns, partition_values, location)
 ```
-* パーティション関数
+* パーティションプロシージャ
   * sync_partition_metadata
     * オブジェクトのパスからパーティション値を推測して、自動的にパーティション値を登録、削除できます。
 
@@ -597,7 +597,7 @@ ALTER TABLE test_table EXECUTE remove_orphan_files(retention_threshold => '7d')
 #### Object Storageに存在するParquetファイルをIcebergテーブルに追加
 * 特定のファイルまたは特定のパスの下のファイルをIcebergテーブルにデータとして追加できます。
 * パーティションがないテーブルはadd_files、パーティションが定義されたテーブルはadd_files_with_partitionでデータファイルとパーティション値を追加できます。
-* add_files関数
+* add_filesプロシージャ
 
   |引数 | サポートする値                  | 説明                                                                                                                                                                                   |
   | --- |---------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -610,7 +610,7 @@ ALTER TABLE test_table EXECUTE remove_orphan_files(retention_threshold => '7d')
 ALTER TABLE example.system.example_table 
 EXECUTE add_files(location => 's3://my-bucket/a/path', format => 'PARQUET', recursive_directory => 'FAIL', duplicate_file => 'FAIL')
 ```
-* add_files_with_partition関数
+* add_files_with_partitionプロシージャ
   * パーティション変形を定義したテーブルもサポートします。
   * 登録するパーティション列タイプがDATEの場合は`YYYY-MM-DD`, TIMESTAMPの場合は`YYYY-MM-DD HH:mm:ss`の形式で入力する必要があります。 timezoneがあるTIMESTAMPの場合は`YYYY-MM-DD HH:mm:ss Asia/Seoul`のように最後にzoneIdを指定する必要があります。
 
@@ -638,9 +638,9 @@ EXECUTE add_files_with_partition(location => 's3://my-bucket/a/path', partition_
 * 既にObject StorageにIcebergデータが存在します。どのようにDataQueryに適用できますか？
     * register_tableを実行して登録できます。データ管理 > テーブル登録をご確認ください。
 * Object StorageにはParquetファイルのみ存在します。どのようにIcebergテーブルにすることができますか？
-    * Icebergテーブルを作成した後、add_files、add_files_with_partition関数を使用してデータを追加できます。
+    * Icebergテーブルを作成した後、add_files、add_files_with_partitionプロシージャを使用してデータを追加できます。
 * すでに存在するIcebergテーブルにParquetデータだけ追加したいです。
-    * Icebergテーブルを作成した後、add_files、add_files_with_partition関数を使用してデータを追加できます。
+    * Icebergテーブルを作成した後、add_files、add_files_with_partitionプロシージャを使用してデータを追加できます。
 
 ## 外部連動
 ### Trino cli
