@@ -292,8 +292,8 @@ system.register_partition(schema_name, table_name, partition_columns, partition_
     * Here's how to infer the Hive partition value based on the paths of Object Storage objects.
       * Retrieve all objects under the defined external_location and extracts the path.
       * If the partition columns are specified as columns c1 and c2, a valid path to a Hive partition must contain `/c1=<c1 value>/c2=<c2 value>`.
-      * For example, if you have a table defined as external_location='s3a://location/tmp/', partitioned_by=ARRAY['year', 'month', 'day'], it will extract the paths of all objects under external_location and infer the partition value by determining that, if the path contains the same format, it is `valid` as a Hive partition path.
-    * [Caution]
+      * For example, if you have a table defined as external_location='s3a://location/tmp/', partitioned_by=ARRAY['year', 'month', 'day'], and if the paths of all objects under external_location contain the same format as s3a://location/tmp/year=yyyy/month=MM/day=dd/, the Hive partition path is determined as 'valid', inferring the partition value.
+   * [Caution]
       * To run sync_partition_metadata, one more path must be below the container in the external\_location defined in the table. For example, when the container is location, such as external\_location='s3a://location/tmp/', there must be one more path to tmp below the container.
   * register_partition
     * You can directly register a user-specified path as the value of a partition.
@@ -597,12 +597,12 @@ ALTER TABLE test_table EXECUTE remove_orphan_files(retention_threshold => '7d')
 #### Add Parquet Files that Exist in Object Storage to the Iceberg Table
 * You can add specific files or files under a specific path as data to an Iceberg table.
 * You can add data files and partition values with add_files for tables without partitions and add_files_with_partition for tables with defined partitions.
-* add_files function
+* add_files procedure
 
   |Argument  | Supported value                    | Description                                                                                                                                                                                     |
   | --- |---------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
   | location | Data file path                 | Path to the data file you want to add                                                                                                                                                                        |
-  | format | PARQUET (native format), ORC, AVRO | The data file format you want to add                                                                                                                                                                        |
+  | format | PARQUET (default format), ORC, AVRO | The data file format you want to add                                                                                                                                                                        |
   | recursive_directory | FAIL (default), TRUE, FALSE   | Behavior when paths below location can be recursively explored<br>FAIL => Causes the query to fail if the entered data file path is recursively traversable to a depth of 2 levels.<br> TRUE => Recursively explores all data file paths down the entered data file path.<br>FALSE => Ignores the entered data file path 2 levels deep. |
   |duplicate_file  | FAIL (default), SKIP, ADD     | Behavior when the data file to be registered is a duplicate of the data file of the already registered iceberg table<br>FAIL => The query will fail if there are duplicate data files compared to those already registered in the iceberg table.<br>SKIP => Ignore duplicate files.<br>ADD => Add a data file.           |
 ```sql
@@ -611,8 +611,8 @@ ALTER TABLE example.system.example_table
 EXECUTE add_files(location => 's3://my-bucket/a/path', format => 'PARQUET', recursive_directory => 'FAIL', duplicate_file => 'FAIL')
 ```
 * add_files_with_partition function
-  * It also supports tables that define partition variants.
-  * The partition column type you want to register must be entered in the following format: `YYYY-MM-DD` for DATE, YYYY-MM-DD`HH` `:``mm:ss` for TIMESTAMP. If it is a TIMESTAMP with a timezone, the zoneId must be specified at the end, such as `YYYY-MM-DD HH:mm:ss Asia/Seoul`.
+  * It also supports tables that define partition transforms.
+  * The partition column type you want to register must be entered in the following format: `YYYY-MM-DD` for DATE, YYYY-MM-DD`HH` `:`mm:ss` for TIMESTAMP. If it is a TIMESTAMP with a timezone, the zoneId must be specified at the end, such as `YYYY-MM-DD HH:mm:ss Asia/Seoul`.
  
     |Argument  | Supported value                    | Description                                                                                                                                                                                      |
     | --- |---------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
