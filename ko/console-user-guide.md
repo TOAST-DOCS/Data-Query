@@ -174,9 +174,9 @@ DataQuery 서비스를 사용하려면 반드시 데이터 소스를 추가해�
         * 메타데이터를 확인할 수 있는 구문: SHOW CATALOGS, SHOW SCHEMAS, SHOW TABLES, SHOW STATS FOR
         * 시스템의 내장 프로시저(Procedure)를 확인하거나 쿼리의 실행 계획을 확인할 수 있는 구문: CALL, EXPLAIN
 * 자세한 사항은 Trino의 가이드 문서를 참고하십시오.
-    * [키워드, 데이터 타입](https://trino.io/docs/455/language.html)
-    * [Trino 쿼리](https://trino.io/docs/455/sql.html)
-    * [내장 함수](https://trino.io/docs/455/functions.html)
+    * [키워드, 데이터 타입](https://trino.io/docs/462/language.html)
+    * [Trino 쿼리](https://trino.io/docs/462/sql.html)
+    * [내장 함수](https://trino.io/docs/462/functions.html)
 
 ### 5. 결과/콘솔 실행 쿼리 영역
 
@@ -239,7 +239,7 @@ DataQuery 서비스를 사용하려면 반드시 데이터 소스를 추가해�
 
 #### Hive 기능 동작을 위한 부가적인 문법
 
-* Trino-Hive는 기본적으로 표준 SQL 문법을 따르지만 Hive 동작 대응을 위한 부가적인 기능/문법이 존재합니다. [상세 정보](https://trino.io/docs/455/connector/hive.html)
+* Trino-Hive는 기본적으로 표준 SQL 문법을 따르지만 Hive 동작 대응을 위한 부가적인 기능/문법이 존재합니다. [상세 정보](https://trino.io/docs/462/connector/hive.html)
 * 지원 데이터 포맷
     * 기본 포맷은 ORC로 지정되어 있으며, 설정으로 Parquet, JSON, ORC, CSV, Text 등을 지정할 수 있습니다.
     * 테이블 생성 시 with절의 format 값으로 지정할 수 있습니다.
@@ -280,7 +280,7 @@ system.create_empty_partition(schema_name, table_name, partition_columns, partit
 system.sync_partition_metadata(schema_name, table_name, mode, case_sensitive)
 system.register_partition(schema_name, table_name, partition_columns, partition_values, location)
 ```
-* 파티션 함수
+* 파티션 프로시저
   * sync_partition_metadata
     * 오브젝트들의 경로에서 파티션 값을 유추해서 자동으로 파티션 값을 등록, 삭제할 수 있습니다.
       
@@ -309,7 +309,7 @@ system.register_partition(schema_name, table_name, partition_columns, partition_
     * External table의 external\_location 경로명에 한글이 들어갈 경우 정상적으로 데이터가 처리되지 않습니다.
     * 테이블과 연결된 Object Storage 버킷이 삭제되면 테이블 DROP 쿼리가 실패합니다.
     * DELETE, UPDATE는 파티션 데이터에 대해서만 제한적으로 수행할 수 있습니다.
-        * [상세 정보](https://trino.io/docs/455/connector/hive.html#data-management)
+        * [상세 정보](https://trino.io/docs/462/connector/hive.html#data-management)
 
 #### 외부 테이블 쿼리 이용 튜토리얼
 
@@ -370,12 +370,12 @@ SELECT * FROM corona_facility_us
     * DELETE는 특정 조건이 충족될 때만 제한적으로 수행할 수 있습니다.
         * where 절이 존재할 때 조건자(Predicate)가 데이터 소스로 온전히 푸시다운(Pushdown)될 수 있어야 합니다.
         * 텍스트 타입의 열은 푸시다운이 지원되지 않습니다.
-        * [상세 정보](https://trino.io/docs/455/connector/mysql.html#predicate-pushdown-support)
+        * [상세 정보](https://trino.io/docs/462/connector/mysql.html#predicate-pushdown-support)
     * UPDATE는 특정 조건이 충족될 때만 제한적으로 수행할 수 있습니다.
         * 상수 값으로의 할당 및 조건자(Predicate)가 존재할 경우에만 수행할 수 있습니다.
         * 산술 표현식, 함수 호출 및 상수가 아닌 값으로의 UPDATE문은 지원되지 않습니다.
         * 테이블의 모든 열을 동시에 업데이트할 수 없습니다.
-        * [상세 정보](https://trino.io/docs/455/connector/mysql.html#update)
+        * [상세 정보](https://trino.io/docs/462/connector/mysql.html#update)
 
 ### PostgreSQL 데이터 소스 쿼리 실행
 
@@ -387,12 +387,12 @@ SELECT * FROM corona_facility_us
         * where 절이 존재할 때 조건자(Predicate)가 데이터 소스로 온전히 푸시다운(Pushdown)될 수 있어야 합니다.
         * CHAR 또는 VARCHAR와 같은 문자열 유형에 대한 범위 조건(>, < 또는 BETWEEN)은 푸시다운이 지원되지 않습니다.
         * 텍스트 타입에 대한 동등 비교 조건(IN, =, !=)은 푸시다운이 지원됩니다.
-        * [상세 정보](https://trino.io/docs/455/connector/postgresql.html#predicate-pushdown-support)
+        * [상세 정보](https://trino.io/docs/462/connector/postgresql.html#predicate-pushdown-support)
     * UPDATE는 특정 조건이 충족될 때만 제한적으로 수행할 수 있습니다.
         * 상수 값으로의 할당 및 조건자(Predicate)가 존재할 경우에만 수행할 수 있습니다.
         * 산술 표현식, 함수 호출 및 상수가 아닌 값으로의 UPDATE문은 지원되지 않습니다.
         * 테이블의 모든 열을 동시에 업데이트할 수 없습니다.
-        * [상세 정보](https://trino.io/docs/455/connector/postgresql.html#update)
+        * [상세 정보](https://trino.io/docs/462/connector/postgresql.html#update)
 
 ### Oracle 데이터 소스 쿼리 실행
 
@@ -403,12 +403,12 @@ SELECT * FROM corona_facility_us
     * DELETE, UPDATE는 특정 조건이 충족될 때만 제한적으로 수행할 수 있습니다.
         * where 절이 존재할 때 조건자(Predicate)가 데이터 소스로 온전히 푸시다운(Pushdown)될 수 있어야 합니다.
         * CLOB, NCLOB, BLOB, or RAW(n)인 Oracle 타입의 열은 푸시다운이 지원되지 않습니다.
-        * [상세 정보](https://trino.io/docs/455/connector/oracle.html#predicate-pushdown-support)
+        * [상세 정보](https://trino.io/docs/462/connector/oracle.html#predicate-pushdown-support)
     * UPDATE는 특정 조건이 충족될 때만 제한적으로 수행할 수 있습니다.
         * 상수 값으로의 할당 및 조건자(Predicate)가 존재할 경우에만 수행할 수 있습니다.
         * 산술 표현식, 함수 호출 및 상수가 아닌 값으로의 UPDATE문은 지원되지 않습니다.
         * 테이블의 모든 열을 동시에 업데이트할 수 없습니다.
-        * [상세 정보](https://trino.io/docs/455/connector/oracle.html#update)
+        * [상세 정보](https://trino.io/docs/462/connector/oracle.html#update)
 
 ### EDB 데이터 소스 쿼리 실행
 
@@ -420,12 +420,12 @@ SELECT * FROM corona_facility_us
         * where 절이 존재할 때 조건자(Predicate)가 데이터 소스로 온전히 푸시다운(Pushdown)될 수 있어야 합니다.
         * CHAR 또는 VARCHAR와 같은 문자열 유형에 대한 범위 조건(>, < 또는 BETWEEN)은 푸시다운이 지원되지 않습니다.
         * 텍스트 타입에 대한 동등 비교 조건(IN, =, !=)은 푸시다운이 지원됩니다.
-        * [상세 정보](https://trino.io/docs/455/connector/postgresql.html#predicate-pushdown-support)
+        * [상세 정보](https://trino.io/docs/462/connector/postgresql.html#predicate-pushdown-support)
     * UPDATE는 특정 조건이 충족될 때만 제한적으로 수행할 수 있습니다.
         * 상수 값으로의 할당 및 조건자(Predicate)가 존재할 경우에만 수행할 수 있습니다.
         * 산술 표현식, 함수 호출 및 상수가 아닌 값으로의 UPDATE문은 지원되지 않습니다.
         * 테이블의 모든 열을 동시에 업데이트할 수 없습니다.
-        * [상세 정보](https://trino.io/docs/455/connector/postgresql.html#update)
+        * [상세 정보](https://trino.io/docs/462/connector/postgresql.html#update)
 
 ### MariaDB 데이터 소스 쿼리 실행
 
@@ -436,12 +436,12 @@ SELECT * FROM corona_facility_us
     * DELETE는 특정 조건이 충족될 때만 제한적으로 수행할 수 있습니다.
         * where 절이 존재할 때 조건자(Predicate)가 데이터 소스로 온전히 푸시다운(Pushdown)될 수 있어야 합니다.
         * 텍스트 타입의 열은 푸시다운이 지원되지 않습니다.
-        * [상세 정보](https://trino.io/docs/455/connector/mariadb.html#predicate-pushdown-support)
+        * [상세 정보](https://trino.io/docs/462/connector/mariadb.html#predicate-pushdown-support)
     * UPDATE는 특정 조건이 충족될 때만 제한적으로 수행할 수 있습니다.
         * 상수 값으로의 할당 및 조건자(Predicate)가 존재할 경우에만 수행할 수 있습니다.
         * 산술 표현식, 함수 호출 및 상수가 아닌 값으로의 UPDATE문은 지원되지 않습니다.
         * 테이블의 모든 열을 동시에 업데이트할 수 없습니다.
-        * [상세 정보](https://trino.io/docs/455/connector/mariadb.html#update)
+        * [상세 정보](https://trino.io/docs/462/connector/mariadb.html#update)
 
 
 ### Iceberg 데이터 소스 쿼리 실행
@@ -482,7 +482,7 @@ WITH (
 ```
 
 * 테이블 속성
-    * 테이블에 대한 메타데이터를 설정할 수 있습니다. [추가 정보](https://trino.io/docs/455/connector/iceberg.html#table-properties)
+    * 테이블에 대한 메타데이터를 설정할 수 있습니다. [추가 정보](https://trino.io/docs/462/connector/iceberg.html#table-properties)
 
 | 속성 이름 | 설명 |
 | ----- | --- |
@@ -497,7 +497,7 @@ WITH (
     * 파티션 열이 c1 열과 c2 열로 지정되어 있을 경우, 해당 파티션의 데이터는 테이블 데이터 경로 하위의 `/c1=<c1 값>/c2=<c2 값>`에 저장됩니다.
 * Iceberg는 쓰기(write)된 데이터의 값을 통해 파티션을 자동으로 관리해 주기 때문에 파티션을 수동으로 추가/관리할 수 없습니다.
 * 테이블 열을 이용(변환)하여 파티션을 지정할 수 있는 기능을 지원합니다.
-    * year, month, day, hour, bucket, truncate [추가 정보](https://trino.io/docs/455/connector/iceberg.html#partitioned-tables)
+    * year, month, day, hour, bucket, truncate [추가 정보](https://trino.io/docs/462/connector/iceberg.html#partitioned-tables)
 
 | 변환 | 지원 유형 | 설명 |
 | --- | ----- | --- |
@@ -508,7 +508,7 @@ WITH (
 
 #### 메타데이터 테이블
 
-* 메타데이터 테이블을 조회하여 Iceberg 테이블의 메타정보를 확인할 수 있습니다. [추가 정보](https://trino.io/docs/455/connector/iceberg.html#metadata-tables)
+* 메타데이터 테이블을 조회하여 Iceberg 테이블의 메타정보를 확인할 수 있습니다. [추가 정보](https://trino.io/docs/462/connector/iceberg.html#metadata-tables)
     * $properties
         * 테이블 속성
     * $history
@@ -593,10 +593,11 @@ ALTER TABLE test_table EXECUTE remove_orphan_files(retention_threshold => '7d')
 | ROW(...) | STRUCT(...) |
 | ARRAY(e) | LIST(e) |
 | MAP(k,v) | MAP(k,v) |
+
 #### Object Storage에 존재하는 Parquet 파일을 Iceberg 테이블에 추가
 * 특정 파일 혹은 특정 경로 하위의 파일들을 Iceberg 테이블에 데이터로 추가할 수 있습니다.
 * 파티션이 없는 테이블은 add_files, 파티션이 정의된 테이블은 add_files_with_partition으로 데이터 파일과 파티션 값을 추가할 수 있습니다.
-* add_files 함수
+* add_files 프로시저
 
   |인자  | 지원하는 값                    | 설명                                                                                                                                                                                     |
   | --- |---------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -609,7 +610,7 @@ ALTER TABLE test_table EXECUTE remove_orphan_files(retention_threshold => '7d')
 ALTER TABLE example.system.example_table 
 EXECUTE add_files(location => 's3://my-bucket/a/path', format => 'PARQUET', recursive_directory => 'FAIL', duplicate_file => 'FAIL')
 ```
-* add_files_with_partition 함수
+* add_files_with_partition 프로시저
   * 파티션 변형을 정의한 테이블도 지원합니다.
   * 등록하려는 파티션 열 타입이 DATE일 때는 `YYYY-MM-DD`, TIMESTAMP일 때는`YYYY-MM-DD HH:mm:ss`의 형식으로 입력해야 합니다. timezone이 있는 TIMESTAMP인 경우 `YYYY-MM-DD HH:mm:ss Asia/Seoul`과 같이 끝에 zoneId가 명시되어야 합니다.
  
@@ -637,23 +638,23 @@ EXECUTE add_files_with_partition(location => 's3://my-bucket/a/path', partition_
 * 이미 Object Storage에 Iceberg 데이터가 존재합니다. 어떻게 DataQuery에 적용할 수 있나요?
     * register_table을 실행하여 등록할 수 있습니다. 데이터 관리 > 테이블 등록을 확인하세요.
 * Object Storage에는 Parquet 파일만 존재합니다. 어떻게 Iceberg 테이블로 만들 수 있나요?
-    * Iceberg 테이블을 생성한 뒤, add_files, add_files_with_partition 함수를 사용하여 데이터를 추가할 수 있습니다.
+    * Iceberg 테이블을 생성한 뒤, add_files, add_files_with_partition 프로시저를 사용하여 데이터를 추가할 수 있습니다.
 * 이미 존재하는 Iceberg 테이블에 Parquet 데이터만 추가하고 싶습니다.
-    * add_files, add_files_with_partition 함수를 사용하여 데이터를 추가할 수 있습니다.
+    * add_files, add_files_with_partition 프로시저를 사용하여 데이터를 추가할 수 있습니다.
 
 
 ## 외부 연동
 ### Trino cli
 
 * 설정 메뉴를 통해 발급 받은 인증 정보, 접속 정보와 Trino에서 지원하는 CLI 툴을 통해 커맨드라인에서 쿼리를 실행할 수 있습니다.
-  * DataQuery는 현재 Trino 455 버전을 기반으로 서비스하고 있습니다.
-  * [Trino CLI](https://repo1.maven.org/maven2/io/trino/trino-cli/455/trino-cli-455-executable.jar)
+  * DataQuery는 현재 Trino 462 버전을 기반으로 서비스하고 있습니다.
+  * [Trino CLI](https://repo1.maven.org/maven2/io/trino/trino-cli/462/trino-cli-462-executable.jar)
 
 ```
 # 파일에 실행 권한이 필요합니다. chmod +x로 부여할 수 있습니다.
-# 예: chmod +x trino-cli-455-executable.jar
+# 예: chmod +x trino-cli-462-executable.jar
 
-./trino-cli-455-executable.jar --server <접속URL(필수)> \
+./trino-cli-462-executable.jar --server <접속URL(필수)> \
   --user <아이디(필수)> --password \
   --catalog <데이터 소스 이름> \
   --schema <스키마 이름>
@@ -675,7 +676,7 @@ EXECUTE add_files_with_partition(location => 's3://my-bucket/a/path', partition_
 * catalog, schema 값은 명령을 수행할 연결에 대한 값으로, 입력하지 않아도 cli를 실행할 수 있으며 아래 쿼리를 이용해 catalog나 schema 목록을 확인할 수 있습니다.
     * show catalogs
     * show schemas
-* 더 자세한 정보는 [Trino 가이드 페이지](https://trino.io/docs/455/client/cli.html)를 참고하세요.
+* 더 자세한 정보는 [Trino 가이드 페이지](https://trino.io/docs/462/client/cli.html)를 참고하세요.
 
 ### JDBC 연결
 
@@ -698,4 +699,4 @@ jdbc:trino://${host}:${port}/${catalog}/${schema}
         * 연결을 원하는 스키마 이름
 * 접속 정보 예시
     * jdbc:trino://test-dataquery-domain-12345abcd.kr1-cluster-dataquery.nhncloudservice.com:443/catalog/schema
-* 더 자세한 정보는 [Trino JDBC 가이드 페이지](https://trino.io/docs/455/client/jdbc.html)를 참고하세요.
+* 더 자세한 정보는 [Trino JDBC 가이드 페이지](https://trino.io/docs/462/client/jdbc.html)를 참고하세요.
