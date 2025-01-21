@@ -278,8 +278,9 @@ SELECT * FROM default"sample$partitions"
 #파티션을 조작
 system.create_empty_partition(schema_name, table_name, partition_columns, partition_values)
 system.sync_partition_metadata(schema_name, table_name, mode, case_sensitive)
+system.register_partition(schema_name, table_name, partition_columns, partition_values, location)
 ```
-* 파티션 프로시저
+* 파티션 함수
   * sync_partition_metadata
     * 오브젝트들의 경로에서 파티션 값을 유추해서 자동으로 파티션 값을 등록, 삭제할 수 있습니다.
       
@@ -503,7 +504,7 @@ WITH (
 | year(ts) | DATE, TIMESTAMP | 연도별 |
 | month(ts) | DATE, TIMESTAMP | 월별 |
 | day(ts) | DATE, TIMESTAMP | 일별 |
-| hour(ts) | DATE, TIMESTAMP | 시간별 |
+| hour(ts) | TIMESTAMP | 시간별 |
 
 #### 메타데이터 테이블
 
@@ -592,11 +593,10 @@ ALTER TABLE test_table EXECUTE remove_orphan_files(retention_threshold => '7d')
 | ROW(...) | STRUCT(...) |
 | ARRAY(e) | LIST(e) |
 | MAP(k,v) | MAP(k,v) |
-
 #### Object Storage에 존재하는 Parquet 파일을 Iceberg 테이블에 추가
 * 특정 파일 혹은 특정 경로 하위의 파일들을 Iceberg 테이블에 데이터로 추가할 수 있습니다.
 * 파티션이 없는 테이블은 add_files, 파티션이 정의된 테이블은 add_files_with_partition으로 데이터 파일과 파티션 값을 추가할 수 있습니다.
-* add_files 프로시저
+* add_files 함수
 
   |인자  | 지원하는 값                    | 설명                                                                                                                                                                                     |
   | --- |---------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -609,7 +609,7 @@ ALTER TABLE test_table EXECUTE remove_orphan_files(retention_threshold => '7d')
 ALTER TABLE example.system.example_table 
 EXECUTE add_files(location => 's3://my-bucket/a/path', format => 'PARQUET', recursive_directory => 'FAIL', duplicate_file => 'FAIL')
 ```
-* add_files_with_partition 프로시저
+* add_files_with_partition 함수
   * 파티션 변형을 정의한 테이블도 지원합니다.
   * 등록하려는 파티션 열 타입이 DATE일 때는 `YYYY-MM-DD`, TIMESTAMP일 때는`YYYY-MM-DD HH:mm:ss`의 형식으로 입력해야 합니다. timezone이 있는 TIMESTAMP인 경우 `YYYY-MM-DD HH:mm:ss Asia/Seoul`과 같이 끝에 zoneId가 명시되어야 합니다.
  
@@ -637,9 +637,9 @@ EXECUTE add_files_with_partition(location => 's3://my-bucket/a/path', partition_
 * 이미 Object Storage에 Iceberg 데이터가 존재합니다. 어떻게 DataQuery에 적용할 수 있나요?
     * register_table을 실행하여 등록할 수 있습니다. 데이터 관리 > 테이블 등록을 확인하세요.
 * Object Storage에는 Parquet 파일만 존재합니다. 어떻게 Iceberg 테이블로 만들 수 있나요?
-    * Iceberg 테이블을 생성한 뒤, add_files, add_files_with_partition 프로시저를 사용하여 데이터를 추가할 수 있습니다.
+    * Iceberg 테이블을 생성한 뒤, add_files, add_files_with_partition 함수를 사용하여 데이터를 추가할 수 있습니다.
 * 이미 존재하는 Iceberg 테이블에 Parquet 데이터만 추가하고 싶습니다.
-    * add_files, add_files_with_partition 프로시저를 사용하여 데이터를 추가할 수 있습니다.
+    * add_files, add_files_with_partition 함수를 사용하여 데이터를 추가할 수 있습니다.
 
 
 ## 외부 연동
