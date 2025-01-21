@@ -1,4 +1,7 @@
 ## Data & Analytics > DataQuery > Release Notes
+### January 21, 2025
+* Upgraded DataQuery to service based on Trino 462 version.
+* Added the add_files_with_partition function for iceberg connector.
 
 ### October 29, 2024
 #### Trino Version Upgrade

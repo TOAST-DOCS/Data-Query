@@ -174,9 +174,9 @@ The service is available through following procedures.
         * Syntax to check Metadata: SHOW CATALOGS, SHOW SCHEMAS, SHOW TABLES, SHOW STATS FOR
         * Syntax to check system's embedded procedure or to check execution plan of Query: CALL, EXPLAIN
 * See Trino's Guide for more information.
-    * [Keyword, Data Type](https://trino.io/docs/455/language.html)
-    * [Trino Query](https://trino.io/docs/455/sql.html)
-    * [Embedded function](https://trino.io/docs/455/functions.html)
+    * [Keyword, Data Type](https://trino.io/docs/462/language.html)
+    * [Trino Query](https://trino.io/docs/462/sql.html)
+    * [Embedded function](https://trino.io/docs/462/functions.html)
 
 ### 5. Results/Console Execution Query Area
 
@@ -239,7 +239,7 @@ The service is available through following procedures.
 
 #### Additional Grammar to operate Hive feature  
 
-* Trino-Hive basically follows standard SQL grammar, but there is additional feature/Grammar for Hive activity response. [Details](https://trino.io/docs/455/connector/hive.html)
+* Trino-Hive basically follows standard SQL grammar, but there is additional feature/Grammar for Hive activity response. [Details](https://trino.io/docs/462/connector/hive.html)
 * Supported data format
     * Default format is designated as ORC, and you can specify Parquet, JSON, ORC, CSV, Text, etc. as Settings.
     * When creating Table, you can specify Format value in With clause.
@@ -278,8 +278,28 @@ SELECT * FROM default"sample$partitions"
 # Control partition
 system.create_empty_partition(schema_name, table_name, partition_columns, partition_values)
 system.sync_partition_metadata(schema_name, table_name, mode, case_sensitive)
+system.register_partition(schema_name, table_name, partition_columns, partition_values, location)
 ```
-
+* Partition procedure
+  * sync_partition_metadata
+    * You can automatically register and delete partition values by inferring partition values from the paths of objects.
+      
+      | Mode | Description                                                                                |
+      | ----- |-----------------------------------------------------------------------------------|
+      | ADD | Add a partition value when the partition value is not registered in the table and the Object Storage objects exist against the Hive partition path. |
+      | DROP | If the partition value is already registered in the table, but the Object Storage objects do not exist in the Hive partition path, delete the partition value. |
+      | FULL | Perform ADD and DROP.                                                            |
+    * Here's how to infer the Hive partition value based on the paths of Object Storage objects.
+      * Retrieve all objects under the defined external_location and extracts the path.
+      * If the partition columns are specified as columns c1 and c2, a valid path to a Hive partition must contain `/c1=<c1 value>/c2=<c2 value>`.
+      * For example, if you have a table defined as external_location='s3a://location/tmp/', partitioned_by=ARRAY['year', 'month', 'day'], and if the paths of all objects under external_location contain the same format as s3a://location/tmp/year=yyyy/month=MM/day=dd/, the Hive partition path is determined as 'valid', inferring the partition value.
+   * [Caution]
+      * To run sync_partition_metadata, one more path must be below the container in the external\_location defined in the table. For example, when the container is location, such as external\_location='s3a://location/tmp/', there must be one more path to tmp below the container.
+  * register_partition
+    * You can directly register a user-specified path as the value of a partition.
+    * In the third parameter, partition_columns, enter the partition columns that you defined in the Hive table.
+    * In the fourth parameter, partition_values, enter the partition values you want to register.
+    * At least one object must exist in the fifth parameter, location.
 * Restrictions
     * Table columns of CSV type are supported for VARCHAR type only.
     * DataQuery uses S3-compatible layer for Object Storage access and requires use of s3a protocol when specifying path for data for schemas or tables (ex. s3a://example/test).
@@ -289,7 +309,7 @@ system.sync_partition_metadata(schema_name, table_name, mode, case_sensitive)
     * If external\_location path name of external table contains Korean characters, the data will not be processed properly.
     * If Object Storage bucket associated with table is deleted, the Table DROP query fails.
     * DELETE, UPDATE can only be performed on partition data on limited basis.
-        * [Details](https://trino.io/docs/455/connector/hive.html#data-management)
+        * [Details](https://trino.io/docs/462/connector/hive.html#data-management)
 
 #### External Table Query Utilization Tutorial
 
@@ -350,12 +370,12 @@ SELECT * FROM corona_facility_us
    * DELETE can only be performed on a limited basis when certain conditions are met.
         * When a where clause is present, the predicate must be able to be pushed down to the data source entirely.
         * Pushdowns are not supported for columns with a text type.
-        * [Details](https://trino.io/docs/455/connector/mysql.html#predicate-pushdown-support)
+        * [Details](https://trino.io/docs/462/connector/mysql.html#predicate-pushdown-support)
     * UPDATE can only be performed on a limited basis when certain conditions are met.
         * Assignment to a constant value and can only be done if a predicate exists.
         * Arithmetic expressions, function calls, and UPDATE statements to non-constant values are not supported.
         * You can't update all columns in a table at the same time.
-        * [Details](https://trino.io/docs/455/connector/mysql.html#update)
+        * [Details](https://trino.io/docs/462/connector/mysql.html#update)
 
 ### Execute PostgreSQL Data Source Query
 
@@ -367,12 +387,12 @@ SELECT * FROM corona_facility_us
         * When a where clause is present, the predicate must be able to be pushed down to the data source entirely.
         * Pushdown is not supported for range conditions (>, <, or BETWEEN) on string types such as CHAR or VARCHAR.
         * Equality comparison conditions (IN, =, !=) for text types support pushdown.
-        * [Details](https://trino.io/docs/455/connector/postgresql.html#predicate-pushdown-support)
+        * [Details](https://trino.io/docs/462/connector/postgresql.html#predicate-pushdown-support)
     * UPDATE can only be performed on a limited basis when certain conditions are met.
         * Assignment to a constant value and can only be done if a predicate exists.
         * Arithmetic expressions, function calls, and UPDATE statements to non-constant values are not supported.
         * You can't update all columns in a table at the same time.
-        * [Details](https://trino.io/docs/455/connector/postgresql.html#update)
+        * [Details](https://trino.io/docs/462/connector/postgresql.html#update)
 
 ### Execute Oracle Data Source Query
 
@@ -383,12 +403,12 @@ SELECT * FROM corona_facility_us
     * DELETE and UPDATE can only be performed on a limited basis when certain conditions are met.
         * When a where clause is present, the predicate must be able to be pushed down to the data source entirely.
         * Pushdown is not supported for Oracle-type columns that are CLOB, NCLOB, BLOB, or RAW(n).
-        * [Details](https://trino.io/docs/455/connector/oracle.html#predicate-pushdown-support)
+        * [Details](https://trino.io/docs/462/connector/oracle.html#predicate-pushdown-support)
     * UPDATE can only be performed on a limited basis when certain conditions are met.
         * Assignment to a constant value and can only be done if a predicate exists.
         * Arithmetic expressions, function calls, and UPDATE statements to non-constant values are not supported.
         * You can't update all columns in a table at the same time.
-        * [Details](https://trino.io/docs/455/connector/oracle.html#update)
+        * [Details](https://trino.io/docs/462/connector/oracle.html#update)
 
 ### Execute EDB Data Source Query
 
@@ -400,12 +420,12 @@ SELECT * FROM corona_facility_us
         * When a where clause is present, the predicate must be able to be pushed down to the data source entirely.
         * Pushdown is not supported for range conditions (>, <, or BETWEEN) on string types such as CHAR or VARCHAR.
         * Equality comparison conditions (IN, =, !=) for text types support pushdown.
-        * [Details](https://trino.io/docs/455/connector/postgresql.html#predicate-pushdown-support)
+        * [Details](https://trino.io/docs/462/connector/postgresql.html#predicate-pushdown-support)
     * UPDATE can only be performed on a limited basis when certain conditions are met.
         * Assignment to a constant value and can only be done if a predicate exists.
         * Arithmetic expressions, function calls, and UPDATE statements to non-constant values are not supported.
         * You can't update all columns in a table at the same time.
-        * [Details](https://trino.io/docs/455/connector/postgresql.html#update)
+        * [Details](https://trino.io/docs/462/connector/postgresql.html#update)
 
 ### Execute MariaDB Data Source Query
 
@@ -416,13 +436,13 @@ SELECT * FROM corona_facility_us
     * DELETE can be performed only when certain conditions are met. 
         * When a where clause is present, the predicate must be able to be pushed down to the data source entirely.
         * Pushdown is not supported for text-type columns. 
-        * [Deatils](https://trino.io/docs/455/connector/mariadb.html#predicate-pushdown-support) 
+        * [Deatils](https://trino.io/docs/462/connector/mariadb.html#predicate-pushdown-support) 
     * UPDATE can only be performed restrictively when certain conditions are met. 
         * Assignment to a constant value and can only be done if a predicate exists.
         * Arithmetic expressions, function calls, and UPDATE statements to non-constant values are not supported.
         * You can't configure conditional clauses as ANDs.
         * You can't update all columns in a table at the same time.
-        * [Details](https://trino.io/docs/455/connector/mariadb.html#update)
+        * [Details](https://trino.io/docs/462/connector/mariadb.html#update)
 
 ### Run Iceberg Data Source Queries
 
@@ -462,7 +482,7 @@ WITH (
 ```
 
 * Table Properties
-    * You can set metadata for the table. [Additional information](https://trino.io/docs/455/connector/iceberg.html#table-properties)
+    * You can set metadata for the table. [Additional information](https://trino.io/docs/462/connector/iceberg.html#table-properties)
 
 | Property name | Description |
 | ----- | --- |
@@ -477,18 +497,18 @@ WITH (
     * If the partition columns are specified as columns C1 and C2, the data in those partitions is stored at `/C1=<C1 value>/C2=<C2 value>` down the table data path.
 * You can't add/manage partitions manually because Iceberg automatically manages partitions based on the value of the data written to them.
 * Supports the feature to specify partitions using (transforming) table columns.
-    * [More about](https://trino.io/docs/455/connector/iceberg.html#partitioned-tables) year, month, day, hour, bucket, truncate
+    * [More about](https://trino.io/docs/462/connector/iceberg.html#partitioned-tables) year, month, day, hour, bucket, truncate
 
 | Convert | Supported type | Description |
 | --- | ----- | --- |
 | year(ts) | DATE, TIMESTAMP | Yearly |
 | month(ts) | DATE, TIMESTAMP | Monthly |
 | day(ts) | DATE, TIMESTAMP | Daily |
-| hour(ts) | DATE, TIMESTAMP | Hourly |
+| hour(ts) | TIMESTAMP | Hourly |
 
 #### Metadata Table
 
-* You can view metadata for an Iceberg table by looking up the metadata table. [Additional information](https://trino.io/docs/455/connector/iceberg.html#metadata-tables)
+* You can view metadata for an Iceberg table by looking up the metadata table. [Additional information](https://trino.io/docs/462/connector/iceberg.html#metadata-tables)
     * $properties
         * Table Properties
     * $history
@@ -574,6 +594,39 @@ ALTER TABLE test_table EXECUTE remove_orphan_files(retention_threshold => '7d')
 | ARRAY(e) | LIST(e) |
 | MAP(k,v) | MAP(k,v) |
 
+#### Add Parquet Files that Exist in Object Storage to the Iceberg Table
+* You can add specific files or files under a specific path as data to an Iceberg table.
+* You can add data files and partition values with add_files for tables without partitions and add_files_with_partition for tables with defined partitions.
+* add_files procedure
+
+  |Argument  | Supported value                    | Description                                                                                                                                                                                     |
+  | --- |---------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+  | location | Data file path                 | Path to the data file you want to add                                                                                                                                                                        |
+  | format | PARQUET (default format), ORC, AVRO | The data file format you want to add                                                                                                                                                                        |
+  | recursive_directory | FAIL (default), TRUE, FALSE   | Behavior when paths below location can be recursively explored<br>FAIL => Causes the query to fail if the entered data file path is recursively traversable to a depth of 2 levels.<br> TRUE => Recursively explores all data file paths down the entered data file path.<br>FALSE => Ignores the entered data file path 2 levels deep. |
+  |duplicate_file  | FAIL (default), SKIP, ADD     | Behavior when the data file to be registered is a duplicate of the data file of the already registered iceberg table<br>FAIL => The query will fail if there are duplicate data files compared to those already registered in the iceberg table.<br>SKIP => Ignore duplicate files.<br>ADD => Add a data file.           |
+```sql
+## Add mybucket/a/path subdata file to example_table
+ALTER TABLE example.system.example_table 
+EXECUTE add_files(location => 's3://my-bucket/a/path', format => 'PARQUET', recursive_directory => 'FAIL', duplicate_file => 'FAIL')
+```
+* add_files_with_partition procedure
+  * It also supports tables that define partition transforms.
+  * The partition column type you want to register must be entered in the following format: `YYYY-MM-DD` for DATE, YYYY-MM-DD`HH` `:`mm:ss` for TIMESTAMP. If it is a TIMESTAMP with a timezone, the zoneId must be specified at the end, such as `YYYY-MM-DD HH:mm:ss Asia/Seoul`.
+ 
+    |Argument  | Supported value                    | Description                                                                                                                                                                                      |
+    | --- |---------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+    | location | Data file path                 | Path to the data file you want to add                                                                                                                                                                         |
+    |partition_columns| ARRAY['partition_column'] | Lists the partition columns defined in the iceberg table, entered as ARRAY['c1', 'c2'] if the table is partitioned into columns c1, c2                                                                                                                 |
+    |partition_values| ARRAY['partition_value']  | The value of the partition you want to register                                                                                                                                                                             |
+    | format | PARQUET (native format), ORC, AVRO | The data file format you want to add                                                                                                                                                                        |
+    | recursive_directory | FAIL (default), TRUE, FALSE   | Behavior when paths below location can be recursively explored<br>FAIL => Causes the query to fail if the entered data file path is recursively traversable to a depth of 2 levels.<br> TRUE => Recursively explores all data file paths down the entered data file path.<br>FALSE => Ignore paths 2 levels deep into the entered data file. |
+    |duplicate_file  | FAIL (default), SKIP, ADD     | Behavior when the data file to be registered is a duplicate of the data file of the already registered iceberg table<br>FAIL => The query will fail if there are duplicate data files compared to those already registered in the iceberg table.<br>SKIP => Ignore duplicate files.<br>ADD => Add a data file.            |
+```sql
+## ICEBERG table with partition column YEAR and DAY transformation applied
+ALTER TABLE example.system.example_table 
+EXECUTE add_files_with_partition(location => 's3://my-bucket/a/path', partition_columns => ARRAY['year'], partition_values => ARRAY['2024-11-21'], format => 'PARQUET', recursive_directory => 'TRUE', duplicate_file => 'FAIL')
+```
 #### Cautions and Constraints
 
 * It is not possible to create duplicate Iceberg tables in the same path.
@@ -585,25 +638,22 @@ ALTER TABLE test_table EXECUTE remove_orphan_files(retention_threshold => '7d')
 * Iceberg data already exists in Object Storage. How can I apply it to a DataQuery?
     * You can register by running register_table. See Data management > Register a table.
 * Only Parquet files exist in Object Storage. How can I make them into Iceberg tables?
-    * Currently, DataQuery does not provide this functionality, but we are working to introduce it.
-    * Currently, you can use Iceberg by creating an Object Storage data source to create a Parquet table, and then using CREATE TABLE AS or INSERT INTO with the table in the Iceberg data source.
+    * After creating an Iceberg table, you can add data using the add_files and add_files_with_partition procedures.
 * I want to add only Parquet data to an Iceberg table that already exists.
-    * Currently, DataQuery does not provide this functionality, but we are working to introduce it.
-    * Currently, you can use Iceberg by creating an Object Storage data source to create a Parquet table, and then using CREATE TABLE AS or INSERT INTO with the table in the Iceberg data source.
-
+    * You can add data using the add_files, add_files_with_partition procedures.
 
 ## External Integration
 ### Trino cli
 
 * You can run queries from command line with credentials issued through the Settings menu, access information, and CLI tools supported by Trino.
-  * DataQuery is currently running on version 455 of Trino.
-  * [Trino CLI](https://repo1.maven.org/maven2/io/trino/trino-cli/455/trino-cli-455-executable.jar)
+  * DataQuery is currently running on version 462 of Trino.
+  * [Trino CLI](https://repo1.maven.org/maven2/io/trino/trino-cli/462/trino-cli-462-executable.jar)
 
 ```
 # Permission to run the file is required. Use chmod +x.
-# ex) chmod +x trino-cli-455-executable.jar
+# ex) chmod +x trino-cli-462-executable.jar
 
-./trino-cli-455-executable.jar --server <Connection URL(Required)> \
+./trino-cli-462-executable.jar --server <Connection URL(Required)> \
   --user <ID (Required)> --password \
   --catalog <Data source name> \
   --schema <Schema name>
@@ -625,7 +675,7 @@ ALTER TABLE test_table EXECUTE remove_orphan_files(retention_threshold => '7d')
 * Catalog, schema value is the value for connection for which you want to run command, and you can run cli without entering it, and you can use Query below to check Catalog or Schema list.
     * show catalogs
     * show schemas
-* For more information, refer to the [Trino Guide](https://trino.io/docs/455/client/cli.html).
+* For more information, refer to the [Trino Guide](https://trino.io/docs/462/client/cli.html).
 
 ### Connect to JDBC
 
@@ -648,4 +698,4 @@ jdbc:trino://${host}:${port}/${catalog}/${schema}
         * Schema name to connect
 * Example of connection information
     * jdbc:trino://test-dataquery-domain-12345abcd.kr1-cluster-dataquery.nhncloudservice.com:443/catalog/schema
-* For more details, see [Trino JDBC Guide](https://trino.io/docs/455/client/jdbc.html).
+* For more details, see [Trino JDBC Guide](https://trino.io/docs/462/client/jdbc.html).
