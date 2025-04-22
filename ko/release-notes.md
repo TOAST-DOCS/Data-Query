@@ -1,4 +1,8 @@
 ## Data & Analytics > DataQuery > 릴리스 노트
+### 2025. 05. 27.
+#### 기능 추가
+* Object Storage 데이터 소스와 연동하기 위한 메타스토어의 인스턴스 타입을 설정할 수 있는 기능을 추가하였습니다.
+
 ### 2025. 01. 21.
 * DataQuery를 Trino 462 버전을 기반으로 서비스하도록 업그레이드하였습니다.
 * iceberg connector에 관한 add_files_with_partition 함수가 추가되었습니다.
