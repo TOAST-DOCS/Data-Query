@@ -1,5 +1,10 @@
 ## Data & Analytics > DataQuery > Release Notes
+### May 27, 2025
+#### Added Features
+* Added the feature to set the instance type of a metastore to work with Object Storage data sources.
+
 ### January 21, 2025
+#### Feature Updates
 * Upgraded DataQuery to service based on Trino 462 version.
 * Added the add_files_with_partition function for iceberg connector.
 
