@@ -599,6 +599,7 @@ ALTER TABLE test_table EXECUTE remove_orphan_files(retention_threshold => '7d')
 | ROW(...) | STRUCT(...) |
 | ARRAY(e) | LIST(e) |
 | MAP(k,v) | MAP(k,v) |
+
 #### Object Storage에 존재하는 Parquet 파일을 Iceberg 테이블에 추가
 * 특정 파일 혹은 특정 경로 하위의 파일들을 Iceberg 테이블에 데이터로 추가할 수 있습니다.
 * 파티션이 없는 테이블은 add_files, 파티션이 정의된 테이블은 add_files_with_partition으로 데이터 파일과 파티션 값을 추가할 수 있습니다.
