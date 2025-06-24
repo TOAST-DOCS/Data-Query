@@ -192,11 +192,12 @@ The service is available through following procedures.
         * Query results can be downloaded maximum 7 days from the Query completion time. If Query runs at 13hr:53min:32sec on December 1st, you can download it no later than 13hr:53min:32sec on December 8th.
     * Right-click mouse to execute copy and export query results from the console.
 * Provides list of queries executed by Query Editor.
+    * ① Click Query History.
+    * ② Additional query window is created where the corresponding query is entered.
 
 <img src="https://kr1-api-object-storage.nhncloudservice.com/v1/AUTH_2acdfabf4efe4efc8a04c00b348110c9/cdn_origin/prod_dataquery/dataquery_console_02_en.png"/>
 
-* ① Click Query History.
-* ② Additional query window is created where the corresponding query is entered.
+* You can check the cluster status metrics.
 
 ## Query History
 

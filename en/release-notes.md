@@ -1,4 +1,9 @@
 ## Data & Analytics > DataQuery > Release Notes
+### June 24, 2025
+#### Added Features
+* Added a visualization area for the cluster status metrics.
+  * Status will be collected for clusters that were started after June 24, 2025.
+
 ### May 27, 2025
 #### Added Features
 * Added the feature to set the instance type of a metastore to work with Object Storage data sources.
