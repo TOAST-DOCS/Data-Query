@@ -1,5 +1,10 @@
 ## Data & Analytics > DataQuery > Release Notes
-### 2026. 03. 24.
+### April 28, 2026
+#### Added integration service
+* Added a "Scheduled Query" template to the Cloud Scheduler service.
+  * Queries can now be run on a desired schedule using the template.
+
+### March 24, 2026
 #### Feature Updates
 * Improved the console query result display policy
   * Removed the limit that restricted console query results to within 1 MB and 5,000 rows.
@@ -53,16 +58,16 @@
 
 ### February 27, 2024
 #### Feature Updates
-- Added the feature to save and manage frequently used queries.
+* Added the feature to save and manage frequently used queries.
 
-### January 23, 2024   
+### January 23, 2024
 #### Trino Version Upgrade
 * Upgraded the Trino version provided by DataQuery from 398 to 434.
 * Added PostgreSQL, Oracle, and EDB to data source types.
 
 ### October 31, 23
 #### Feature Updates
-* Added a feature to select a cluster type
+* Added a feature to select a cluster type.
 
 ### December 27, 2022
 
