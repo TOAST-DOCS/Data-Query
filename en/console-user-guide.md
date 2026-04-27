@@ -33,7 +33,7 @@ The service is available through the following steps:
         * Existing data to be linked may exist outside the dataquery-warehouse container.
     * Metastore types
         * You can set the instance type of the metastore used for data input and output to Object Storage.
-            * For information on types, see [Pricing by Service](https://www.nhncloud.com/en/pricing/by-service?c=Data%20%26%20Analytics&s=DataQuery).
+            * For information on types, see [Pricing by Service](https://www.nhncloud.com/kr/pricing/by-service?c=Data%20%26%20Analytics&s=DataQuery).
         * By default, the C1M3 type is selected.
         * The settings take effect after the next cluster start. If the cluster is already turned on, it must be shut down and restarted.
     * Additional Settings Information
