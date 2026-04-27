@@ -120,7 +120,7 @@ The service is available through the following steps:
 * Access key, secret key, region
     * The Iceberg table data to integrate with or the connection information for the Object Storage where the data exists.
     * Access keys and secret keys can be issued from the Object Storage console. For more details, refer to [Object Storage Console Guide](https://docs.toast.com/ko/Storage/Object%20Storage/ko/console-guide/#s3-api).
-        * The region must match the S3 region name corresponding to the NHN Cloud region. Refer to [AWS Command Line Interface (CLI) > Configuration](https://docs.toast.com/en/Storage/Object%20Storage/en/s3-api-guide/#aws-cli)in the  Object Storage guide.
+        * The region must match the S3 region name corresponding to the NHN Cloud region. Refer to [AWS Command Line Interface (CLI) > Configuration](https://docs.nhncloud.com/en/Storage/Object%20Storage/en/s3-api-guide/#aws-command-line-interface-cli)in the  Object Storage guide.
 * Bucket Name
     * The Object Storage container that the system uses to store basic Iceberg table information is named dataquery-warehouse and has a child path of iceberg.
     * The existing data you want to integrate may exist in a different path.
