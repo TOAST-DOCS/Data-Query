@@ -1,7 +1,7 @@
 ## Data & Analytics > DataQuery > Console User Guide
 
 To use DataQuery service, you have to add a data source.
-The service is available through following procedures.
+The service is available through the following steps:
 
 * Add a data source to link
 * Start a cluster to reflect the data source
@@ -14,7 +14,7 @@ The service is available through following procedures.
 * Restrictions for Data Source Setup and Reflection
     * Up to 5 data sources of Object Storage type can be registered.
     * You must use the DataQuery IP fixation feature when connecting to data sources with access control enabled.
-        * To enable the DataQuery IP fixation feature, contact the Customer Center.
+        * To enable the DataQuery IP fixation feature, contact the Customer Support.
 * Click **Add Data Source**.
 
 
@@ -25,8 +25,8 @@ The service is available through following procedures.
         * This is a separator used to perform queries, and must be unique value among data sources.
     * Access key, secret key, region
         * Connection information for Object Storage where Data to be linked exists.
-        * Access keys and secret keys can be issued from the Object Storage console. For more details, refer to [Object Storage Console Guide](https://docs.toast.com/ko/Storage/Object%20Storage/ko/console-guide/#s3-api).
-        * For regions, refer to [S3 Region](https://docs.toast.com/ko/Storage/Object%20Storage/ko/s3-api-guide/#aws-cli) from Object Storage Guide of respective region.
+        * Access keys and secret keys can be issued from the Object Storage console. For more details, refer to [Object Storage Console Guide](https://docs.toast.com/en/Storage/Object%20Storage/en/console-guide/#s3-api).
+        * The region must match the S3 region name corresponding to the NHN Cloud region. Refer to [AWS Command Line Interface (CLI) > Configuration](https://docs.nhncloud.com/en/Storage/Object%20Storage/en/s3-api-guide/#aws-command-line-interface-cli)in the  Object Storage guide.
     * Bucket Name
         * Object Storage container name (dataquery-warehouse) that the system uses to store Default table information, management table information, and data.
             * Create and use your own dataquery-warehouse container.
@@ -120,10 +120,10 @@ The service is available through following procedures.
 * Access key, secret key, region
     * The Iceberg table data to integrate with or the connection information for the Object Storage where the data exists.
     * Access keys and secret keys can be issued from the Object Storage console. For more details, refer to [Object Storage Console Guide](https://docs.toast.com/ko/Storage/Object%20Storage/ko/console-guide/#s3-api).
-        * For regions, refer to [S3 Region](https://docs.toast.com/ko/Storage/Object%20Storage/ko/s3-api-guide/#aws-cli) from Object Storage Guide of respective region.
-    * Bucket Name
-        * The Object Storage container that the system uses to store basic Iceberg table information is named dataquery-warehouse and has a child path of iceberg.
-        * The existing data you want to integrate may exist in a different path.
+        * The region must match the S3 region name corresponding to the NHN Cloud region. Refer to [AWS Command Line Interface (CLI) > Configuration](https://docs.nhncloud.com/en/Storage/Object%20Storage/en/s3-api-guide/#aws-command-line-interface-cli)in the  Object Storage guide.
+* Bucket Name
+    * The Object Storage container that the system uses to store basic Iceberg table information is named dataquery-warehouse and has a child path of iceberg.
+    * The existing data you want to integrate may exist in a different path.
 
 > [Caution]
 > If Object Storage to link with DataQuery is not in the same region, network traffic may incur additional charges.
@@ -142,7 +142,7 @@ The service is available through following procedures.
 * If a data source has been added, changed, deleted, the Restart Cluster message appears as shown below.
 * It may take 1~2 minutes to turn off and 5~7 minutes to turn on.
 * DataQuery cluster reflects all data sources and cannot apply individual data sources.
-* If Cluster **on** or **off** persists to fail, contact the Customer Center.
+* If Cluster **on** or **off** persists to fail, contact the Customer Support.
 
 ### 2. Schema Area
 
@@ -244,11 +244,11 @@ The service is available through following procedures.
 * Supports processing of Parquet, JSON, ORC, CSV, and Text types of Data on Object Storage.
 * Object Storage data source provides default Schema named Default, and you can work in the corresponding schema.
 > [Note]
-> If you need performance improvements for Hive used for Object Storage queries, please contact the Custoer Center.
+> If you need performance improvements for Hive used for Object Storage queries, please contact the Custoer Support.
 
 #### Additional Grammar to operate Hive feature  
 
-* Trino-Hive basically follows standard SQL grammar, but there is additional feature/Grammar for Hive activity response. [Details](https://trino.io/docs/476/connector/hive.html)
+* Trino-Hive basically follows standard SQL grammar, but there is additional feature and grammar for Hive activity response. [Details](https://trino.io/docs/476/connector/hive.html)
 * Supported data format
     * Default format is designated as ORC, and you can specify Parquet, JSON, ORC, CSV, Text, etc. as Settings.
     * When creating Table, you can specify Format value in With clause.
@@ -314,7 +314,7 @@ system.register_partition(schema_name, table_name, partition_columns, partition_
     * DataQuery uses S3-compatible layer for Object Storage access and requires use of s3a protocol when specifying path for data for schemas or tables (e.g., s3a://example/test).
     * Data directory path object specified by external\_location in External Table have to be existed separately.
         * With the directory created separately in Object Storage, the data must be located in the corresponding directory for normal link.
-        * If having issues with the processing, please contact the Customer Center.
+        * If having issues with the processing, please contact the Customer Support.
     * If external\_location path name of external table contains Korean characters, the data will not be processed properly.
     * If Object Storage bucket associated with table is deleted, the Table DROP query fails.
     * DELETE, UPDATE can only be performed on partition data on limited basis.
@@ -458,7 +458,7 @@ SELECT * FROM corona_facility_us
 * Iceberg data source queries are performed based on Trino-Iceberg.
 * You can integrate with Iceberg table data that exists in Object Storage and for data in supported formats.
     * Supports data of type PARQUET (native format), ORC, and AVRO.
-* Uses S3-compatible layer for Object Storage access and requires use of s3a protocol when specifying path for data for Schemas or Tables (ex. s3a://example/test).
+* Uses S3-compatible layer for Object Storage access and requires use of s3a protocol when specifying path for data of Schemas or Tables (ex. s3a://example/test).
 
 #### Schema
 
@@ -491,14 +491,14 @@ WITH (
 ```
 
 * Table Properties
-    * You can set metadata for the table. [Additional information](https://trino.io/docs/476/connector/iceberg.html#table-properties)
+    * You can set metadata of the table. [Additional information](https://trino.io/docs/476/connector/iceberg.html#table-properties)
 
 | Property name | Description |
 | ----- | --- |
 | format | Specify the format of the table data file. PARQUET, ORC, or AVRO. <br> The default is PARQUET. |
 | partitioning | Specifies the table partition. If the table is partitioned into columns c1 and c2, you can specify partitioning=ARRAY['c1', 'c2']. |
 | sorted_by | When saving individual data files, sort them by the values in the columns you specify. |
-| location | Specify the Object Storage path for the table.<br>If the property is not set, it is stored in the schema path under the default path. |
+| location | Specify the Object Storage path of the table.<br>If the property is not set, it is stored in the schema path under the default path. |
 
 #### Partitions
 
@@ -612,7 +612,7 @@ ALTER TABLE test_table EXECUTE remove_orphan_files(retention_threshold => '7d')
   | --- |---------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
   | location | Data file path                 | Path to the data file you want to add                                                                                                                                                                        |
   | format | PARQUET (default format), ORC, AVRO | The data file format you want to add                                                                                                                                                                        |
-  | recursive_directory | FAIL (default), TRUE, FALSE   | Behavior when paths below location can be recursively explored<br>FAIL => Causes the query to fail if the entered data file path is recursively traversable to a depth of 2 levels.<br> TRUE => Recursively explores all data file paths down the entered data file path.<br>FALSE => Ignores the entered data file path 2 levels deep. |
+  | recursive_directory | FAIL (default), TRUE, FALSE   | Behavior when paths below location can be recursively explored<br>FAIL => The query will fail if the entered data file path can be recursively traversed to a depth of 2 levels.<br> TRUE => Recursively explores all data file paths down the entered data file path.<br>FALSE => Ignores the entered data file path 2 levels deep. |
   |duplicate_file  | FAIL (default), SKIP, ADD     | Behavior when the data file to be registered is a duplicate of the data file of the already registered iceberg table<br>FAIL => The query will fail if there are duplicate data files compared to those already registered in the iceberg table.<br>SKIP => Ignore duplicate files.<br>ADD => Add a data file.           |
 ```sql
 -- Add mybucket/a/path subdata file to example_table
@@ -629,7 +629,7 @@ EXECUTE add_files(location => 's3://my-bucket/a/path', format => 'PARQUET', recu
     |partition_columns| ARRAY['partition_column'] | Lists the partition columns defined in the iceberg table, entered as ARRAY['c1', 'c2'] if the table is partitioned into columns c1, c2                                                                                                                 |
     |partition_values| ARRAY['partition_value']  | The value of the partition you want to register                                                                                                                                                                             |
     | format | PARQUET (native format), ORC, AVRO | The data file format you want to add                                                                                                                                                                        |
-    | recursive_directory | FAIL (default), TRUE, FALSE   | Behavior when paths below location can be recursively explored<br>FAIL => Causes the query to fail if the entered data file path is recursively traversable to a depth of 2 levels.<br> TRUE => Recursively explores all data file paths down the entered data file path.<br>FALSE => Ignore paths 2 levels deep into the entered data file. |
+    | recursive_directory | FAIL (default), TRUE, FALSE   | Behavior when paths below location can be recursively explored<br>FAIL => The query will fail if the entered data file path can be recursively traversed to a depth of 2 levels.<br> TRUE => Recursively explores all data file paths down the entered data file path.<br>FALSE => Ignore paths 2 levels deep into the entered data file. |
     |duplicate_file  | FAIL (default), SKIP, ADD     | Behavior when the data file to be registered is a duplicate of the data file of the already registered iceberg table<br>FAIL => The query will fail if there are duplicate data files compared to those already registered in the iceberg table.<br>SKIP => Ignore duplicate files.<br>ADD => Add a data file.            |
 ```sql
 -- ICEBERG table with partition column YEAR and DAY transformation applied
@@ -708,3 +708,22 @@ jdbc:trino://${host}:${port}/${catalog}/${schema}
 * Example of connection information
     * jdbc:trino://test-dataquery-domain-12345abcd.kr1-cluster-dataquery.nhncloudservice.com:443/catalog/schema
 * For more details, see [Trino JDBC Guide](https://trino.io/docs/476/client/jdbc.html).
+
+### Cloud Scheduler connection
+* You can run queries on a desired schedule using the **Scheduled Query** template in the Cloud Scheduler service.
+
+| Parameter | Required | Description |
+| ----- | --- | ---- |
+| Appkey | O | Appkey of the DataQuery service |
+| User Access Key | O | User Access Key issued by NHN Cloud |
+| Secret Access Key | O | Secret Access Key issued by NHN Cloud |
+| Query statement | O | The body of the query to be executed |
+
+!!! tip "Note"
+    * The results of **Scheduled Query** are not displayed in the UI or included in the API response. If query results are needed, use a CTAS or INSERT SELECT query to save them to a separate table.
+    * User Access Key and Secret Access Key can be issued using **API Security Settings** > **Create User Access Key**.
+    * For creating a schedule using the target template, refer to **Application Service > Cloud Scheduler > Console User Guide** in the user guide.
+
+!!! danger "Caution"
+    * The cluster must be running to execute a query.
+    * User Access Key and Secret Access Key must be issued using an account with permissions for the registered Appkey.
