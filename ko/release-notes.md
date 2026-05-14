@@ -1,4 +1,8 @@
 ## Data & Analytics > DataQuery > 릴리스 노트
+### 2026. 05. 27.
+#### 연동 서비스 추가
+* 데이터 소스 유형에 Data Lake Storage를 추가했습니다.
+
 ### 2026. 04. 28.
 #### 연동 서비스 추가
 * Cloud Scheduler 서비스에 '예약된 쿼리' 템플릿을 추가했습니다.
