@@ -12,11 +12,31 @@ The service is available through the following steps:
 ### Add Data Source
 
 * Restrictions for Data Source Setup and Reflection
-    * Up to 5 data sources of Object Storage type can be registered.
+    * Up to 5 data sources can be registered in total for Data Lake Storage and Object Storage types.
     * You must use the DataQuery IP fixation feature when connecting to data sources with access control enabled.
         * To enable the DataQuery IP fixation feature, contact the Customer Support.
 * Click **Add Data Source**.
 
+### Data Lake Storage Data Source Type
+You can create a Data Lake Storage data source by selecting **Data Lake Storage** from **Data Source Type** on the add data source page, entering the connection information and additional settings, and clicking **Add**.
+
+| Item | Required | Description | Notes |
+| --- | --- | --- | --- |
+| Data source name | O | Identifier used when executing queries | • The name must be unique among data sources. |
+| Data source description | O | Description of the data source |  |
+| Access key | O | Credentials issued by Data Lake Storage | • For information on how to issue Data Lake Storage credentials, see the [Data Lake Storage Console User Guide](https://docs.nhncloud.com/ko/Data%20&%20Analytics/Data%20Lake%20Storage/ko/console-user-guide/#_10). |
+| Secret key | O | Credentials issued by Data Lake Storage |  |
+| Bucket name | O | The default bucket used to store basic table information, managed table information, and data. | • If the bucket does not exist, it is created together when the data source is registered.<br>• For available bucket names, see the [Data Lake Storage Console User Guide](https://docs.nhncloud.com/ko/Data%20&%20Analytics/Data%20Lake%20Storage/ko/console-user-guide/#_7).<br>• Existing data to be integrated may exist outside the dataquery-warehouse container. |
+| Region | O | The Data Lake Storage region name corresponding to the NHN Cloud region |  |
+| Metastore type | O | The instance type of the metastore used to input/output data to Data Lake Storage | • For descriptions of each type, see [Pricing by service](https://www.nhncloud.com/kr/pricing/by-service?c=Data%20%26%20Analytics&s=DataQuery).<br>• The c1m3 type is selected by default.<br>• The setting is applied after the next cluster start. If the cluster is already running, it must be stopped and restarted. |
+| Recursive path read | X | Whether to execute queries including subdirectories |  |
+| File storage format | X | The file type to be stored in storage |  |
+
+!!! tip "Note"
+    * Data Lake Storage can exist in a different NHN Cloud project from DataQuery.
+
+!!! danger "Caution"
+    * If the Data Lake Storage to be integrated with DataQuery is not in the same region, additional charges may be incurred due to network traffic.
 
 ### Object Storage Data Source Type
 
@@ -112,7 +132,6 @@ The service is available through the following steps:
     * Password 
         * MariaDB password to access.
 
-
 ### Iceberg Data Source Type
 
 * Data source name
@@ -127,7 +146,6 @@ The service is available through the following steps:
 
 > [Caution]
 > If Object Storage to link with DataQuery is not in the same region, network traffic may incur additional charges.
-
 
 ## Query Editor
 
@@ -283,7 +301,7 @@ The service is available through the following steps:
 -- Create by applying partition to the table
 CREATE TABLE default.sample (...) WITH ( partitioned_by = ARRAY['columna', 'columnb'],)
 -- Query partition
-SELECT * FROM default"sample$partitions"
+SELECT * FROM default."sample$partitions"
 -- Control partition
 system.create_empty_partition(schema_name, table_name, partition_columns, partition_values)
 system.sync_partition_metadata(schema_name, table_name, mode, case_sensitive)
@@ -652,7 +670,7 @@ EXECUTE add_files_with_partition(location => 's3://my-bucket/a/path', partition_
     * You can add data using the add_files, add_files_with_partition procedures.
 
 ## External Integration
-### Trino cli
+### Trino CLI
 
 * You can run queries from command line with credentials issued through the Settings menu, access information, and CLI tools supported by Trino.
   * DataQuery is currently running on version 476 of Trino.
@@ -681,7 +699,7 @@ EXECUTE add_files_with_partition(location => 's3://my-bucket/a/path', partition_
     * Schema name
         * Schema that has linked
 * Additional debug information can be output by adding the `--debug` option.
-* Catalog, schema value is the value for connection for which you want to run command, and you can run cli without entering it, and you can use Query below to check Catalog or Schema list.
+* Catalog, schema value is the value for connection for which you want to run command, and you can run CLI without entering it, and you can use Query below to check Catalog or Schema list.
     * show catalogs
     * show schemas
 * For more information, refer to the [Trino Guide](https://trino.io/docs/476/client/cli.html).
@@ -715,6 +733,7 @@ jdbc:trino://${host}:${port}/${catalog}/${schema}
 | Parameter | Required | Description |
 | ----- | --- | ---- |
 | Appkey | O | Appkey of the DataQuery service |
+| Region | O | Region of the DataQuery service |
 | User Access Key | O | User Access Key issued by NHN Cloud |
 | Secret Access Key | O | Secret Access Key issued by NHN Cloud |
 | Query statement | O | The body of the query to be executed |
@@ -727,3 +746,4 @@ jdbc:trino://${host}:${port}/${catalog}/${schema}
 !!! danger "Caution"
     * The cluster must be running to execute a query.
     * User Access Key and Secret Access Key must be issued using an account with permissions for the registered Appkey.
+    * To execute queries, **Credentials** for the DataQuery service must be issued.
