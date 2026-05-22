@@ -24,7 +24,7 @@ You can create a Data Lake Storage data source by selecting **Data Lake Storage*
 | --- | --- | --- | --- |
 | Data source name | O | Identifier used when executing queries | • The name must be unique among data sources. |
 | Data source description | O | Description of the data source |  |
-| Access key | O | Credentials issued by Data Lake Storage | • For information on how to issue Data Lake Storage credentials, see the [Data Lake Storage Console User Guide](https://docs.nhncloud.com/ko/Data%20&%20Analytics/Data%20Lake%20Storage/ko/console-user-guide/#_10). |
+| Access key | O | Credentials issued by Data Lake Storage | • For information on how to issue Data Lake Storage credentials, see the [Data Lake Storage Console User Guide](https://docs.nhncloud.com/en/Data%20&%20Analytics/Data%20Lake%20Storage/en/console-user-guide/#manage-credentials). |
 | Secret key | O | Credentials issued by Data Lake Storage |  |
 | Bucket name | O | The default bucket used to store basic table information, managed table information, and data. | • If the bucket does not exist, it is created together when the data source is registered.<br>• For available bucket names, see the [Data Lake Storage Console User Guide](https://docs.nhncloud.com/en/Data%20&%20Analytics/Data%20Lake%20Storage/en/console-user-guide/#create-bucket).<br>• Existing data to be integrated may exist outside the dataquery-warehouse container. |
 | Region | O | The Data Lake Storage region name corresponding to the NHN Cloud region |  |
