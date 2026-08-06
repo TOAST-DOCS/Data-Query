@@ -1,9 +1,13 @@
-## DataQuery 개요
+<!-- pre-align:aligned sig=9a93e7290804 -->
+
+<a id="dataquery-overview"></a>
+## DataQuery 개요 { #dataquery-overview }
 
 * 분산 SQL 쿼리 엔진 Trino를 기반으로 대규모 데이터에 대해 쿼리를 실행할 수 있는 서비스 입니다.
 * Object Storage 등 NHN Cloud 서비스와의 연동을 지원합니다.
 
-## 주요 기능
+<a id="main-features"></a>
+## 주요 기능 { #main-features }
 
 * NHN Cloud Object Storage, NHN Cloud RDS for MySQL 등 데이터 소스들에 대한 연결을 지원합니다.
 * 각각 다른 데이터 소스들에 대해 표준 SQL로 통합 쿼리 실행이 가능합니다.
@@ -13,7 +17,8 @@
 * Trino 엔드포인트를 통해 UI 접속 및 외부 툴(JDBC, CLI, BI 솔루션 등)과의 연동이 가능합니다.
 * 사용자 프로젝트별 Trino 클러스터를 제공하며 필요 시 사양 조정이 가능합니다.
 
-## 서비스 용어
+<a id="service-terminology"></a>
+## 서비스 용어 { #service-terminology }
 
 | 용어 | 설명 |
 | --- | --- |
