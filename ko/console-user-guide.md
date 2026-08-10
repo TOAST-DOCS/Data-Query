@@ -166,7 +166,7 @@ DataQuery 서비스를 사용하려면 반드시 데이터 소스를 추가해�
 
 * 쿼리 편집기는 클러스터 영역, 스키마 영역, 저장된 쿼리 영역, 편집기 영역, 결과/콘솔 실행 영역으로 구분됩니다.
 
-<img src="https://static.toastoven.net/prod_dataquery/console-user-guide/2026-03/ko/dataquery_console_01.png" alt="쿼리 편집기 화면"/>
+![쿼리 편집기 화면](../static/images/dataquery_console_01.png)
 
 <a id="cluster-area"></a>
 ### 1. 클러스터 영역 { #cluster-area }
@@ -237,7 +237,7 @@ DataQuery 서비스를 사용하려면 반드시 데이터 소스를 추가해�
     * ① 쿼리 이력을 클릭합니다.
     * ② 해당 쿼리가 입력된 쿼리 창이 추가 생성됩니다.
 
-<img src="https://static.toastoven.net/prod_dataquery/console-user-guide/2025-09/ko/dataquery_console_02.png" alt="쿼리 이력 화면"/>
+![쿼리 이력 화면](../static/images/dataquery_console_02.png)
 
 * 클러스터의 상태 지표를 확인할 수 있습니다.
 
@@ -249,7 +249,7 @@ DataQuery 서비스를 사용하려면 반드시 데이터 소스를 추가해�
 * 가장 오른쪽 칼럼의 펼침 버튼을 클릭해 쿼리의 추가적인 실행 정보를 확인할 수 있으며, **다운로드**를 클릭해 쿼리의 전체 실행 정보를 내려받을 수 있습니다.
     * 다운로드 파일에 쿼리 결과는 포함되지 않습니다.
 
-<img src="https://kr1-api-object-storage.nhncloudservice.com/v1/AUTH_2acdfabf4efe4efc8a04c00b348110c9/cdn_origin/prod_dataquery/dataquery_console_03_ko.png" alt="쿼리 이력 화면"/>
+![쿼리 이력 화면](../static/images/dataquery_console_03.png)
 
 <a id="settings"></a>
 ## 설정 { #settings }
@@ -372,7 +372,7 @@ system.register_partition(schema_name, table_name, partition_columns, partition_
 
 1. 샘플 CSV 파일을 [다운로드](https://static.toastoven.net/prod_dataquery/files/facility-boundary-us-all.csv)하여 Object Storage에 업로드합니다.
 
-<img src="https://kr1-api-object-storage.nhncloudservice.com/v1/AUTH_2acdfabf4efe4efc8a04c00b348110c9/cdn_origin/prod_dataquery/dataquery_console_04_ko.png" alt="Object Storage 업로드 화면"/>
+![Object Storage 업로드 화면](../static/images/dataquery_console_04.png)
 
 2. Object Storage 콘솔에서 액세스 키, 비밀 키를 발급받습니다.
 3. Object Storage의 액세스 키, 비밀 키, 엔드포인트를 이용하여 Object Storage 데이터 소스를 입력합니다.
@@ -406,7 +406,7 @@ with (
 
 6. 테이블이 정상적으로 추가되었는지 확인하기 위해 테이블을 새로 고침합니다.
 
-<img src="https://kr1-api-object-storage.nhncloudservice.com/v1/AUTH_2acdfabf4efe4efc8a04c00b348110c9/cdn_origin/prod_dataquery/dataquery_console_05_ko.png" width=220 alt="테이블 새로 고침 화면"/>
+![테이블 새로 고침 화면](../static/images/dataquery_console_05.png){ width="220" }
 
 7. 해당 테이블에서 아래와 같이 쿼리를 실행합니다.
 
