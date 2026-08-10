@@ -1,4 +1,7 @@
-## Data & Analytics > DataQuery > Console User Guide
+<!-- pre-align:aligned sig=a1a3882f94e2 -->
+
+<a id="data-analytics-dataquery-console-user-guide"></a>
+## Data & Analytics > DataQuery > Console User Guide { #data-analytics-dataquery-console-user-guide }
 
 To use DataQuery service, you have to add a data source.
 The service is available through the following steps:
@@ -7,9 +10,11 @@ The service is available through the following steps:
 * Start a cluster to reflect the data source
 * Run Queries from separate tool via Query Editor on Console or external access URL
 
-## Data Source
+<a id="data-source"></a>
+## Data Source { #data-source }
 
-### Add Data Source
+<a id="add-data-source"></a>
+### Add Data Source { #add-data-source }
 
 * Restrictions for Data Source Setup and Reflection
     * Up to 5 data sources can be registered in total for Data Lake Storage and Object Storage types.
@@ -17,7 +22,8 @@ The service is available through the following steps:
         * To enable the DataQuery IP fixation feature, contact the Customer Support.
 * Click **Add Data Source**.
 
-### Data Lake Storage Data Source Type
+<a id="data-lake-storage-data-source-type"></a>
+### Data Lake Storage Data Source Type { #data-lake-storage-data-source-type }
 You can create a Data Lake Storage data source by selecting **Data Lake Storage** from **Data Source Type** on the add data source page, entering the connection information and additional settings, and clicking **Add**.
 
 | Item | Required | Description | Notes |
@@ -38,7 +44,8 @@ You can create a Data Lake Storage data source by selecting **Data Lake Storage*
 !!! danger "Caution"
     * If the Data Lake Storage to be integrated with DataQuery is not in the same region, additional charges may be incurred due to network traffic.
 
-### Object Storage Data Source Type
+<a id="object-storage-data-source-type"></a>
+### Object Storage Data Source Type { #object-storage-data-source-type }
 
 * Click **Add Data Source**, and then on the Add data source page, enter the Object Storage information.
     * Data source name
@@ -64,7 +71,8 @@ You can create a Data Lake Storage data source by selecting **Data Lake Storage*
 > [Note]
 > If Object Storage to link with DataQuery is not in the same region, network traffic may incur additional charges.
 
-### MySQL Data Source Type
+<a id="mysql-data-source-type"></a>
+### MySQL Data Source Type { #mysql-data-source-type }
 
 * Data source name
     * This is a separator used to perform queries, and must be unique value among data sources.
@@ -78,7 +86,8 @@ You can create a Data Lake Storage data source by selecting **Data Lake Storage*
 * Password
     * MySQL Password to access.
 
-### PostgreSQL Data Source Type
+<a id="postgresql-data-source-type"></a>
+### PostgreSQL Data Source Type { #postgresql-data-source-type }
 
 * Data source name
     * This is a separator used to perform queries, and must be unique value among data sources.
@@ -90,7 +99,8 @@ You can create a Data Lake Storage data source by selecting **Data Lake Storage*
 * Password
     * PostgreSQL Password to access.
 
-### Oracle Data Source Type
+<a id="oracle-data-source-type"></a>
+### Oracle Data Source Type { #oracle-data-source-type }
 
 * Data source name
     * This is a separator used to perform queries, and must be unique value among data sources.
@@ -106,7 +116,8 @@ You can create a Data Lake Storage data source by selecting **Data Lake Storage*
     * Default number of decimal places: Set the default number of decimal places for numbers that don't have a full significant digits (PRECISION) or decimal places (SCALE) setting.
     * Number rounding: Set the rounding policy for the Oracle NUMBER data type.
 
-### EDB Data Source Type
+<a id="edb-data-source-type"></a>
+### EDB Data Source Type { #edb-data-source-type }
 
 * Data source name
     * This is a separator used to perform queries, and must be unique value among data sources.
@@ -118,7 +129,8 @@ You can create a Data Lake Storage data source by selecting **Data Lake Storage*
 * Password
     * EDB Password to access.
 
-### MariaDB Data Source Type
+<a id="mariadb-data-source-type"></a>
+### MariaDB Data Source Type { #mariadb-data-source-type }
 
 * Data source name 
     * This is a separator used when performing queries, and must be unique among data sources 
@@ -132,7 +144,8 @@ You can create a Data Lake Storage data source by selecting **Data Lake Storage*
     * Password 
         * MariaDB password to access.
 
-### Iceberg Data Source Type
+<a id="iceberg-data-source-type"></a>
+### Iceberg Data Source Type { #iceberg-data-source-type }
 
 * Data source name
     * This is a separator used to perform queries, and must be unique value among data sources.
@@ -147,13 +160,15 @@ You can create a Data Lake Storage data source by selecting **Data Lake Storage*
 > [Caution]
 > If Object Storage to link with DataQuery is not in the same region, network traffic may incur additional charges.
 
-## Query Editor
+<a id="query-editor"></a>
+## Query Editor { #query-editor }
 
 * Query Editor is divided into Cluster area, Schema area, Saved query area, Editor area, and Result/Console execution area.
 
 <img src="https://static.toastoven.net/prod_dataquery/console-user-guide/2026-03/en/dataquery_console_01.png" alt="query editor screen"/>
 
-### 1. Cluster Area
+<a id="cluster-area"></a>
+### 1. Cluster Area { #cluster-area }
 
 * You can turn the cluster on or off.
 * In order to reflect the added, changed, and deleted data source information to actual activity, DataQuery cluster have to be restarted. 
@@ -162,27 +177,31 @@ You can create a Data Lake Storage data source by selecting **Data Lake Storage*
 * DataQuery cluster reflects all data sources and cannot apply individual data sources.
 * If Cluster **on** or **off** persists to fail, contact the Customer Support.
 
-### 2. Schema Area
+<a id="schema-area"></a>
+### 2. Schema Area { #schema-area }
 
 * You can check data sources that are connected and the actual DB, tables, and column information that they provide.
     * Information\_schema is DB that has connection information with the data source and cannot be tempered.
 * Click Refresh for respective item to refresh data sources, schema, tables, and column information.
     * However, refreshing parent Schema does not reload the child Schema information. When you refresh Table, only its Table list is imported and respective column’s information is not to be updated.
 
-### 3. Saved Query Area
+<a id="saved-query-area"></a>
+### 3. Saved Query Area { #saved-query-area }
 
 * You can manage queries saved by users.
 * Click **Open** to import the query you saved in the currently open query editor area.
 * Click **Open New Tab** to import the query you saved in the new query editor area.
 * Copy a query saved to the clipboard by clicking **Copy Query**.
 
-### 4. Editor Area
+<a id="editor-area"></a>
+### 4. Editor Area { #editor-area }
 
 * You can create maximum 10 Query Editors by clicking **\+ Add Query**.
 * You can execute Query by clicking **Run** or typing **ctrl+enter**, and can check progress of running Query at the bottom of Editor and cause log in case of failure.
 * Click **Save Query** to save your favorite queries.
 * Supports automatic completion of data sources, schemas, tables, and column names collected while creating queries.
 
+<a id="editor-area-sql-guide"></a>
 #### SQL Guide
 
 * SQL in DataQuery works in accordance with Trino criteria.
@@ -201,7 +220,8 @@ You can create a Data Lake Storage data source by selecting **Data Lake Storage*
     * [Trino Query](https://trino.io/docs/476/sql.html)
     * [Embedded function](https://trino.io/docs/476/functions.html)
 
-### 5. Results/Console Execution Query Area
+<a id="resultsconsole-execution-query-area"></a>
+### 5. Results/Console Execution Query Area { #resultsconsole-execution-query-area }
 
 * You can check the results of Query executed in Query Editor.
     * Provides query results of up to 30 MB.
@@ -220,7 +240,8 @@ You can create a Data Lake Storage data source by selecting **Data Lake Storage*
 
 * You can check the cluster status metrics.
 
-## Query History
+<a id="query-history"></a>
+## Query History { #query-history }
 
 * You can check query information you run on **Query History** screen.
     * The query information can be viewed for up to 90 days after query execution.
@@ -229,16 +250,19 @@ You can create a Data Lake Storage data source by selecting **Data Lake Storage*
 
 <img src="https://kr1-api-object-storage.nhncloudservice.com/v1/AUTH_2acdfabf4efe4efc8a04c00b348110c9/cdn_origin/prod_dataquery/dataquery_console_03_en.png" alt="query history screen"/>
 
-## Settings
+<a id="settings"></a>
+## Settings { #settings }
 
-### Cluster Settings
+<a id="cluster-settings"></a>
+### Cluster Settings { #cluster-settings }
 * You can see the instance types and number of nodes set up in your cluster.
     * For information on types provided or types other than the list provided in Settings, see [Pricing by Service](https://www.nhncloud.com/kr/pricing/by-service?c=Data%20%26%20Analytics&s=DataQuery).
 * You can change the instance type and number of workers.
     * The number of workers can be set from a minimum of 1 to a maximum of 5.
     * Settings can only be modified when the cluster is turned off (OFF).
     
-### External Integration
+<a id="external-integration"></a>
+### External Integration { #external-integration }
 * Trino endpoints are provided for linking with external tools (JDBC, CLI, BI solutions, etc.) and can be linked using the information provided in **Settings** page.
 * Access to endpoints requires personal credentials and can be issued by clicking issue **authentication key** from **Settings** menu.
     * Personal credentials consist of ID and authentication key and are used Username (ID) and Password (authentication key) when accessing the endpoint.
@@ -246,15 +270,18 @@ You can create a Data Lake Storage data source by selecting **Data Lake Storage*
     * Issued/reissued authentication key is available after 5 minutes of issuance.
 * Once credentials have been issued, Trino endpoint connection information is activated at the bottom of screen.
 
-### Disable Object Storage integration for Storing Query History
+<a id="disable-object-storage-integration-for-storing-query-history"></a>
+### Disable Object Storage integration for Storing Query History { #disable-object-storage-integration-for-storing-query-history }
 
 * You can receive a notification when the integration is disabled because the Object Storage authentication for storing query history has expired.
 * Default Recipient
     * A member with the DataQuery ADMIN role in the project where the DataQuery service you are using is enabled
 
-## Data Source Detailed Guide
+<a id="data-source-detailed-guide"></a>
+## Data Source Detailed Guide { #data-source-detailed-guide }
 
-### Run Object Storage Data Source Query
+<a id="run-object-storage-data-source-query"></a>
+### Run Object Storage Data Source Query { #run-object-storage-data-source-query }
 
 * Object Storage data source queries are based on Trino-Hive.
     * Hive is solution to support SQL job processing in [Apache Hadoop](https://hive.apache.org/) distributed storage environments.
@@ -264,6 +291,7 @@ You can create a Data Lake Storage data source by selecting **Data Lake Storage*
 > [Note]
 > If you need performance improvements for Hive used for Object Storage queries, please contact the Custoer Support.
 
+<a id="run-object-storage-data-source-query-additional-grammar-to-operate-hive-feature"></a>
 #### Additional Grammar to operate Hive feature  
 
 * Trino-Hive basically follows standard SQL grammar, but there is additional feature and grammar for Hive activity response. [Details](https://trino.io/docs/476/connector/hive.html)
@@ -338,6 +366,7 @@ system.register_partition(schema_name, table_name, partition_columns, partition_
     * DELETE, UPDATE can only be performed on partition data on limited basis.
         * [Details](https://trino.io/docs/476/connector/hive.html#data-management)
 
+<a id="run-object-storage-data-source-query-external-table-query-utilization-tutorial"></a>
 #### External Table Query Utilization Tutorial
 
 1. [Download](https://static.toastoven.net/prod_dataquery/files/facility-boundary-us-all.csv) the sample CSV file and upload to Object Storage.
@@ -388,7 +417,8 @@ SELECT * FROM corona_facility_us
 
 8. Check if the total of 10 data are displayed normally.
 
-### Execute MySQL Data Source Query
+<a id="execute-mysql-data-source-query"></a>
+### Execute MySQL Data Source Query { #execute-mysql-data-source-query }
 
 * MySQL data source queries are executed based on Trino-MySQL.
 * MySQL data source schemas and tables are run and expressed based on lowercase names.
@@ -404,7 +434,8 @@ SELECT * FROM corona_facility_us
         * You can't update all columns in a table at the same time.
         * [Details](https://trino.io/docs/476/connector/mysql.html#update-limitation)
 
-### Execute PostgreSQL Data Source Query
+<a id="execute-postgresql-data-source-query"></a>
+### Execute PostgreSQL Data Source Query { #execute-postgresql-data-source-query }
 
 * PostgreSQL data source queries are performed based on Trino-PostgreSQL.
 * PostgreSQL data source schemas and tables are run and expressed based on lowercase names.
@@ -421,7 +452,8 @@ SELECT * FROM corona_facility_us
         * You can't update all columns in a table at the same time.
         * [Details](https://trino.io/docs/476/connector/postgresql.html#update)
 
-### Execute Oracle Data Source Query
+<a id="execute-oracle-data-source-query"></a>
+### Execute Oracle Data Source Query { #execute-oracle-data-source-query }
 
 * Oracle data source queries are performed based on Trino-Oracle.
 * Oracle data source schemas and tables are run and expressed based on lowercase names.
@@ -437,7 +469,8 @@ SELECT * FROM corona_facility_us
         * You can't update all columns in a table at the same time.
         * [Details](https://trino.io/docs/476/connector/oracle.html#update-limitation)
 
-### Execute EDB Data Source Query
+<a id="execute-edb-data-source-query"></a>
+### Execute EDB Data Source Query { #execute-edb-data-source-query }
 
 * EDB data source queries are performed based on Trino-PostgreSQL.
 * EDB data source schemas and tables are run and expressed based on lowercase names.
@@ -454,7 +487,8 @@ SELECT * FROM corona_facility_us
         * You can't update all columns in a table at the same time.
         * [Details](https://trino.io/docs/476/connector/postgresql.html#update)
 
-### Execute MariaDB Data Source Query
+<a id="execute-mariadb-data-source-query"></a>
+### Execute MariaDB Data Source Query { #execute-mariadb-data-source-query }
 
 * MariaDB data source queries are performed based on Trino-MariaDB. 
 * Schema and tables in MariaDB data source are operated and represented based on lowercase names. 
@@ -471,13 +505,15 @@ SELECT * FROM corona_facility_us
         * You can't update all columns in a table at the same time.
         * [Details](https://trino.io/docs/476/connector/mariadb.html#update-limitation)
 
-### Run Iceberg Data Source Queries
+<a id="run-iceberg-data-source-queries"></a>
+### Run Iceberg Data Source Queries { #run-iceberg-data-source-queries }
 
 * Iceberg data source queries are performed based on Trino-Iceberg.
 * You can integrate with Iceberg table data that exists in Object Storage and for data in supported formats.
     * Supports data of type PARQUET (native format), ORC, and AVRO.
 * Uses S3-compatible layer for Object Storage access and requires use of s3a protocol when specifying path for data of Schemas or Tables (ex. s3a://example/test).
 
+<a id="run-iceberg-data-source-queries-schema"></a>
 #### Schema
 
 * You can create them through the CREATE SCHEMA statement.
@@ -490,6 +526,7 @@ CREATE SCHEMA example_schema
 WITH (location = 's3a://my-bucket/example_schema/');
 ```
 
+<a id="run-iceberg-data-source-queries-tables"></a>
 #### Tables
 
 * You can create them with a CREATE TABLE or CREATE TABLE AS statement.
@@ -518,6 +555,7 @@ WITH (
 | sorted_by | When saving individual data files, sort them by the values in the columns you specify. |
 | location | Specify the Object Storage path of the table.<br>If the property is not set, it is stored in the schema path under the default path. |
 
+<a id="run-iceberg-data-source-queries-partitions"></a>
 #### Partitions
 
 * Table properties allow you to create partitioned (partitioned) tables in a structure where the table data is stored partitioned.
@@ -533,6 +571,7 @@ WITH (
 | day(ts) | DATE, TIMESTAMP | Daily |
 | hour(ts) | TIMESTAMP | Hourly |
 
+<a id="run-iceberg-data-source-queries-metadata-table"></a>
 #### Metadata Table
 
 * You can view metadata for an Iceberg table by looking up the metadata table. [Additional information](https://trino.io/docs/476/connector/iceberg.html#metadata-tables)
@@ -554,6 +593,7 @@ WITH (
 SELECT * FROM "test_table$properties"
 ```
 
+<a id="run-iceberg-data-source-queries-data-management"></a>
 #### Data Management
 
 * Registering a table
@@ -598,6 +638,7 @@ ALTER TABLE test_table EXECUTE expire_snapshots(retention_threshold => '7d')
 ALTER TABLE test_table EXECUTE remove_orphan_files(retention_threshold => '7d')
 ```
 
+<a id="run-iceberg-data-source-queries-iceberg-type-information"></a>
 #### Iceberg Type Information
 
 * Iceberg types map to types that can be processed by DataQuery, as shown below.
@@ -621,6 +662,7 @@ ALTER TABLE test_table EXECUTE remove_orphan_files(retention_threshold => '7d')
 | ARRAY(e) | LIST(e) |
 | MAP(k,v) | MAP(k,v) |
 
+<a id="run-iceberg-data-source-queries-add-parquet-files-that-exist-in-object-storage-to-the-iceberg-table"></a>
 #### Add Parquet Files that Exist in Object Storage to the Iceberg Table
 * You can add specific files or files under a specific path as data to an Iceberg table.
 * You can add data files and partition values with add_files for tables without partitions and add_files_with_partition for tables with defined partitions.
@@ -654,12 +696,14 @@ EXECUTE add_files(location => 's3://my-bucket/a/path', format => 'PARQUET', recu
 ALTER TABLE example.system.example_table 
 EXECUTE add_files_with_partition(location => 's3://my-bucket/a/path', partition_columns => ARRAY['year'], partition_values => ARRAY['2024-11-21'], format => 'PARQUET', recursive_directory => 'TRUE', duplicate_file => 'FAIL')
 ```
+<a id="run-iceberg-data-source-queries-cautions-and-constraints"></a>
 #### Cautions and Constraints
 
 * It is not possible to create duplicate Iceberg tables in the same path.
 * When converting columns to organize partitions, you can't use the same columns.
     * Example: You cannot set up two partitions, year and month, with columns that have a single DATE type.
 
+<a id="run-iceberg-data-source-queries-faq"></a>
 #### FAQ
 
 * Iceberg data already exists in Object Storage. How can I apply it to a DataQuery?
@@ -669,8 +713,10 @@ EXECUTE add_files_with_partition(location => 's3://my-bucket/a/path', partition_
 * I want to add only Parquet data to an Iceberg table that already exists.
     * You can add data using the add_files, add_files_with_partition procedures.
 
-## External Integration
-### Trino CLI
+<a id="external-integration-2"></a>
+## External Integration { #external-integration-2 }
+<a id="trino-cli"></a>
+### Trino CLI { #trino-cli }
 
 * You can run queries from command line with credentials issued through the Settings menu, access information, and CLI tools supported by Trino.
   * DataQuery is currently running on version 476 of Trino.
@@ -704,7 +750,8 @@ EXECUTE add_files_with_partition(location => 's3://my-bucket/a/path', partition_
     * show schemas
 * For more information, refer to the [Trino Guide](https://trino.io/docs/476/client/cli.html).
 
-### Connect to JDBC
+<a id="connect-to-jdbc"></a>
+### Connect to JDBC { #connect-to-jdbc }
 
 * You can connect to JDBC using the authentication information issued from the **Settings** menu, access information, and the JDBC driver supported by Trino.
 
@@ -727,7 +774,8 @@ jdbc:trino://${host}:${port}/${catalog}/${schema}
     * jdbc:trino://test-dataquery-domain-12345abcd.kr1-cluster-dataquery.nhncloudservice.com:443/catalog/schema
 * For more details, see [Trino JDBC Guide](https://trino.io/docs/476/client/jdbc.html).
 
-### Cloud Scheduler connection
+<a id="cloud-scheduler-connection"></a>
+### Cloud Scheduler connection { #cloud-scheduler-connection }
 * You can run queries on a desired schedule using the **Scheduled Query** template in the Cloud Scheduler service.
 
 | Parameter | Required | Description |
