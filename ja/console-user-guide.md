@@ -1,4 +1,7 @@
-## Data & Analytics > DataQuery > コンソール使用ガイド
+<!-- pre-align:aligned sig=a1a3882f94e2 -->
+
+<a id="data-analytics-dataquery-console-user-guide"></a>
+## Data & Analytics > DataQuery > コンソール使用ガイド { #data-analytics-dataquery-console-user-guide }
 
 DataQueryサービスを使用するには、必ずデータソースを追加する必要があります。
 以下のような手順でサービスを使用できます。
@@ -7,18 +10,43 @@ DataQueryサービスを使用するには、必ずデータソースを追加�
 * データソースを反映するためのクラスタ起動
 * コンソールのクエリエディタまたは外部接続URLを使用して、別のツールでクエリを実行
 
-## データソース
+<a id="data-source"></a>
+## データソース { #data-source }
 
-### データソース追加
+<a id="add-data-source"></a>
+### データソース追加 { #add-data-source }
 
 * データソース設定および反映制約事項
-    * Object Storageタイプのデータソースは最大5個まで登録できます。
+    * Data Lake StorageとObject Storageタイプのデータソースは、合計で最大5つまで登録できます。
     * アクセス制御が設定されたデータソースに接続する場合は、DataQuery IP固定機能を使用する必要があります。
         * DataQuery IP固定機能を使用する場合は、サポートにお問い合わせください。
 * **データソースの追加**をクリックします。
 
+<a id="data-lake-storage-data-source-type"></a>
+### Data Lake Storageデータソースのタイプ { #data-lake-storage-data-source-type }
 
-### Object Storageデータソースタイプ
+データソース追加ページの**データソースのタイプ**で**Data Lake Storage**を選択し、接続情報と追加設定情報を入力した後、**追加**してData Lake Storageデータソースを作成できます。
+
+| 項目 | 必須 | 説明 | 備考 |
+| --- | --- | --- | --- |
+| データソース名 | O | クエリ実行時に使用する識別用 | • 名前はデータソース間で固有の値である必要があります。 |
+| データソースの説明 | O | データソースの説明 |  |
+| アクセスキー | O | Data Lake Storageで発行した認証情報 | • Data Lake Storageの認証情報発行方法は、[Data Lake Storageコンソール使用ガイド](https://docs.nhncloud.com/ja/Data%20&%20Analytics/Data%20Lake%20Storage/ja/console-user-guide/#_10)を参照してください。 |
+| シークレットキー | O | Data Lake Storageで発行した認証情報 |  |
+| バケット名 | O | 基本テーブル情報や管理テーブル情報、データを保存するために使用する基本バケット。 | • バケットが存在しない場合、データソースの登録時にバケットを一緒に作成します。<br>• 使用可能なバケット名は[Data Lake Storageコンソール使用ガイド](https://docs.nhncloud.com/ja/Data%20&%20Analytics/Data%20Lake%20Storage/ja/console-user-guide/#_7)を参照してください。<br>• 連携する既存のデータはdataquery-warehouseコンテナの外部に存在できます。 |
+| リージョン | O | NHN Cloudリージョンに対応するData Lake Storageのリージョン名 |  |
+| メタストアタイプ | O | Data Lake Storageにデータを入出力するために使用するメタストアのインスタンスタイプ | • タイプに関する説明は[サービス別料金](https://www.nhncloud.com/kr/pricing/by-service?c=Data%20%26%20Analytics&s=DataQuery)で確認できます。<br>• デフォルトでc1m3タイプが選択されています。<br>• 設定は次のクラスター起動後に適用されます。クラスターがすでに起動している状態であれば、終了した後に再起動する必要があります。 |
+| 再帰的パス読み取り | X | サブディレクトリを含むクエリ実行の有無 |  |
+| ファイル保存形式 | X | ストレージに保存されるファイルタイプ |  |
+
+!!! tip "参考"
+    * Data Lake Storageは、DataQueryとは異なるNHN Cloudプロジェクトに存在できます。
+
+!!! danger "注意"
+    * DataQueryと連携するData Lake Storageが互いに同じリージョンではない場合、ネットワークトラフィックによる追加料金が発生する可能性があります。
+
+<a id="object-storage-data-source-type"></a>
+### Object Storageデータソースタイプ { #object-storage-data-source-type }
 
 * **データソースの追加**をクリックした後、データソースの追加ページでObject Storage情報を入力します。
     * データソース名
@@ -44,7 +72,8 @@ DataQueryサービスを使用するには、必ずデータソースを追加�
 > [注意]
 > DataQueryと連動するObject Storageが同じリージョンではない場合、ネットワークトラフィックによる追加料金が発生する可能性があります。
 
-### MySQLデータソースタイプ
+<a id="mysql-data-source-type"></a>
+### MySQLデータソースタイプ { #mysql-data-source-type }
 
 * データソース名
         * クエリ実行時に使用されるセパレータで、データソース間で一意の値でなければなりません。
@@ -58,7 +87,8 @@ DataQueryサービスを使用するには、必ずデータソースを追加�
 * パスワード
     * 接続するMySQLパスワードです。
 
-### PostgreSQLデータソースタイプ
+<a id="postgresql-data-source-type"></a>
+### PostgreSQLデータソースタイプ { #postgresql-data-source-type }
 
 * データソース名
     * クエリ実行時に使用される識別子で、データソース間で固有の値でなければなりません。
@@ -70,7 +100,8 @@ DataQueryサービスを使用するには、必ずデータソースを追加�
 * パスワード
     * 接続するPostgreSQLパスワードです。
 
-### Oracleデータソースタイプ
+<a id="oracle-data-source-type"></a>
+### Oracleデータソースタイプ { #oracle-data-source-type }
 
 * データソース名
     * クエリ実行時に使用される識別子で、データソース間で固有の値でなければなりません。
@@ -86,7 +117,8 @@ DataQueryサービスを使用するには、必ずデータソースを追加�
     * 基本小数点以下の桁数： 全体の有効桁数(precision)、小数点以下の桁数(scale)設定がない数字の基本小数点桁数を設定します。
     * 数字の切り上げ/切り捨て：Oracle NUMBERデータ型の切り上げ/切り捨てポリシーを設定します。
 
-### EDBデータソースタイプ
+<a id="edb-data-source-type"></a>
+### EDBデータソースタイプ { #edb-data-source-type }
 
 * データソース名
     * クエリ実行時に使用される識別子で、データソース間で固有の値でなければなりません。
@@ -98,7 +130,8 @@ DataQueryサービスを使用するには、必ずデータソースを追加�
 * パスワード
     * 接続するEDBパスワードです。 
 
-### MariaDBデータソースタイプ
+<a id="mariadb-data-source-type"></a>
+### MariaDBデータソースタイプ { #mariadb-data-source-type }
 
 * データソース名
     * クエリ実行時に使用される名前で、データソース間で固有の値でなければなりません。
@@ -112,8 +145,8 @@ DataQueryサービスを使用するには、必ずデータソースを追加�
 * パスワード
     * 接続するMariaDBパスワードです。
 
-
-### Icebergデータソースタイプ
+<a id="iceberg-data-source-type"></a>
+### Icebergデータソースタイプ { #iceberg-data-source-type }
 
 * データソース名
     * クエリ実行時に使用される区切り文字で、データソース間で固有の値でなければなりません。
@@ -128,14 +161,15 @@ DataQueryサービスを使用するには、必ずデータソースを追加�
 > [注意]
 > DataQueryと連動するObject Storageが同じリージョンでない場合、ネットワークトラフィックによる追加料金が発生する可能性があります。
 
-
-## クエリエディタ
+<a id="query-editor"></a>
+## クエリエディタ { #query-editor }
 
 * クエリエディタはクラスタ領域、スキーマ領域、保存されたクエリ領域、エディタ領域、結果/コンソール実行領域に区分されます。
 
 <img src="https://static.toastoven.net/prod_dataquery/console-user-guide/2026-03/ja/dataquery_console_01.png" alt="クエリエディタ画面"/>
 
-### 1. クラスタ領域
+<a id="cluster-area"></a>
+### 1. クラスタ領域 { #cluster-area }
 
 * クラスタのオン/オフを切り替えることができます。
 * 追加、変更、削除したデータソース情報を実際の動作に反映させるにはDataQueryクラスタを再起動する必要があります。
@@ -144,27 +178,31 @@ DataQueryサービスを使用するには、必ずデータソースを追加�
 * DataQueryクラスタはすべてのデータソースを反映し、個別のデータソース適用はできません。
 * 継続的にクラスタの**オン/オフ**に失敗する場合は、サポートにお問い合わせください。
 
-### 2. スキーマ領域
+<a id="schema-area"></a>
+### 2. スキーマ領域 { #schema-area }
 
 * 接続設定されたデータソースと、該当ソースで提供する実際のDB 、テーブル、カラム情報を確認できます。
     * information\_schemaはデータソースとの接続情報を持っているDBで、ユーザーが任意にデータを操作できません。
 * 各項目の更新アイコンをクリックして、データソース、スキーマ、テーブル、カラム情報を新しく取得できます。
     * ただし、上位スキーマを更新しても下位情報は全部新しく読み込みません。テーブルを更新する場合、テーブルリストのみ新たに取得し、各テーブルのカラム情報はアップデートされません。
 
-### 3. 保存されたクエリ領域
+<a id="saved-query-area"></a>
+### 3. 保存されたクエリ領域 { #saved-query-area }
 
 * ユーザーが保存したクエリを管理できます。
 * **開く**をクリックすると、現在開いているクエリエディタ領域に保存したクエリを呼び出すことができます。
 * **新しいタブを開く**をクリックすると、新しいクエリエディタ領域に保存されたクエリを呼び出すことができます。
 * **クエリのコピー**をクリックすると、クリップボードに保存されたクエリをコピーできます。
 
-### 4. エディタ領域
+<a id="editor-area"></a>
+### 4. エディタ領域 { #editor-area }
 
 * **\+ クエリ追加**をクリックしてクエリエディタを最大10個まで作成できます。
 * **実行**をクリックするか、**Ctrl+Enter**を入力してクエリを実行でき、エディタ下部で実行中のクエリの進行状態と失敗時の原因ログを確認できます。
 * **クエリの保存**をクリックすると、ユーザーがよく使うクエリを保存できます。
 * クエリ作成時に収集されたデータソース、スキーマ、テーブル、カラム名のオートコンプリートをサポートします。
 
+<a id="editor-area-sql-guide"></a>
 #### SQLガイド
 
 * DataQueryのSQLはTrino基準に従って動作します。
@@ -183,7 +221,8 @@ DataQueryサービスを使用するには、必ずデータソースを追加�
     * [Trinoクエリ](https://trino.io/docs/476/sql.html)
     * [組み込み関数](https://trino.io/docs/476/functions.html)
 
-### 5. 結果/コンソール実行クエリ領域
+<a id="resultsconsole-execution-query-area"></a>
+### 5. 結果/コンソール実行クエリ領域 { #resultsconsole-execution-query-area }
 
 * クエリエディタで実行されたクエリ結果を確認できます。
     * クエリ結果を最大30MBまで提供します。
@@ -201,7 +240,8 @@ DataQueryサービスを使用するには、必ずデータソースを追加�
 
 * クラスターの状態指標を確認できます。
 
-## クエリ履歴
+<a id="query-history"></a>
+## クエリ履歴 { #query-history }
 
 * 実行したクエリ情報を**クエリ履歴**画面で確認できます。
     * クエリ情報は、クエリ実行後90日間照会可能です。
@@ -210,16 +250,19 @@ DataQueryサービスを使用するには、必ずデータソースを追加�
 
 <img src="https://kr1-api-object-storage.nhncloudservice.com/v1/AUTH_2acdfabf4efe4efc8a04c00b348110c9/cdn_origin/prod_dataquery/dataquery_console_03_en.png" alt="クエリ履歴画面"/>
 
-## 設定
+<a id="settings"></a>
+## 設定 { #settings }
 
-### クラスタ設定
+<a id="cluster-settings"></a>
+### クラスタ設定 { #cluster-settings }
 * クラスタに設定されているインスタンスタイプとノード数を確認できます。
     * タイプについての説明や設定で提供されるリスト以外のタイプは、[サービス別料金](https://www.nhncloud.com/kr/pricing/by-service?c=Data%20%26%20Analytics&s=DataQuery)で確認できます。
 * インスタンスタイプとワーカー 数を変更できます。
     * ワーカー数は最小1個から最大5個まで設定できます。
     * 設定はクラスターがオフの状態(OFF)でのみ修正できます。
 
-### 外部連動
+<a id="external-integration"></a>
+### 外部連動 { #external-integration }
 
 * 外部ツール(JDBC、CLI、BIソリューションなど)と連携するようにTrinoエンドポイントを提供し、**設定**ページで提供する情報を利用して連携できます。
 * エンドポイント接続には、個人別の認証情報が必要で、**設定**メニューで**認証キー**発行をクリックして発行できます。
@@ -228,15 +271,18 @@ DataQueryサービスを使用するには、必ずデータソースを追加�
     * 発行/再発行された認証キーは発行してから5分後に使用できます。
 * 認証情報が発行された場合はTrinoエンドポイント接続情報が画面下部に有効になります。
 
-### クエリ履歴を保存するためのObject Storage連動の無効化案内メール
+<a id="disable-object-storage-integration-for-storing-query-history"></a>
+### クエリ履歴を保存するためのObject Storage連動の無効化案内メール { #disable-object-storage-integration-for-storing-query-history }
 
 * クエリ履歴を保存するためのObject Storage認証の有効期限が切れて連動が無効になった場合、通知メールを受け取ることができます。
 * 基本受信対象
     * 使用中のDataQueryサービスが有効化されたプロジェクトのDataQuery ADMINロールを持つメンバー
 
-## データソース詳細ガイド
+<a id="data-source-detailed-guide"></a>
+## データソース詳細ガイド { #data-source-detailed-guide }
 
-### Object Storageデータソースクエリ実行
+<a id="run-object-storage-data-source-query"></a>
+### Object Storageデータソースクエリ実行 { #run-object-storage-data-source-query }
 
 * Object Storageデータソースクエリは、Trino-Hiveに基づいて実行されます。
     * Hiveは[Apache Hadoop](https://hive.apache.org/)分散ストレージ環境でSQL作業処理をサポートするためのソリューションです。
@@ -246,6 +292,7 @@ DataQueryサービスを使用するには、必ずデータソースを追加�
 > [参考]
 > Object Storageクエリに使用するHiveの性能向上が必要な場合は、サポートにお問い合わせください。
 
+<a id="run-object-storage-data-source-query-additional-grammar-to-operate-hive-feature"></a>
 #### Hive機能動作のための追加の文法
 
 * Trino-Hiveは基本的に標準SQL文法に従いますが、Hive動作対応のための追加機能/文法が存在します。 [詳細情報](https://trino.io/docs/476/connector/hive.html)
@@ -283,7 +330,7 @@ DataQueryサービスを使用するには、必ずデータソースを追加�
 -- テーブルにパーティションを適用して作成
 CREATE TABLE default.sample (...) WITH ( partitioned_by = ARRAY['columna', 'columnb'],)
 -- パーティション照会
-SELECT * FROM default"sample$partitions"
+SELECT * FROM default."sample$partitions"
 -- パーティションを操作
 system.create_empty_partition(schema_name, table_name, partition_columns, partition_values)
 system.sync_partition_metadata(schema_name, table_name, mode, case_sensitive)
@@ -320,6 +367,7 @@ system.register_partition(schema_name, table_name, partition_columns, partition_
     * DELETE、UPDATEはパーティションデータに対してのみ制限的に実行できます。
         * [詳細情報](https://trino.io/docs/476/connector/hive.html#data-management)
 
+<a id="run-object-storage-data-source-query-external-table-query-utilization-tutorial"></a>
 #### 外部テーブルクエリ利用チュートリアル
 
 1. サンプルCSVファイルを[ダウンロード](https://static.toastoven.net/prod_dataquery/files/facility-boundary-us-all.csv)してObject Storageにアップロードします。
@@ -370,7 +418,8 @@ SELECT * FROM corona_facility_us
 
 8. 合計10件のデータが正常に表示されていることを確認します。
 
-### MySQLデータソースクエリ実行
+<a id="execute-mysql-data-source-query"></a>
+### MySQLデータソースクエリ実行 { #execute-mysql-data-source-query }
 
 * MySQLデータソースクエリはTrino-MySQLに基づいて行われます。
 * MySQLデータソースのスキーマとテーブルは、小文字名に基づいて動作し、表現されます。
@@ -386,7 +435,8 @@ SELECT * FROM corona_facility_us
         * テーブルの全てのカラムを同時に更新することはできません。
         * [詳細情報](https://trino.io/docs/476/connector/mysql.html#update)
 
-### PostgreSQLデータソースクエリの実行
+<a id="execute-postgresql-data-source-query"></a>
+### PostgreSQLデータソースクエリの実行 { #execute-postgresql-data-source-query }
 
 * PostgreSQLデータソースクエリは、Trino-PostgreSQLに基づいて実行されます。
 * PostgreSQLデータソースのスキーマとテーブルは小文字の名前に基づいて動作し、表現されます。
@@ -403,7 +453,8 @@ SELECT * FROM corona_facility_us
         * テーブルの全てのカラムを同時に更新することはできません。
         * [詳細情報](https://trino.io/docs/476/connector/postgresql.html#update-limitation)
 
-### Oracleデータソースクエリの実行
+<a id="execute-oracle-data-source-query"></a>
+### Oracleデータソースクエリの実行 { #execute-oracle-data-source-query }
 
 * Oracleデータソースクエリは、Trino-Oracleに基づいて実行されます。
 * Oracleデータソースのスキーマとテーブルは、小文字の名前に基づいて動作し、表現されます。
@@ -419,7 +470,8 @@ SELECT * FROM corona_facility_us
         * テーブルの全てのカラムを同時に更新することはできません。
         * [詳細情報](https://trino.io/docs/476/connector/oracle.html#update-limitation)
 
-### EDBデータソースクエリの実行
+<a id="execute-edb-data-source-query"></a>
+### EDBデータソースクエリの実行 { #execute-edb-data-source-query }
 
 * EDBデータソースクエリは、Trino-PostgreSQLに基づいて実行されます。
 * EDBデータソースのスキーマとテーブルは小文字の名前に基づいて動作し、表現されます。
@@ -436,7 +488,8 @@ SELECT * FROM corona_facility_us
         * テーブルの全てのカラムを同時に更新することはできません。
         * [詳細情報](https://trino.io/docs/476/connector/postgresql.html#update-limitation)
 
-### MariaDBデータソースクエリ実行
+<a id="execute-mariadb-data-source-query"></a>
+### MariaDBデータソースクエリ実行 { #execute-mariadb-data-source-query }
 
 * MariaDBデータソースクエリはTrino-MariaDBに基づいて実行されます。
 * MariaDBデータソースのスキーマとテーブルは小文字の名前に基づいて動作し、表現されます。
@@ -452,14 +505,15 @@ SELECT * FROM corona_facility_us
         * テーブルの全てのカラムを同時に更新することはできません。
         * [詳細情報](https://trino.io/docs/476/connector/mariadb.html#update-limitation)
 
-
-### Icebergデータソースクエリ実行
+<a id="run-iceberg-data-source-queries"></a>
+### Icebergデータソースクエリ実行 { #run-iceberg-data-source-queries }
 
 * Icebergデータソースクエリは、Trino-Icebergに基づいて実行されます。
 * Object Storageに存在するIcebergテーブルデータ及びサポートするフォーマットのデータに対して連動できます。
     * PARQUET(基本フォーマット), ORC, AVROタイプのデータをサポートします。
 * Object StorageへのアクセスにS3互換レイヤーを使用し、スキーマまたはテーブルのデータパス指定時にs3aプロトコルを使用する必要があります(例：s3a://example/test)。
 
+<a id="run-iceberg-data-source-queries-schema"></a>
 #### スキーマ
 
 * CREATE SCHEMA文で作成できます。
@@ -472,6 +526,7 @@ CREATE SCHEMA example_schema
 WITH (location = 's3a://my-bucket/example_schema/');
 ```
 
+<a id="run-iceberg-data-source-queries-tables"></a>
 #### テーブル
 
 * CREATE TABLEまたはCREATE TABLE AS文で作成できます。
@@ -500,6 +555,7 @@ WITH (
 | sorted\_by | 個別データファイルを保存する際、指定したカラムの値でソートして保存します。 |
 | location | テーブルのObject Storageパスを指定します。<br>プロパティを設定しない場合、デフォルトのパスより下のスキーマパスに保存されます。 |
 
+<a id="run-iceberg-data-source-queries-partitions"></a>
 #### パーティション
 
 * テーブルプロパティを使用して、テーブルデータが分割保存された構造の分割された(パーティションされた)テーブルを作成できます。
@@ -515,6 +571,7 @@ WITH (
 | day(ts) | DATE, TIMESTAMP | 日別 |
 | hour(ts) | TIMESTAMP | 時間別 |
 
+<a id="run-iceberg-data-source-queries-metadata-table"></a>
 #### メタデータテーブル
 
 * メタデータテーブルを照会してIcebergテーブルのメタ情報を確認できます。 [追加情報](https://trino.io/docs/476/connector/iceberg.html#metadata-tables)
@@ -536,6 +593,7 @@ WITH (
 SELECT * FROM "test_table$properties"
 ```
 
+<a id="run-iceberg-data-source-queries-data-management"></a>
 #### データ管理
 
 * テーブル登録
@@ -580,6 +638,7 @@ ALTER TABLE test_table EXECUTE expire_snapshots(retention_threshold => '7d')
 ALTER TABLE test_table EXECUTE remove_orphan_files(retention_threshold => '7d')
 ```
 
+<a id="run-iceberg-data-source-queries-iceberg-type-information"></a>
 #### Icebergタイプマッピング情報
 
 * IcebergタイプはDataQueryで処理できるタイプで、下記のようにマッピングされます。
@@ -602,6 +661,7 @@ ALTER TABLE test_table EXECUTE remove_orphan_files(retention_threshold => '7d')
 | ROW(...) | STRUCT(...) |
 | ARRAY(e) | LIST(e) |
 | MAP(k,v) | MAP(k,v) |
+<a id="run-iceberg-data-source-queries-add-parquet-files-that-exist-in-object-storage-to-the-iceberg-table"></a>
 #### Object Storageに存在するParquetファイルをIcebergテーブルに追加
 * 特定のファイルまたは特定のパスの下のファイルをIcebergテーブルにデータとして追加できます。
 * パーティションがないテーブルはadd_files、パーティションが定義されたテーブルはadd_files_with_partitionでデータファイルとパーティション値を追加できます。
@@ -635,12 +695,14 @@ EXECUTE add_files(location => 's3://my-bucket/a/path', format => 'PARQUET', recu
 ALTER TABLE example.system.example_table 
 EXECUTE add_files_with_partition(location => 's3://my-bucket/a/path', partition_columns => ARRAY['year'], partition_values => ARRAY['2024-11-21'], format => 'PARQUET', recursive_directory => 'TRUE', duplicate_file => 'FAIL')
 ```
+<a id="run-iceberg-data-source-queries-cautions-and-constraints"></a>
 #### 注意及び制約事項
 
 * 同じパスにIcebergテーブルを重複して作成することはできません。
 * カラムを変換してパーティションを構成する際、同じカラムを使用することはできません。
     * 例：1つのDATEタイプを持つカラムでyear、monthの2つのパーティションを設定できません。
 
+<a id="run-iceberg-data-source-queries-faq"></a>
 #### FAQ
 
 * 既にObject StorageにIcebergデータが存在します。どのようにDataQueryに適用できますか？
@@ -650,8 +712,10 @@ EXECUTE add_files_with_partition(location => 's3://my-bucket/a/path', partition_
 * すでに存在するIcebergテーブルにParquetデータだけ追加したいです。
     * Icebergテーブルを作成した後、add_files、add_files_with_partitionプロシージャを使用してデータを追加できます。
 
-## 外部連動
-### Trino cli
+<a id="external-integration-2"></a>
+## 外部連動 { #external-integration-2 }
+<a id="trino-cli"></a>
+### Trino CLI { #trino-cli }
 
 * 設定メニューから発行された認証情報、接続情報、TrinoでサポートするCLIツールを利用してコマンドラインからクエリを実行できます。
   * DataQueryは現在Trino 476バージョンを基盤にサービスしています。
@@ -680,12 +744,13 @@ EXECUTE add_files_with_partition(location => 's3://my-bucket/a/path', partition_
     * スキーマ名
         * 接続したデータベース名
 * `--debug` オプションを追加してデバッグ情報を追加で出力できます。
-* catalog、schema値はコマンドを実行する接続に対する値で、入力しなくてもcli実行することができ、以下のクエリを利用してcatalogやschemaリストを確認できます。
+* catalog、schema値はコマンドを実行する接続の値であり、入力しなくてもCLIを実行できます。また、以下のクエリでcatalogやschemaの一覧を確認できます。
     * show catalogs
     * show schemas
 * 詳細は[Trinoガイドページ](https://trino.io/docs/476/client/cli.html)をご覧ください。
 
-### JDBC接続
+<a id="connect-to-jdbc"></a>
+### JDBC接続 { #connect-to-jdbc }
 
 * **設定**メニューで発行された認証情報、接続情報と、TrinoでサポートするJDBCドライバーを利用してJDBCに接続できます。
 
@@ -710,13 +775,15 @@ jdbc:trino://${host}:${port}/${catalog}/${schema}
 
 
 
-### Cloud Scheduler連携
+<a id="cloud-scheduler-connection"></a>
+### Cloud Scheduler連携 { #cloud-scheduler-connection }
 
 * Cloud Schedulerサービスの**予約されたクエリ**テンプレートを使用して、クエリを任意のスケジュールで実行できます。
 
 | パラメータ | 必須 | 説明 |
 | ----- | --- | ---- |
 | Appkey | O | DataQueryサービスのAppkey |
+| リージョン | O | DataQueryサービスのリージョン |
 | User Access Key | O | NHN Cloudが発行するUser Access Key |
 | Secret Access Key | O | NHN Cloudが発行するSecret Access Key |
 | クエリ文 | O | 実行するクエリ本文 |
@@ -728,4 +795,5 @@ jdbc:trino://${host}:${port}/${catalog}/${schema}
 
 !!! danger "注意"
     * クエリを実行するには、クラスターが起動している必要があります。
+    * クエリを実行するには、DataQueryサービスの**認証情報**を発行した状態である必要があります。
     * User Access Key及びSecret Access Keyは、登録したAppkeyに権限を持つアカウントを使用して発行する必要があります。
