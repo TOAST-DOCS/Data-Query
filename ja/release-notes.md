@@ -1,5 +1,7 @@
 <!-- machine_translated: true -->
 
+<!-- pre-align:aligned sig=32adddd624f0 -->
+
 <a id="data-analytics-dataquery-release-notes"></a>
 ## Data & Analytics > DataQuery > リリースノート { #data-analytics-dataquery-release-notes }
 

@@ -1,3 +1,5 @@
+<!-- pre-align:aligned sig=32adddd624f0 -->
+
 <a id="data-analytics-dataquery-release-notes"></a>
 ## Data & Analytics > DataQuery > 릴리스 노트 { #data-analytics-dataquery-release-notes }
 
