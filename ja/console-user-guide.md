@@ -166,7 +166,7 @@ DataQueryサービスを使用するには、必ずデータソースを追加�
 
 * クエリエディタはクラスタ領域、スキーマ領域、保存されたクエリ領域、エディタ領域、結果/コンソール実行領域に区分されます。
 
-<img src="https://static.toastoven.net/prod_dataquery/console-user-guide/2026-03/ja/dataquery_console_01.png" alt="クエリエディタ画面"/>
+![クエリエディタ画面](../static/images/dataquery_console_01.png)
 
 <a id="cluster-area"></a>
 ### 1. クラスタ領域 { #cluster-area }
@@ -236,7 +236,8 @@ DataQueryサービスを使用するには、必ずデータソースを追加�
 * クエリエディタで実行したクエリリストを提供します。
     * ①クエリ履歴をクリックします。
     * ②該当クエリが入力されたクエリウィンドウが追加作成されます。
-<img src="https://static.toastoven.net/prod_dataquery/console-user-guide/2025-09/ja/dataquery_console_02.png" alt="クエリ履歴画面"/>
+
+![クエリ履歴画面](../static/images/dataquery_console_02.png)
 
 * クラスターの状態指標を確認できます。
 
@@ -248,7 +249,7 @@ DataQueryサービスを使用するには、必ずデータソースを追加�
 * 一番右のカラムの展開ボタンをクリックして、クエリの追加の実行情報を確認できます。**ダウンロード**をクリックして、クエリの全体実行情報をダウンロードできます。
     * ダウンロードファイルにクエリ結果は含まれません。
 
-<img src="https://kr1-api-object-storage.nhncloudservice.com/v1/AUTH_2acdfabf4efe4efc8a04c00b348110c9/cdn_origin/prod_dataquery/dataquery_console_03_en.png" alt="クエリ履歴画面"/>
+![クエリ履歴画面](../static/images/dataquery_console_03.png)
 
 <a id="settings"></a>
 ## 設定 { #settings }
@@ -372,7 +373,7 @@ system.register_partition(schema_name, table_name, partition_columns, partition_
 
 1. サンプルCSVファイルを[ダウンロード](https://static.toastoven.net/prod_dataquery/files/facility-boundary-us-all.csv)してObject Storageにアップロードします。
 
-<img src="https://kr1-api-object-storage.nhncloudservice.com/v1/AUTH_2acdfabf4efe4efc8a04c00b348110c9/cdn_origin/prod_dataquery/dataquery_console_04_en.png" alt="Object Storage アップロード画面"/>
+![Object Storage アップロード画面](../static/images/dataquery_console_04.png)
 
 2. Object Storageコンソールでアクセスキー、シークレットキーを発行します。
 3. Object Storageのアクセスキー、シークレットキー、エンドポイントを利用してObject Storageデータソースを入力します。
@@ -406,7 +407,7 @@ with (
 
 6. テーブルが正常に追加されたことを確認するためにテーブルを更新します。
 
-<img src="https://kr1-api-object-storage.nhncloudservice.com/v1/AUTH_2acdfabf4efe4efc8a04c00b348110c9/cdn_origin/prod_dataquery/dataquery_console_05_en.png" width=220 alt="テーブル更新画面"/>
+![テーブル更新画面](../static/images/dataquery_console_05.png){ width="220" }
 
 7. 該当テーブルで、次のようにクエリを実行します。
 
