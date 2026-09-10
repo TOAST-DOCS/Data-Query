@@ -275,7 +275,7 @@ DataQueryサービスを使用するには、必ずデータソースを追加�
 <a id="disable-object-storage-integration-for-storing-query-history"></a>
 ### クエリ履歴を保存するためのObject Storage連動の無効化案内メール { #disable-object-storage-integration-for-storing-query-history }
 
-* クエリ履歴を保存するためのObject Storage認証の有効期限が切れて連動が無効になった場合、通知メールを受け取ることができます。
+* 쿼리 이력 저장을 위한 Object Storage 인증이 만료되거나 등록한 버킷이 삭제될 경우 연동이 비활성화되어 알림 메일을 수신할 수 있습니다.
 * 基本受信対象
     * 使用中のDataQueryサービスが有効化されたプロジェクトのDataQuery ADMINロールを持つメンバー
 
