@@ -274,7 +274,7 @@ DataQuery 서비스를 사용하려면 반드시 데이터 소스를 추가해�
 <a id="disable-object-storage-integration-for-storing-query-history"></a>
 ### 쿼리 이력 저장을 위한 Object Storage 연동 비활성화 안내 이메일 { #disable-object-storage-integration-for-storing-query-history }
 
-* 쿼리 이력 저장을 위한 Object Storage 인증이 만료되어 연동이 비활성화되었을 때 알림 메일을 수신할 수 있습니다.
+* 쿼리 이력 저장을 위한 Object Storage 인증이 만료되거나 등록한 버킷이 삭제될 경우 연동이 비활성화되어 알림 메일을 수신할 수 있습니다.
 * 기본 수신 대상
     * 사용 중인 DataQuery 서비스가 활성화된 프로젝트의 DataQuery ADMIN 역할을 가진 멤버
 
