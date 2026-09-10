@@ -52,8 +52,8 @@ You can create a Data Lake Storage data source by selecting **Data Lake Storage*
         * This is a separator used to perform queries, and must be unique value among data sources.
     * Access key, secret key, region
         * Connection information for Object Storage where Data to be linked exists.
-        * Access keys and secret keys can be issued from the Object Storage console. For more details, refer to [Object Storage Console Guide](https://docs.toast.com/en/Storage/Object%20Storage/en/console-guide/#s3-api).
-        * The region must match the S3 region name corresponding to the NHN Cloud region. Refer to [AWS Command Line Interface (CLI) > Configuration](https://docs.nhncloud.com/en/Storage/Object%20Storage/en/s3-api-guide/#aws-command-line-interface-cli)in the  Object Storage guide.
+        * Access keys and secret keys can be issued from the Object Storage console. For more details, refer to [Object Storage Console Guide](/Storage/Object%20Storage/en/console-guide/#s3-api).
+        * The region must match the S3 region name corresponding to the NHN Cloud region. Refer to [AWS Command Line Interface (CLI) > Configuration](/Storage/Object%20Storage/en/s3-api-guide/#aws-command-line-interface-cli)in the  Object Storage guide.
     * Bucket Name
         * Object Storage container name (dataquery-warehouse) that the system uses to store Default table information, management table information, and data.
             * Create and use your own dataquery-warehouse container.
@@ -151,8 +151,8 @@ You can create a Data Lake Storage data source by selecting **Data Lake Storage*
     * This is a separator used to perform queries, and must be unique value among data sources.
 * Access key, secret key, region
     * The Iceberg table data to integrate with or the connection information for the Object Storage where the data exists.
-    * Access keys and secret keys can be issued from the Object Storage console. For more details, refer to [Object Storage Console Guide](https://docs.toast.com/ko/Storage/Object%20Storage/ko/console-guide/#s3-api).
-        * The region must match the S3 region name corresponding to the NHN Cloud region. Refer to [AWS Command Line Interface (CLI) > Configuration](https://docs.nhncloud.com/en/Storage/Object%20Storage/en/s3-api-guide/#aws-command-line-interface-cli)in the  Object Storage guide.
+    * Access keys and secret keys can be issued from the Object Storage console. For more details, refer to [Object Storage Console Guide](/Storage/Object%20Storage/ko/console-guide/#s3-api).
+        * The region must match the S3 region name corresponding to the NHN Cloud region. Refer to [AWS Command Line Interface (CLI) > Configuration](/Storage/Object%20Storage/en/s3-api-guide/#aws-command-line-interface-cli)in the  Object Storage guide.
 * Bucket Name
     * The Object Storage container that the system uses to store basic Iceberg table information is named dataquery-warehouse and has a child path of iceberg.
     * The existing data you want to integrate may exist in a different path.
