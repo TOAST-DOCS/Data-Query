@@ -30,9 +30,9 @@ You can create a Data Lake Storage data source by selecting **Data Lake Storage*
 | --- | --- | --- | --- |
 | Data source name | O | Identifier used when executing queries | • The name must be unique among data sources. |
 | Data source description | O | Description of the data source |  |
-| Access key | O | Credentials issued by Data Lake Storage | • For information on how to issue Data Lake Storage credentials, see the [Data Lake Storage Console User Guide](https://docs.nhncloud.com/en/Data%20&%20Analytics/Data%20Lake%20Storage/en/console-user-guide/#manage-credentials). |
+| Access key | O | Credentials issued by Data Lake Storage | • For information on how to issue Data Lake Storage credentials, see the [Data Lake Storage Console User Guide](/Data%20%26%20Analytics/Data%20Lake%20Storage/en/console-user-guide/#manage-credentials). |
 | Secret key | O | Credentials issued by Data Lake Storage |  |
-| Bucket name | O | The default bucket used to store basic table information, managed table information, and data. | • If the bucket does not exist, it is created together when the data source is registered.<br>• For available bucket names, see the [Data Lake Storage Console User Guide](https://docs.nhncloud.com/en/Data%20&%20Analytics/Data%20Lake%20Storage/en/console-user-guide/#create-bucket).<br>• Existing data to be integrated may exist outside the dataquery-warehouse container. |
+| Bucket name | O | The default bucket used to store basic table information, managed table information, and data. | • If the bucket does not exist, it is created together when the data source is registered.<br>• For available bucket names, see the [Data Lake Storage Console User Guide](/Data%20%26%20Analytics/Data%20Lake%20Storage/en/console-user-guide/#create-bucket).<br>• Existing data to be integrated may exist outside the dataquery-warehouse container. |
 | Region | O | The Data Lake Storage region name corresponding to the NHN Cloud region |  |
 | Metastore type | O | The instance type of the metastore used to input/output data to Data Lake Storage | • For descriptions of each type, see [Pricing by service](https://www.nhncloud.com/kr/pricing/by-service?c=Data%20%26%20Analytics&s=DataQuery).<br>• The c1m3 type is selected by default.<br>• The setting is applied after the next cluster start. If the cluster is already running, it must be stopped and restarted. |
 | Recursive path read | X | Whether to execute queries including subdirectories |  |
@@ -52,8 +52,8 @@ You can create a Data Lake Storage data source by selecting **Data Lake Storage*
         * This is a separator used to perform queries, and must be unique value among data sources.
     * Access key, secret key, region
         * Connection information for Object Storage where Data to be linked exists.
-        * Access keys and secret keys can be issued from the Object Storage console. For more details, refer to [Object Storage Console Guide](https://docs.toast.com/en/Storage/Object%20Storage/en/console-guide/#s3-api).
-        * The region must match the S3 region name corresponding to the NHN Cloud region. Refer to [AWS Command Line Interface (CLI) > Configuration](https://docs.nhncloud.com/en/Storage/Object%20Storage/en/s3-api-guide/#aws-command-line-interface-cli)in the  Object Storage guide.
+        * Access keys and secret keys can be issued from the Object Storage console. For more details, refer to [Object Storage Console Guide](/Storage/Object%20Storage/en/console-guide/#s3-api).
+        * The region must match the S3 region name corresponding to the NHN Cloud region. Refer to [AWS Command Line Interface (CLI) > Configuration](/Storage/Object%20Storage/en/s3-api-guide/#aws-command-line-interface-cli)in the  Object Storage guide.
     * Bucket Name
         * Object Storage container name (dataquery-warehouse) that the system uses to store Default table information, management table information, and data.
             * Create and use your own dataquery-warehouse container.
@@ -151,8 +151,8 @@ You can create a Data Lake Storage data source by selecting **Data Lake Storage*
     * This is a separator used to perform queries, and must be unique value among data sources.
 * Access key, secret key, region
     * The Iceberg table data to integrate with or the connection information for the Object Storage where the data exists.
-    * Access keys and secret keys can be issued from the Object Storage console. For more details, refer to [Object Storage Console Guide](https://docs.toast.com/ko/Storage/Object%20Storage/ko/console-guide/#s3-api).
-        * The region must match the S3 region name corresponding to the NHN Cloud region. Refer to [AWS Command Line Interface (CLI) > Configuration](https://docs.nhncloud.com/en/Storage/Object%20Storage/en/s3-api-guide/#aws-command-line-interface-cli)in the  Object Storage guide.
+    * Access keys and secret keys can be issued from the Object Storage console. For more details, refer to [Object Storage Console Guide](/Storage/Object%20Storage/ko/console-guide/#s3-api).
+        * The region must match the S3 region name corresponding to the NHN Cloud region. Refer to [AWS Command Line Interface (CLI) > Configuration](/Storage/Object%20Storage/en/s3-api-guide/#aws-command-line-interface-cli)in the  Object Storage guide.
 * Bucket Name
     * The Object Storage container that the system uses to store basic Iceberg table information is named dataquery-warehouse and has a child path of iceberg.
     * The existing data you want to integrate may exist in a different path.
