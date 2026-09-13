@@ -31,11 +31,11 @@ DataQueryサービスを使用するには、必ずデータソースを追加�
 | --- | --- | --- | --- |
 | データソース名 | O | クエリ実行時に使用する識別用 | • 名前はデータソース間で固有の値である必要があります。 |
 | データソースの説明 | O | データソースの説明 |  |
-| アクセスキー | O | Data Lake Storageで発行した認証情報 | • Data Lake Storageの認証情報発行方法は、[Data Lake Storageコンソール使用ガイド](https://docs.nhncloud.com/ja/Data%20&%20Analytics/Data%20Lake%20Storage/ja/console-user-guide/#_10)を参照してください。 |
+| アクセスキー | O | Data Lake Storageで発行した認証情報 | • Data Lake Storageの認証情報発行方法は、[Data Lake Storageコンソール使用ガイド](/Data%20&%20Analytics/Data%20Lake%20Storage/ja/console-user-guide/#_10)を参照してください。 |
 | シークレットキー | O | Data Lake Storageで発行した認証情報 |  |
-| バケット名 | O | 基本テーブル情報や管理テーブル情報、データを保存するために使用する基本バケット。 | • バケットが存在しない場合、データソースの登録時にバケットを一緒に作成します。<br>• 使用可能なバケット名は[Data Lake Storageコンソール使用ガイド](https://docs.nhncloud.com/ja/Data%20&%20Analytics/Data%20Lake%20Storage/ja/console-user-guide/#_7)を参照してください。<br>• 連携する既存のデータはdataquery-warehouseコンテナの外部に存在できます。 |
+| バケット名 | O | 基本テーブル情報や管理テーブル情報、データを保存するために使用する基本バケット。 | • バケットが存在しない場合、データソースの登録時にバケットを一緒に作成します。<br>• 使用可能なバケット名は[Data Lake Storageコンソール使用ガイド](/Data%20&%20Analytics/Data%20Lake%20Storage/ja/console-user-guide/#_7)を参照してください。<br>• 連携する既存のデータはdataquery-warehouseコンテナの外部に存在できます。 |
 | リージョン | O | NHN Cloudリージョンに対応するData Lake Storageのリージョン名 |  |
-| メタストアタイプ | O | Data Lake Storageにデータを入出力するために使用するメタストアのインスタンスタイプ | • タイプに関する説明は[サービス別料金](https://www.nhncloud.com/kr/pricing/by-service?c=Data%20%26%20Analytics&s=DataQuery)で確認できます。<br>• デフォルトでc1m3タイプが選択されています。<br>• 設定は次のクラスター起動後に適用されます。クラスターがすでに起動している状態であれば、終了した後に再起動する必要があります。 |
+| メタストアタイプ | O | Data Lake Storageにデータを入出力するために使用するメタストアのインスタンスタイプ | • タイプに関する説明は[サービス別料金](/pricing/by-service?c=Data%20%26%20Analytics&s=DataQuery)で確認できます。<br>• デフォルトでc1m3タイプが選択されています。<br>• 設定は次のクラスター起動後に適用されます。クラスターがすでに起動している状態であれば、終了した後に再起動する必要があります。 |
 | 再帰的パス読み取り | X | サブディレクトリを含むクエリ実行の有無 |  |
 | ファイル保存形式 | X | ストレージに保存されるファイルタイプ |  |
 
@@ -53,8 +53,8 @@ DataQueryサービスを使用するには、必ずデータソースを追加�
         * クエリ実行時に使用されるセパレータで、データソース間で一意の値なければなりません。
     * アクセスキー、秘密鍵、リージョン
         * 連動するデータが存在するObject Storageの接続情報です。
-        * アクセスキーと秘密鍵はObject Storageコンソールで発行できます。詳細については[Object Storageコンソール使用ガイド](https://docs.toast.com/ko/Storage/Object%20Storage/ko/console-guide/#s3-api)をご覧ください。
-        * リージョンはNHN Cloudリージョンに対応するS3リージョン名を選択する必要があります。Object Storageガイドの[AWSコマンドラインインターフェース(CLI) > 設定](https://docs.nhncloud.com/ja/Storage/Object%20Storage/ja/s3-api-guide/#awscli)を参照してください。
+        * アクセスキーと秘密鍵はObject Storageコンソールで発行できます。詳細については[Object Storageコンソール使用ガイド](/Storage/Object%20Storage/ko/console-guide/#s3-api)をご覧ください。
+        * リージョンはNHN Cloudリージョンに対応するS3リージョン名を選択する必要があります。Object Storageガイドの[AWSコマンドラインインターフェース(CLI) > 設定](/Storage/Object%20Storage/ja/s3-api-guide/#awscli)を参照してください。
     * バケット名
         * システムで基本テーブル情報や管理テーブル情報、データを保存するために使用するObject Storageコンテナ名(dataquery-warehouse)です。
             * 独自にdataquery-warehouseコンテナを作成して使用します。
@@ -152,8 +152,8 @@ DataQueryサービスを使用するには、必ずデータソースを追加�
     * クエリ実行時に使用される区切り文字で、データソース間で固有の値でなければなりません。
 * アクセスキー、秘密鍵、リージョン
     * 連動するIcebergテーブルデータまたは連動するデータが存在するObject Storageの接続情報です。
-    * アクセスキーと秘密鍵はObject Storageコンソールで発行できます。詳細は[Object Storageコンソール使用ガイド](https://docs.toast.com/ko/Storage/Object%20Storage/ko/console-guide/#s3-api)を参照してください。
-        * リージョンはNHN Cloudリージョンに対応するS3リージョン名を選択する必要があります。Object Storageガイドの[AWSコマンドラインインターフェース(CLI) > 設定](https://docs.nhncloud.com/ja/Storage/Object%20Storage/ja/s3-api-guide/#awscli)を参照してください。
+    * アクセスキーと秘密鍵はObject Storageコンソールで発行できます。詳細は[Object Storageコンソール使用ガイド](/Storage/Object%20Storage/ko/console-guide/#s3-api)を参照してください。
+        * リージョンはNHN Cloudリージョンに対応するS3リージョン名を選択する必要があります。Object Storageガイドの[AWSコマンドラインインターフェース(CLI) > 設定](/Storage/Object%20Storage/ja/s3-api-guide/#awscli)を参照してください。
     * バケット名
         * システムで基本Icebergテーブル情報を保存するために使用するObject Storageコンテナ名はdataquery-warehouseで、下位パスはicebergです。
         * 連動する既存のデータは他のパスに存在する可能性があります。

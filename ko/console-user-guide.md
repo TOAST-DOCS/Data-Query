@@ -31,11 +31,11 @@ DataQuery 서비스를 사용하려면 반드시 데이터 소스를 추가해�
 | --- | --- | --- | --- |
 | 데이터 소스 이름 | O | 쿼리 수행 시 사용하는 구분자 | • 이름은 데이터 소스 사이에서 고유한 값이어야 합니다. |
 | 데이터 소스 설명 | O | 데이터 소스의 설명 |  |
-| 액세스 키 | O | Data Lake Storage에서 발급한 자격 증명 | • Data Lake Storage 자격 발급 방법은 [Data Lake Storage 콘솔 사용 가이드](https://docs.nhncloud.com/ko/Data%20&%20Analytics/Data%20Lake%20Storage/ko/console-user-guide/#_10)를 참고하세요. |
+| 액세스 키 | O | Data Lake Storage에서 발급한 자격 증명 | • Data Lake Storage 자격 발급 방법은 [Data Lake Storage 콘솔 사용 가이드](/Data%20&%20Analytics/Data%20Lake%20Storage/ko/console-user-guide/#_10)를 참고하세요. |
 | 비밀 키 | O | Data Lake Storage에서 발급한 자격 증명 |  |
-| 버킷 이름 | O | 기본 테이블 정보나 관리 테이블 정보, 데이터를 저장하기 위해 사용할 기본 버킷. | • 버킷이 존재하지 않을 경우, 데이터 소스 등록 시 버킷을 함께 생성합니다.<br>• 사용 가능한 버킷 이름은 [Data Lake Storage 콘솔 사용 가이드](https://docs.nhncloud.com/ko/Data%20&%20Analytics/Data%20Lake%20Storage/ko/console-user-guide/#_7)를 참고하세요.<br>• 연동할 기존 데이터는 dataquery-warehouse 컨테이너 외부에 존재할 수 있습니다. |
+| 버킷 이름 | O | 기본 테이블 정보나 관리 테이블 정보, 데이터를 저장하기 위해 사용할 기본 버킷. | • 버킷이 존재하지 않을 경우, 데이터 소스 등록 시 버킷을 함께 생성합니다.<br>• 사용 가능한 버킷 이름은 [Data Lake Storage 콘솔 사용 가이드](/Data%20&%20Analytics/Data%20Lake%20Storage/ko/console-user-guide/#_7)를 참고하세요.<br>• 연동할 기존 데이터는 dataquery-warehouse 컨테이너 외부에 존재할 수 있습니다. |
 | 리전 | O | NHN Cloud 리전에 대응하는 Data Lake Storage 리전 이름 |  |
-| 메타스토어 타입 | O | Data Lake Storage에 데이터를 입/출력하기 위해 사용하는 메타스토어의 인스턴스 타입 | • 타입에 대한 설명은 [서비스별 요금](https://www.nhncloud.com/kr/pricing/by-service?c=Data%20%26%20Analytics&s=DataQuery)에서 확인할 수 있습니다.<br>• 기본으로 c1m3 타입이 선택되어 있습니다.<br>• 설정은 다음 클러스터 시작 이후에 적용됩니다. 클러스터가 이미 켜진 상태라면 종료한 이후 다시 시작해야 합니다. |
+| 메타스토어 타입 | O | Data Lake Storage에 데이터를 입/출력하기 위해 사용하는 메타스토어의 인스턴스 타입 | • 타입에 대한 설명은 [서비스별 요금](/pricing/by-service?c=Data%20%26%20Analytics&s=DataQuery)에서 확인할 수 있습니다.<br>• 기본으로 c1m3 타입이 선택되어 있습니다.<br>• 설정은 다음 클러스터 시작 이후에 적용됩니다. 클러스터가 이미 켜진 상태라면 종료한 이후 다시 시작해야 합니다. |
 | 재귀적 경로 읽기 | X | 하위 디렉터리를 포함한 쿼리 실행 여부 |  |
 | 파일 저장 형식 | X | 스토리지에 저장될 파일 타입 |  |
 
