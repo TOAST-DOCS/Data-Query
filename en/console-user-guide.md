@@ -1,3 +1,5 @@
+<!-- machine_translated: true -->
+
 <!-- pre-align:aligned sig=a1a3882f94e2 -->
 
 <a id="data-analytics-dataquery-console-user-guide"></a>
@@ -273,9 +275,9 @@ You can create a Data Lake Storage data source by selecting **Data Lake Storage*
 <a id="disable-object-storage-integration-for-storing-query-history"></a>
 ### Disable Object Storage integration for Storing Query History { #disable-object-storage-integration-for-storing-query-history }
 
-* 쿼리 이력 저장을 위한 Object Storage 인증이 만료되거나 등록한 버킷이 삭제될 경우 연동이 비활성화되어 알림 메일을 수신할 수 있습니다.
-* Default Recipient
-    * A member with the DataQuery ADMIN role in the project where the DataQuery service you are using is enabled
+* If the authentication for Object Storage used to save query history expires or the registered bucket is deleted, the integration is disabled and you can receive a notification email.
+* Default recipients
+    * Members with the DataQuery ADMIN role in the project where the DataQuery service in use is activated
 
 <a id="data-source-detailed-guide"></a>
 ## Data Source Detailed Guide { #data-source-detailed-guide }

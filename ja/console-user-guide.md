@@ -1,3 +1,5 @@
+<!-- machine_translated: true -->
+
 <!-- pre-align:aligned sig=a1a3882f94e2 -->
 
 <a id="data-analytics-dataquery-console-user-guide"></a>
@@ -275,9 +277,9 @@ DataQueryサービスを使用するには、必ずデータソースを追加�
 <a id="disable-object-storage-integration-for-storing-query-history"></a>
 ### クエリ履歴を保存するためのObject Storage連動の無効化案内メール { #disable-object-storage-integration-for-storing-query-history }
 
-* 쿼리 이력 저장을 위한 Object Storage 인증이 만료되거나 등록한 버킷이 삭제될 경우 연동이 비활성화되어 알림 메일을 수신할 수 있습니다.
-* 基本受信対象
-    * 使用中のDataQueryサービスが有効化されたプロジェクトのDataQuery ADMINロールを持つメンバー
+* クエリ履歴保存のための Object Storage 認証が有効期限切れになるか、登録したバケットが削除された場合、連携が無効化されてメール通知を受信することがあります。
+* デフォルトの受信対象
+    * 使用中の DataQuery サービスが有効化されているプロジェクトの DataQuery ADMIN ロールを持つメンバー
 
 <a id="data-source-detailed-guide"></a>
 ## データソース詳細ガイド { #data-source-detailed-guide }
