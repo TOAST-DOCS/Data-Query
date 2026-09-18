@@ -791,7 +791,7 @@ jdbc:trino://${host}:${port}/${catalog}/${schema}
 | Secret Access Key | O | NHN Cloudが発行するSecret Access Key |
 | クエリ文 | O | 実行するクエリ本文 |
 
-!!! tip 「ポイント」
+!!! tip "ポイント"
     * **予約されたクエリ**の結果は、UIに表示されたり、APIのレスポンスに含まれたりしません。クエリの結果が必要な場合は、CTASまたはINSERT SELECTクエリを使用して別のテーブルに保存する必要があります。
     * User Access Key及びSecret Access Keyは、**APIセキュリティ設定** > **User Access Keyの作成**で発行できます。
     * 対象のテンプレートを使用したスケジュールの作成については、ユーザーガイドの**Application Service > Cloud Scheduler > コンソールユーザーガイド**をご参照ください。
