@@ -53,8 +53,8 @@ DataQuery 서비스를 사용하려면 반드시 데이터 소스를 추가해�
         * 쿼리 수행 시 사용되는 구분자이며, 데이터 소스 사이에서 고유한 값이어야 합니다.
     * 액세스 키, 비밀 키, 리전
         * 연동할 데이터가 존재하는 Object Storage의 연결 정보입니다.
-        * 액세스 키와 비밀 키는 Object Storage 콘솔에서 발급할 수 있습니다. 자세한 내용은 [Object Storage 콘솔 사용 가이드](https://docs.toast.com/ko/Storage/Object%20Storage/ko/console-guide/#s3-api)를 참고하세요.
-        * 리전은 NHN Cloud 리전에 대응하는 S3 리전 이름을 선택해야 합니다. Object Storage 가이드의 [AWS 명령줄 인터페이스(CLI) > 설정](https://docs.toast.com/ko/Storage/Object%20Storage/ko/s3-api-guide/#aws-cli)을 참고하세요.
+        * 액세스 키와 비밀 키는 Object Storage 콘솔에서 발급할 수 있습니다. 자세한 내용은 [Object Storage 콘솔 사용 가이드](https://docs.nhncloud.com/ko/Storage/Object%20Storage/ko/console-guide/#s3-api)를 참고하세요.
+        * 리전은 NHN Cloud 리전에 대응하는 S3 리전 이름을 선택해야 합니다. Object Storage 가이드의 [AWS 명령줄 인터페이스(CLI) > 설정](https://docs.nhncloud.com/ko/Storage/Object%20Storage/ko/s3-api-guide/#aws-cli)을 참고하세요.
     * 버킷 이름
         * 시스템에서 기본 테이블 정보나 관리 테이블 정보, 데이터를 저장하기 위해 사용하는 Object Storage 컨테이너명(dataquery-warehouse)입니다.
             * 자체적으로 dataquery-warehouse 컨테이너를 생성해 사용합니다.
@@ -152,8 +152,8 @@ DataQuery 서비스를 사용하려면 반드시 데이터 소스를 추가해�
     * 쿼리 수행 시 사용되는 구분자이며, 데이터 소스 사이에서 고유한 값이어야 합니다.
 * 액세스 키, 비밀 키, 리전
     * 연동할 Iceberg 테이블 데이터 또는 연동할 데이터가 존재하는 Object Storage의 연결 정보입니다.
-    * 액세스 키와 비밀 키는 Object Storage 콘솔에서 발급할 수 있습니다. 자세한 내용은 [Object Storage 콘솔 사용 가이드](https://docs.toast.com/ko/Storage/Object%20Storage/ko/console-guide/#s3-api)를 참고하세요.
-    * 리전은 NHN Cloud 리전에 대응하는 S3 리전 이름을 선택해야 합니다. Object Storage 가이드의 [AWS 명령줄 인터페이스(CLI) > 설정](https://docs.toast.com/ko/Storage/Object%20Storage/ko/s3-api-guide/#aws-cli)을 참고하세요.
+    * 액세스 키와 비밀 키는 Object Storage 콘솔에서 발급할 수 있습니다. 자세한 내용은 [Object Storage 콘솔 사용 가이드](https://docs.nhncloud.com/ko/Storage/Object%20Storage/ko/console-guide/#s3-api)를 참고하세요.
+    * 리전은 NHN Cloud 리전에 대응하는 S3 리전 이름을 선택해야 합니다. Object Storage 가이드의 [AWS 명령줄 인터페이스(CLI) > 설정](https://docs.nhncloud.com/ko/Storage/Object%20Storage/ko/s3-api-guide/#aws-cli)을 참고하세요.
 * 버킷 이름
     * 시스템에서 기본 Iceberg 테이블 정보를 저장하기 위해 사용하는 Object Storage 컨테이너명은 dataquery-warehouse이고 하위 경로는 iceberg입니다.
     * 연동할 기존 데이터들은 다른 경로에 존재할 수도 있습니다.
@@ -313,7 +313,7 @@ DataQuery 서비스를 사용하려면 반드시 데이터 소스를 추가해�
         * 사용자가 지정한 별도의 경로에 위치한 데이터를 기반으로 동작합니다.
         * 테이블을 삭제할 때 내부 테이블과는 달리 연결된 데이터 원본은 삭제되지 않습니다.
         * 테이블을 생성할 때 WITH절의 external\_location에 데이터의 경로를 지정해야 합니다.
-          * external_location 데이터의 경로 입력 시 버킷(컨테이너)명은 [NHN Cloud Object Storage의 버킷 명명 규칙](https://docs.toast.com/ko/Storage/Object%20Storage/ko/s3-api-guide/#_7)을 지켜야 합니다.
+          * external_location 데이터의 경로 입력 시 버킷(컨테이너)명은 [NHN Cloud Object Storage의 버킷 명명 규칙](https://docs.nhncloud.com/ko/Storage/Object%20Storage/ko/s3-api-guide/#_7)을 지켜야 합니다.
 
 ``` sql
 -- Managed Table 샘플
