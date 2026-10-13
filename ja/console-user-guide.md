@@ -316,7 +316,7 @@ DataQueryサービスを使用するには、必ずデータソースを追加�
         * ユーザーが指定した別のパスにあるデータに基づいて動作します。
         * テーブルを削除すると、内部テーブルとは異なり接続されたデータ原本は削除されません。
         * テーブルを作成する時、WITH節のexternal\_locationにデータのパスを指定する必要があります。
-          * external_locationデータのパス入力時、バケット(コンテナ)名は[NHN Cloud Object Storageのバケット命名ルール](https://docs.toast.com/ko/Storage/Object%20Storage/ko/s3-api-guide/#_7)を守る必要があります。
+          * external_locationデータのパス入力時、バケット(コンテナ)名は[NHN Cloud Object Storageのバケット命名ルール](https://docs.nhncloud.com/ko/Storage/Object%20Storage/ko/s3-api-guide/#_7)を守る必要があります。
 
 ``` sql
 -- Managed Tableサンプル

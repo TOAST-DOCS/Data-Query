@@ -314,7 +314,7 @@ You can create a Data Lake Storage data source by selecting **Data Lake Storage*
         * It works based on data located in separate path that user specified.
         * When deleting a table, unlike internal table, the associated data source is not deleted. 
         * When creating a table, you must specify the path of data in the external\_location of WITH clause.
-          * When entering the path of external_location data, the bucket (container) name must comply with [NHN Cloud Object Storage's Bucket Naming Rules](https://docs.toast.com/ko/Storage/Object%20Storage/ko/s3-api-guide/#_7).
+          * When entering the path of external_location data, the bucket (container) name must comply with [NHN Cloud Object Storage's Bucket Naming Rules](https://docs.nhncloud.com/ko/Storage/Object%20Storage/ko/s3-api-guide/#_7).
 
 ``` sql
 -- Managed Table Sample
